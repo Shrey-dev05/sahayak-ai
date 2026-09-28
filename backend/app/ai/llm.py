@@ -95,7 +95,12 @@ class GeminiLLM(LLMProvider):
         if "hi" in lang_lower:
             lang_instruction = "CRITICAL LANGUAGE REQUIREMENT: You MUST reply strictly in fluent, respectful, grammatically correct pure Hindi in Devanagari script (हिंदी लिपि). Do NOT use Hinglish or Roman script."
         else:
-            lang_instruction = "CRITICAL LANGUAGE REQUIREMENT: You MUST reply strictly in clear, direct, and accessible pure English."
+            lang_instruction = (
+                "CRITICAL LANGUAGE REQUIREMENT: You MUST reply strictly in clear, direct, and accessible pure English. "
+                "If the user question was phonetically transcribed into Devanagari from English (for example 'समवन इस कैप्चरड माय लैंड इन लीगली व्हाट शोल्ड ई दो' "
+                "which means 'Someone has captured my land illegally, what should I do?'), understand the English question and provide your complete, detailed response strictly in English. "
+                "Never reply in Hindi if the question is asked in English."
+            )
 
         prompt_content = (
             f"{INTELLIGENT_SAHAYAK_SYSTEM_PROMPT}\n\n"
@@ -129,15 +134,15 @@ class GeminiLLM(LLMProvider):
             }
         }
 
-        # Try designated model, with fallbacks to other active models
-        models_to_try = [self.model, "gemini-3.5-flash-lite", "gemini-flash-latest", "gemini-3.8-flash"]
+        # Try designated model, with fallbacks to other active models with generous free quotas
+        models_to_try = [self.model, "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.5-flash", "gemini-3.8-flash"]
         seen = set()
         candidate_models = [m for m in models_to_try if m and not (m in seen or seen.add(m))]
 
         for m in candidate_models:
             url = f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent?key={self.api_key}"
             try:
-                with httpx.Client(timeout=30.0) as client:
+                with httpx.Client(timeout=12.0) as client:
                     resp = client.post(url, json=payload)
                     if resp.status_code == 200:
                         data = resp.json()

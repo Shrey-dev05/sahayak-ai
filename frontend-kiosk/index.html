@@ -967,7 +967,7 @@ const UI = {
     send: 'पूछें',
     replay: '🔊 आवाज़ दोबारा सुनें',
     next: 'नया सवाल पूछें (Close)',
-    langBtn: 'English',
+    langBtn: '🌐 English',
     help: 'मदद',
     helpTxt: 'सहायक AI फसल बीमा क्लेम, KCC ऋण, पैक्स समिति और सरकारी योजनाओं की पूरी जानकारी देता है। पूछने के लिए "Hello Sahayak" बोलें!'
   },
@@ -992,7 +992,7 @@ const UI = {
     send: 'Ask',
     replay: '🔊 Replay Audio',
     next: 'Ask Next Question',
-    langBtn: 'हिन्दी',
+    langBtn: '🌐 हिन्दी',
     help: 'Help',
     helpTxt: 'Sahayak AI helps farmers and citizens with crop insurance, KCC loans, PACS membership and government schemes.'
   }
@@ -1261,11 +1261,19 @@ async function handleQuery(text){
     lastAudioUrl = res.audio_url || '';
 
     // Automatic Language Identification:
-    // If citizen spoke in Hindi, English, or Hinglish, seamlessly adapt Kiosk language & UI labels
+    // If citizen spoke in Hindi or English, seamlessly adapt Kiosk language & UI labels
     if (res.language && res.language !== lang) {
       lang = res.language;
       localStorage.setItem('sahayak_lang', lang);
       updateUILabels();
+      if (mainRecog) {
+        mainRecog.lang = (lang === 'hi') ? 'hi-IN' : 'en-IN';
+      }
+      if (wakeRecog) {
+        stopWakeWordListener();
+        wakeRecog = null;
+        startWakeWordListener();
+      }
     }
 
     // Prepare Join URL for QR handoff to another mobile device
@@ -1343,6 +1351,14 @@ langBtn.onclick = () => {
   lang = (lang === 'hi') ? 'en' : 'hi';
   localStorage.setItem('sahayak_lang', lang);
   updateUILabels();
+  if (mainRecog) {
+    mainRecog.lang = (lang === 'hi') ? 'hi-IN' : 'en-IN';
+  }
+  if (wakeRecog) {
+    stopWakeWordListener();
+    wakeRecog = null;
+    startWakeWordListener();
+  }
 };
 
 helpBtn.onclick = () => {

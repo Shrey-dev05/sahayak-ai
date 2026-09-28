@@ -18,28 +18,47 @@ import re
 
 DEVANAGARI_RE = re.compile(r"[\u0900-\u097F]")
 
-# Comprehensive Hinglish markers: Hindi pronouns, question words, verbs, auxiliaries, postpositions, and rural domain terms
-HINGLISH_MARKERS = {
-    # Pronouns & Possessives
-    "mera", "meri", "mere", "mujhe", "mujhko", "hum", "humara", "humare", "humari",
-    "aap", "aapka", "aapke", "aapki", "aapko", "tum", "tumhara", "tumhe",
-    "yeh", "ye", "woh", "wo", "unka", "unke", "unki", "kisko", "kiska", "kiske", "kisne", "apna", "apne", "apni",
-    # Postpositions & Conjunctions
-    "ka", "ki", "ke", "ko", "se", "me", "mein", "par", "pe", "aur", "ya", "bhi", "toh", "to", "agar", "jab", "tab", "ab", "sab", "sabse",
+# Genuine Hindi grammatical markers: verbs, auxiliaries, question words, pronouns, postpositions
+HINDI_GRAMMAR_MARKERS = {
     # Question words
     "kya", "kaise", "kyu", "kyun", "kab", "kaha", "kahan", "kitna", "kitne", "kitni", "kaun",
-    # Verbs, Auxiliaries & Actions
+    # Verbs & Auxiliaries
     "hai", "hain", "ho", "hu", "hoon", "tha", "thi", "the", "hoga", "hogi", "honge", "hote", "hoti", "hota",
-    "kare", "karen", "karein", "karo", "karna", "karta", "karti", "karte", "kiya", "kiye", "de", "dena", "diya", "diye", "lo", "lena", "liya",
+    "kare", "karen", "karein", "karo", "karna", "karu", "karun", "karta", "karti", "karte", "kiya", "kiye",
+    "de", "dena", "diya", "diye", "lo", "lena", "liya", "liye",
     "batao", "bataiye", "bataye", "bata", "chahiye", "raha", "rahe", "rahi",
-    "aaya", "aaye", "aayega", "aayegi", "aayenge", "milega", "milegi", "milenge", "milta", "milti", "sakta", "sakte", "sakti",
-    "gaya", "gaye", "gayi", "lagta", "lagte", "lagti", "lagega", "lagegi", "lagengi",
-    "baat", "bolo", "bolna", "sun", "suno", "dekh", "dekho", "dekhein", "samjhao",
-    "nahi", "nhi", "mat", "na",
-    # Domain concepts frequently uttered in Hinglish
-    "fasal", "bima", "nuksan", "kharab", "barbad", "paise", "paisa", "kisan", "kisano", "kheti",
-    "zameen", "zamin", "karz", "byaj", "samiti", "suchi", "shikayat", "darj", "madad", "sadasya",
-    "aavedan", "patra", "kist", "khata", "labh", "labharthi", "sahkari", "muavza", "daur", "panjikaran"
+    "aaya", "aaye", "aayega", "aayegi", "aayenge", "milega", "milegi", "milenge", "milta", "milti",
+    "sakta", "sakte", "sakti", "gaya", "gaye", "gayi", "lagta", "lagte", "lagti", "lagega", "lagegi",
+    "baat", "bolo", "bolna", "suno", "dekho", "samjhao", "chheen", "chhod",
+    # Pronouns & Negatives
+    "mera", "meri", "mere", "mujhe", "mujhko", "humara", "humare", "humari",
+    "aapka", "aapke", "aapki", "aapko", "tumhara", "tumhe", "apna", "apne", "apni",
+    "kisko", "kiska", "kiske", "kisne", "unka", "unke", "unki",
+    "nahi", "nhi", "mat"
+}
+
+# Devanagari Hindi grammar markers
+DEVANAGARI_HINDI_GRAMMAR = {
+    "क्या", "कैसे", "क्यों", "क्यो", "कब", "कहाँ", "कहा", "कितना", "कितने", "कितनी", "कौन",
+    "है", "हैं", "हो", "हूँ", "था", "थी", "थे", "होगा", "होगी", "होंगे", "होता", "होती", "होते",
+    "करें", "करे", "करो", "करना", "करूं", "करूँ", "कर", "किया", "किए", "दीजिए", "दें", "देना", "दिया",
+    "बताओ", "बताइए", "बताएं", "चाहिए", "मिलेगा", "मिलेगी", "मिलेंगे", "सकता", "सकते", "सकती",
+    "रहा", "रहे", "रही", "गया", "गए", "गई", "लगा", "लगे", "लगी",
+    "मेरा", "मेरी", "मेरे", "मुझे", "मुझको", "हमारा", "हमारे", "हमारी",
+    "आपका", "आपके", "आपकी", "आपको", "तुम्हारा", "तुम्हें", "अपना", "अपने", "अपनी",
+    "नहीं", "नही", "मत", "किस", "किसे", "किसको", "का", "की", "के", "को", "से", "में", "पर", "ने"
+}
+
+# Phonetic English words when transcribed by speech recognition in Devanagari (e.g. hi-IN Web Speech mode)
+DEVANAGARI_PHONETIC_ENGLISH = {
+    "समवन", "कैप्चरड", "कैप्चर्ड", "माय", "लैंड", "व्हाट", "शोल्ड", "शुड", "ई", "आई", "दो", "डू",
+    "हस", "हैज", "बीन", "बाय", "एल्स", "लीगली", "इलीगली", "इन", "ऑन", "एट", "टू", "फॉर", "विथ",
+    "हाउ", "व्हेन", "वेयर", "वाय", "हु", "विच", "दिस", "दैट", "दीज", "दोज",
+    "कैन", "कुड", "वुड", "विल", "शैल", "मे", "माइट", "मस्ट", "इज", "इस", "आर", "एम",
+    "हेल्प", "प्लीज", "टेल", "मी", "यू", "योर", "वी", "अवर", "दे", "देयर",
+    "फार्मर", "क्रॉप", "इंश्योरेंस", "कंप्लेंट", "गवर्नमेंट", "स्कीम", "लोन", "क्रेडिट", "कार्ड",
+    "अप्लाई", "रजिस्टर", "ऑनलाइन", "पोर्टल", "मनी", "बैंक", "अकाउंट",
+    "प्रॉब्लम", "इश्यू", "डॉक्यूमेंट", "डॉक्यूमेंट्स", "प्रोसेस", "स्टेप्स", "डिटेल", "डिटेल्स"
 }
 
 ENGLISH_INDICATORS = {
@@ -49,10 +68,11 @@ ENGLISH_INDICATORS = {
     "the", "this", "that", "these", "those", "my", "your", "his", "her", "their", "our", "its",
     "i", "you", "he", "she", "it", "we", "they", "me", "him", "us", "them",
     "for", "with", "from", "about", "into", "through", "during", "before", "after",
-    "please", "tell", "explain", "process", "procedure", "claim", "insurance",
+    "please", "tell", "explain", "process", "procedure", "claim", "insurance", "credit", "card",
     "document", "documents", "required", "eligibility", "eligible", "status", "apply", "application",
     "deadline", "helpline", "contact", "download", "damage", "damaged", "compensation", "officer",
-    "authority", "department", "cooperative", "complaint", "grievance", "register", "help"
+    "authority", "department", "cooperative", "complaint", "grievance", "register", "help", "solve",
+    "someone", "anyone", "captured", "illegal", "illegally", "land", "dispute", "money", "stolen", "crops"
 }
 
 PDF_KEYWORDS_RE = re.compile(
@@ -82,51 +102,65 @@ HANDOFF_TEXT = {
 
 def detect_language_style(text: str, default_lang: Optional[str] = None) -> str:
     """
-    Automatically identifies whether user input is Hindi (Devanagari or Romanized Hindi)
-    or English, returning 'hi' or 'en'. Hinglish speech/mode is removed: any Hindi or
-    Romanized Hindi query maps directly to pure Hindi ('hi') in Devanagari script.
+    Accurately identifies whether user input is Hindi (Devanagari or Romanized Hindi)
+    or English, returning 'hi' or 'en'. Recognizes English questions mentioning scheme
+    nouns (like 'Kisan Credit Card', 'PM Fasal Bima') as English, and detects English
+    speech phonetically transcribed into Devanagari.
     """
     if not text or not text.strip():
         if default_lang in ["hi", "en"]:
             return default_lang
+        return "en"
+
+    clean_text = text.strip()
+
+    # 1. Devanagari script processing
+    if DEVANAGARI_RE.search(clean_text):
+        dev_words = re.findall(r"[\u0900-\u097F]+", clean_text)
+        filtered_dev = [w for w in dev_words if w not in {"हेलो", "नमस्ते", "सहायक"}]
+        if not filtered_dev:
+            filtered_dev = dev_words
+
+        dev_set = set(filtered_dev)
+        hi_grammar_count = len(dev_set.intersection(DEVANAGARI_HINDI_GRAMMAR))
+        phonetic_en_count = len(dev_set.intersection(DEVANAGARI_PHONETIC_ENGLISH))
+
+        # If speech recognition transcribed English phonetically into Devanagari
+        if phonetic_en_count >= 2 and phonetic_en_count > hi_grammar_count:
+            return "en"
+        if default_lang == "en" and hi_grammar_count == 0 and phonetic_en_count >= 1:
+            return "en"
         return "hi"
 
-    # 1. Any Devanagari script is conclusively Hindi
-    if DEVANAGARI_RE.search(text):
-        return "hi"
-
-    words = re.findall(r"\b[a-zA-Z]+\b", text.lower())
+    # 2. Latin script processing
+    words = re.findall(r"\b[a-zA-Z]+\b", clean_text.lower())
     if not words:
         if default_lang in ["hi", "en"]:
             return default_lang
-        return "hi"
-
-    word_set = set(words)
-    hinglish_matches = word_set.intersection(HINGLISH_MARKERS)
-    english_matches = word_set.intersection(ENGLISH_INDICATORS)
-
-    h_count = len(hinglish_matches)
-    e_count = len(english_matches)
-
-    # 2. Check for distinct Hindi/Romanized markers or grammatical particles -> map to pure Hindi
-    strong_hindi = any(w in word_set for w in [
-        "kaise", "kya", "chahiye", "batao", "bataiye", "bataye", "milega", "milegi", "milenge",
-        "kare", "karein", "karna", "karo", "nuksan", "kharab", "barbad", "mera", "meri", "mere",
-        "mujhe", "mujhko", "nahi", "nhi", "hoga", "hogi", "aayega", "aayegi", "darj", "paise", "paisa",
-        "fasal", "bima", "kisan", "zameen", "zamin", "shikayat", "aavedan", "kist"
-    ])
-
-    if strong_hindi or (h_count > 0 and h_count >= e_count):
-        return "hi"
-
-    # 3. Pure English check
-    if e_count > 0:
         return "en"
 
-    # 4. Fallback gracefully
+    word_set = set(words)
+    eval_words = word_set - {"hello", "sahayak", "hey", "namaste"}
+    if not eval_words:
+        eval_words = word_set
+
+    h_grammar_count = len(eval_words.intersection(HINDI_GRAMMAR_MARKERS))
+    en_count = len(eval_words.intersection(ENGLISH_INDICATORS))
+
+    # If the user explicitly requested English, and there is no strong Hindi grammar
+    if default_lang == "en" and h_grammar_count == 0:
+        return "en"
+
+    # Strong Hindi if distinct Hindi verbs/pronouns are present and not overwhelmed by English
+    if h_grammar_count > 0 and h_grammar_count >= en_count:
+        return "hi"
+
+    if en_count > 0:
+        return "en"
+
     if default_lang in ["hi", "en"]:
         return default_lang
-    return "hi" if h_count > 0 else "en"
+    return "hi" if h_grammar_count > 0 else "en"
 
 
 def build_actionable_kiosk_summary(
@@ -235,9 +269,20 @@ def handle_message(db: DBSession, session: models.Session, text: str, language: 
         spoken_text = clean_for_speech(f"{answer}. {invite}", lang_style)
     elif intent_name == "UNKNOWN" and not chunks:
         response_mode = "HUMAN_ESCALATION"
-        answer = NO_EVIDENCE.get(lang_style, NO_EVIDENCE["en"])
         sources = []
-        spoken_text = clean_for_speech(answer, lang_style)
+        bundle = llm.generate_response_bundle(text, evidence_texts, lang_style)
+        answer = bundle.get("answer_text")
+        if not answer:
+            answer = NO_EVIDENCE.get(lang_style, NO_EVIDENCE["en"])
+        kiosk_summary = bundle.get("kiosk_summary")
+        if kiosk_summary:
+            kiosk_summary = build_actionable_kiosk_summary(answer, action_plan_out, kiosk_summary, lang_style)
+            qr_obj = create_qr_session(db, session.id)
+            qr_data = {"token": qr_obj.token, "join_url": f"/mobile/?token={qr_obj.token}", "expires_at": qr_obj.expires_at}
+            invite = QR_SPOKEN_INVITE.get(lang_style, QR_SPOKEN_INVITE["en"])
+            spoken_text = clean_for_speech(f"{kiosk_summary}. {invite}", lang_style)
+        else:
+            spoken_text = clean_for_speech(answer, lang_style)
     elif (fact_type := requires_specific_fact(text)) and not evidence_has_fact([c.text for c in chunks], fact_type, text):
         response_mode = "HUMAN_ESCALATION"
         sources = []
