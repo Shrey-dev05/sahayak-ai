@@ -1,0 +1,49 @@
+# Environments and secrets
+.env
+*.env
+!*.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+*.pyd.disabled
+*.pyd.bak
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Databases and storage
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+backend/data/*.db
+backend/data/*.sqlite
+backend/data/*.sqlite3
+uploads/
+backend/uploads/
+*.mp3
+audio_cache/
+backend/data/audio_cache/
+
+# IDE and OS
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.log

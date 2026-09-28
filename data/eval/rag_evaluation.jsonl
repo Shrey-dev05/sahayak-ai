@@ -1,0 +1,16 @@
+{"question": "What is a PACS?", "expected_domain": "PACS", "expected_sources": ["PACS - primary agricultural credit society"], "must_not_hallucinate": true}
+{"question": "PACS ka matlab kya hai?", "expected_domain": "PACS", "expected_sources": ["PACS - primary agricultural credit society"], "must_not_hallucinate": true}
+{"question": "What is a cooperative society?", "expected_domain": "COOPERATIVE_LAW", "expected_sources": ["Cooperative society - general definition"], "must_not_hallucinate": true}
+{"question": "Cooperative society kaise kaam karti hai?", "expected_domain": "COOPERATIVE_LAW", "expected_sources": ["Cooperative society - general definition"], "must_not_hallucinate": true}
+{"question": "How does crop insurance work?", "expected_domain": "CROP_INSURANCE", "expected_sources": ["Crop insurance - general guidance"], "must_not_hallucinate": true}
+{"question": "Fasal insurance kya cover karta hai?", "expected_domain": "CROP_INSURANCE", "expected_sources": ["Crop insurance - general guidance"], "must_not_hallucinate": true}
+{"question": "What is interest on savings?", "expected_domain": "FINANCIAL_LITERACY", "expected_sources": ["Financial literacy - interest and savings"], "must_not_hallucinate": true}
+{"question": "Loan aur savings interest mein kya fark hai?", "expected_domain": "FINANCIAL_LITERACY", "expected_sources": ["Financial literacy - interest and savings"], "must_not_hallucinate": true}
+{"question": "How do I file a grievance?", "expected_domain": "GRIEVANCE", "expected_sources": ["Filing a grievance - general process"], "must_not_hallucinate": true}
+{"question": "Shikayat kaise darj kare?", "expected_domain": "GRIEVANCE", "expected_sources": ["Filing a grievance - general process"], "must_not_hallucinate": true}
+{"question": "What is the exact PMFBY premium subsidy percentage for this year?", "expected_domain": "CROP_INSURANCE", "expected_sources": [], "must_not_hallucinate": true, "note": "No approved document contains this - the system must say it cannot verify it, not guess a percentage."}
+{"question": "What is the current cooperative election commissioner's phone number?", "expected_domain": "COOPERATIVE_LAW", "expected_sources": [], "must_not_hallucinate": true, "note": "No approved document contains a contact number - must not fabricate one."}
+{"question": "Tell me about sample scheme XYZ.", "expected_domain": "GOVT_SCHEME", "expected_sources": [], "must_not_hallucinate": true, "note": "This document exists but is status=pending - it must NOT be retrievable until an admin approves it."}
+{"question": "What is the crop insurance application deadline this season?", "expected_domain": "CROP_INSURANCE", "expected_sources": [], "must_not_hallucinate": true, "note": "Deadlines change every season and are not in the demo KB - must not invent a date."}
+{"question": "asdkjqwe nonsense gibberish", "expected_domain": "UNKNOWN", "expected_sources": [], "must_not_hallucinate": true}
+{"question": "What's the weather today?", "expected_domain": "UNKNOWN", "expected_sources": [], "must_not_hallucinate": true}

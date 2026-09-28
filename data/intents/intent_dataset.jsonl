@@ -1,0 +1,408 @@
+{"text": "groundnut kharab ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "groundnut"}}
+{"text": "soybean ka insurance rabi season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "soybean", "season": "rabi"}}
+{"text": "PACS me member banne ke liye kya chahiye?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "Is postal savings safer than a bank?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "PACS किसानों को कौन सी सेवाएं देती है?", "intent": "PACS_INFO", "language": "hi", "entities": {}}
+{"text": "Fasal ka insurance kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {}}
+{"text": "How does membership rules work in a cooperative society?", "intent": "COOP_GOVERNANCE", "language": "en", "entities": {"topic": "membership rules"}}
+{"text": "seeds ke liye koi sarkari sahayata hai kya?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {"topic": "seeds"}}
+{"text": "PMFBY ke liye apply kaise kare?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {}}
+{"text": "meri soybean crop damage ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "soybean"}}
+{"text": "baarish me fasal chali gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {}}
+{"text": "What is the role of a Primary Agricultural Credit Society?", "intent": "PACS_INFO", "language": "en", "entities": {}}
+{"text": "I was overcharged for a service, how do I file a complaint?", "intent": "GRIEVANCE", "language": "en", "entities": {"category": "PAYMENT"}}
+{"text": "PACS kya hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "Insurance premium sarkar deti hai ya kisan?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {}}
+{"text": "What is financial inclusion?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "Mujhe gaana sunao", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "dhaan ka insurance kharif season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "dhaan", "season": "kharif"}}
+{"text": "PACS aur cooperative bank mein kya fark hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "Crop insurance ke liye premium kitna lagta hai?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {}}
+{"text": "Cooperative societies act mein member rights ke baare mein kya likha hai?", "intent": "COOP_LAW", "language": "hinglish", "entities": {"topic": "member rights"}}
+{"text": "wheat barbad ho gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "wheat"}}
+{"text": "Crop insurance enrollment procedure", "intent": "CROP_INSURANCE", "language": "en", "entities": {}}
+{"text": "Chit fund safe hota hai kya?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "paani me groundnut doob gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "groundnut"}}
+{"text": "What's the weather like today?", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "meri groundnut crop damage ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "groundnut"}}
+{"text": "What is KYC and why is it required?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "Is there a subsidy scheme for dairy farmers?", "intent": "GOVT_SCHEME", "language": "en", "entities": {}}
+{"text": "Fasal ka insurance kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {}}
+{"text": "Is a PACS the same as a regular bank branch?", "intent": "PACS_INFO", "language": "en", "entities": {}}
+{"text": "इस पत्र में क्या कार्रवाई करने को कहा गया है?", "intent": "DOCUMENT_EXPLANATION", "language": "hi", "entities": {}}
+{"text": "Karz chukane mein deri ho jaye to kya hota hai?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "Is receipt ko samjhao", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {"document_type": "receipt"}}
+{"text": "Mera account freeze ho gaya hai, kya karu?", "intent": "BANKING", "language": "hinglish", "entities": {}}
+{"text": "wheat ka insurance zaid season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "wheat", "season": "zaid"}}
+{"text": "mujhe PACS samjhao", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "How does annual meeting work in a cooperative society?", "intent": "COOP_GOVERNANCE", "language": "en", "entities": {"topic": "annual meeting"}}
+{"text": "rice ka insurance zaid season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "rice", "season": "zaid"}}
+{"text": "gehu ka insurance rabi season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "gehu", "season": "rabi"}}
+{"text": "warehouse ke liye koi sarkari sahayata hai kya?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {"topic": "warehouse"}}
+{"text": "What subsidy schemes exist for solar water pumps?", "intent": "GOVT_SCHEME", "language": "en", "entities": {}}
+{"text": "Cooperative societies act mein record keeping ke baare mein kya likha hai?", "intent": "COOP_LAW", "language": "hinglish", "entities": {"topic": "record keeping"}}
+{"text": "PACS kya hota hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "PACS ka matlab kya hota hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "Can you help me fill this application form?", "intent": "FORM_ASSISTANCE", "language": "en", "entities": {}}
+{"text": "How do I cook biryani?", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "Digital payment fraud se kaise bache?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "dhaan ka insurance zaid season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "dhaan", "season": "zaid"}}
+{"text": "Can you explain this form?", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {"document_type": "form"}}
+{"text": "Play some music", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "PACS ki सदस्यता के लिए क्या पात्रता है?", "intent": "PACS_MEMBERSHIP", "language": "hi", "entities": {}}
+{"text": "ब्याज दर कैसे तय होती है?", "intent": "FINANCIAL_LITERACY", "language": "hi", "entities": {}}
+{"text": "Credit score kya hota hai aur kaise sudharein?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "bajra ka insurance zaid season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "bajra", "season": "zaid"}}
+{"text": "meri wheat ki fasal beema claim ke layak hai kya?", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "wheat"}}
+{"text": "How does by-laws work in a cooperative society?", "intent": "COOP_GOVERNANCE", "language": "en", "entities": {"topic": "by-laws"}}
+{"text": "Who regulates PACS societies?", "intent": "PACS_INFO", "language": "en", "entities": {}}
+{"text": "What does the Cooperative Societies Act say about amendment of by-laws?", "intent": "COOP_LAW", "language": "en", "entities": {"topic": "amendment of by-laws"}}
+{"text": "cotton barbad ho gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "cotton"}}
+{"text": "PACS gaon mein kitni common hoti hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "The cooperative office is not responding to my application", "intent": "GRIEVANCE", "language": "en", "entities": {"category": "DELAY"}}
+{"text": "keeton ne meri groundnut ki fasal barbad kar di", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "groundnut"}}
+{"text": "Cooperative members ke liye koi special scheme hai?", "intent": "GOVT_SCHEME", "language": "hinglish", "entities": {}}
+{"text": "Ye membership form kaise bhare?", "intent": "FORM_ASSISTANCE", "language": "hinglish", "entities": {"form": "membership form"}}
+{"text": "PACS membership fee kitni hai?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "Bank statement mein ye charges kya hain?", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {}}
+{"text": "makka kharab ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "makka"}}
+{"text": "How do I open a cheque book at my PACS bank?", "intent": "BANKING", "language": "en", "entities": {"service": "a cheque book"}}
+{"text": "Beej aur khaad par sarkari sahayata milti hai kya?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {}}
+{"text": "PACS society ka function kya hota hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "rice kharab ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "rice"}}
+{"text": "gehu ka insurance kharif season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "gehu", "season": "kharif"}}
+{"text": "Dairy farmers ke liye koi scheme hai?", "intent": "GOVT_SCHEME", "language": "hinglish", "entities": {}}
+{"text": "How do I update my registered mobile number with the bank?", "intent": "BANKING", "language": "en", "entities": {}}
+{"text": "PACS se kya kya fayda hota hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "Is form ko samjhao", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {"document_type": "form"}}
+{"text": "Aaj cricket match kisne jeeta?", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "PACS सदस्यता कैसे लें?", "intent": "PACS_MEMBERSHIP", "language": "hi", "entities": {}}
+{"text": "Nearest petrol pump kaha hai?", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "What machinery subsidies are available for small farmers?", "intent": "AGRICULTURAL_SUPPORT", "language": "en", "entities": {}}
+{"text": "What documents are needed for crop insurance enrollment?", "intent": "CROP_INSURANCE", "language": "en", "entities": {}}
+{"text": "Scheme ka beneficiary list kaise check kare?", "intent": "GOVT_SCHEME", "language": "hinglish", "entities": {}}
+{"text": "Can you explain this receipt?", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {"document_type": "receipt"}}
+{"text": "Mujhe apne loan agreement ki shartein samajhni hain", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {}}
+{"text": "paani me bajra doob gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "bajra"}}
+{"text": "How do I get crop insurance?", "intent": "CROP_INSURANCE", "language": "en", "entities": {}}
+{"text": "Savings account aur fixed deposit mein kya fark hai?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "sukhe se dhaan ki fasal kharab ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "dhaan"}}
+{"text": "How do I apply for a home loan?", "intent": "LOAN", "language": "en", "entities": {"loan_type": "home loan"}}
+{"text": "PACS ka member kaise bane?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "Society ne meri application reject kar di bina reason bataye", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "DELAY"}}
+{"text": "Loan ka interest rate fix hota hai ya badalta rehta hai?", "intent": "LOAN", "language": "hinglish", "entities": {}}
+{"text": "PACS mein judne ka process kya hai?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "bajra barbad ho gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "bajra"}}
+{"text": "groundnut ka insurance rabi season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "groundnut", "season": "rabi"}}
+{"text": "How is EMI calculated?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "tractor purchase ke liye koi sarkari sahayata hai kya?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {"topic": "tractor purchase"}}
+{"text": "Aaj ka rashifal kya hai?", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "How do I apply for a gold loan?", "intent": "LOAN", "language": "en", "entities": {"loan_type": "gold loan"}}
+{"text": "How long does a grievance usually take to resolve?", "intent": "GRIEVANCE", "language": "en", "entities": {}}
+{"text": "Agar society ke rules follow nahi ho rahe to kya kare?", "intent": "COOP_LAW", "language": "hinglish", "entities": {}}
+{"text": "How do I open a locker at my PACS bank?", "intent": "BANKING", "language": "en", "entities": {"service": "a locker"}}
+{"text": "How can I become a PACS member?", "intent": "PACS_MEMBERSHIP", "language": "en", "entities": {}}
+{"text": "Mere liye konsi sarkari yojana available hai?", "intent": "GOVT_SCHEME", "language": "hinglish", "entities": {}}
+{"text": "meri dhaan crop damage ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "dhaan"}}
+{"text": "Mera claim reject ho gaya.", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "INSURANCE"}}
+{"text": "Mera claim reject ho gaya.", "intent": "GRIEVANCE", "language": "hinglish", "entities": {}}
+{"text": "Insurance premium aur bank interest mein kya fark hai?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "Can you walk me through this grievance form?", "intent": "FORM_ASSISTANCE", "language": "en", "entities": {"form": "grievance form"}}
+{"text": "groundnut ka insurance zaid season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "groundnut", "season": "zaid"}}
+{"text": "PACS ke kya benefits hain?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "Can you explain this letter?", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {"document_type": "letter"}}
+{"text": "Guarantor ke bina loan mil sakta hai kya?", "intent": "LOAN", "language": "hinglish", "entities": {}}
+{"text": "What collateral is needed for a crop loan?", "intent": "LOAN", "language": "en", "entities": {}}
+{"text": "rice ka insurance rabi season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "rice", "season": "rabi"}}
+{"text": "meri sugarcane ki fasal beema claim ke layak hai kya?", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "sugarcane"}}
+{"text": "PACS membership kaise milegi?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "Is there government support for seeds?", "intent": "AGRICULTURAL_SUPPORT", "language": "en", "entities": {"topic": "seeds"}}
+{"text": "fasal barbad ho gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {}}
+{"text": "What government schemes am I eligible for?", "intent": "GOVT_SCHEME", "language": "en", "entities": {}}
+{"text": "What's the capital of France?", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "How do I open a fixed deposit at my PACS bank?", "intent": "BANKING", "language": "en", "entities": {"service": "a fixed deposit"}}
+{"text": "Scheme apply karne ka last date kya hai?", "intent": "GOVT_SCHEME", "language": "hinglish", "entities": {}}
+{"text": "Mujhe galat jankari di gayi thi, ab kya kare?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "STAFF"}}
+{"text": "शिकायत दर्ज करने के बाद कितने दिन में जवाब मिलता है?", "intent": "GRIEVANCE", "language": "hi", "entities": {}}
+{"text": "I'm stuck on the eligibility section of this form", "intent": "FORM_ASSISTANCE", "language": "en", "entities": {}}
+{"text": "Joint account kholne ke liye dono logo ko jana padega kya?", "intent": "BANKING", "language": "hinglish", "entities": {}}
+{"text": "sugarcane barbad ho gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "sugarcane"}}
+{"text": "Cooperative society ka registration kaise kare?", "intent": "COOP_REGISTRATION", "language": "hinglish", "entities": {}}
+{"text": "Recurring deposit kaise kaam karti hai?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "Society ka audit kaun karta hai?", "intent": "COOP_GOVERNANCE", "language": "hinglish", "entities": {}}
+{"text": "PACS membership kaise milegi?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "Hailstorm damaged my wheat field", "intent": "CROP_DAMAGE", "language": "en", "entities": {"crop": "wheat"}}
+{"text": "Panchayat adhikari ne sahi jawab nahi diya", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "STAFF"}}
+{"text": "Meri fasal kharab ho gayi hai, insurance claim ka complete process documents ke saath batao.", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {}}
+{"text": "What is the penalty for late loan repayment?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "Can you explain what a PACS is?", "intent": "PACS_INFO", "language": "en", "entities": {}}
+{"text": "PACS ka board kaun chalata hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "Mujhse ghoos maangi gayi office mein", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "STAFF"}}
+{"text": "wheat nuksan ho gaya, ab kya karu?", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "wheat"}}
+{"text": "Loan approval mein kitna time lagta hai?", "intent": "LOAN", "language": "hinglish", "entities": {}}
+{"text": "What is a minimum balance requirement?", "intent": "BANKING", "language": "en", "entities": {}}
+{"text": "gehu kharab ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "gehu"}}
+{"text": "मुझे एक कहानी सुनाओ", "intent": "UNKNOWN", "language": "hi", "entities": {}}
+{"text": "Ye loan application kaise bhare?", "intent": "FORM_ASSISTANCE", "language": "hinglish", "entities": {"form": "loan application"}}
+{"text": "सोसाइटी रजिस्ट्रेशन की फीस कितनी है?", "intent": "COOP_REGISTRATION", "language": "hi", "entities": {}}
+{"text": "How do I open a recurring deposit at my PACS bank?", "intent": "BANKING", "language": "en", "entities": {"service": "a recurring deposit"}}
+{"text": "Loan par interest kaise calculate hota hai?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "Cooperative society mein by-laws kaise hota hai?", "intent": "COOP_GOVERNANCE", "language": "hinglish", "entities": {"topic": "by-laws"}}
+{"text": "How does election work in a cooperative society?", "intent": "COOP_GOVERNANCE", "language": "en", "entities": {"topic": "election"}}
+{"text": "Overdraft facility kya hoti hai?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "How do I escalate an unresolved grievance?", "intent": "GRIEVANCE", "language": "en", "entities": {}}
+{"text": "Can a cooperative society expel a member?", "intent": "COOP_LAW", "language": "en", "entities": {}}
+{"text": "soybean ka insurance zaid season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "soybean", "season": "zaid"}}
+{"text": "What documents do I need for PACS membership?", "intent": "PACS_MEMBERSHIP", "language": "en", "entities": {}}
+{"text": "Diwali kab hai is saal?", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "paani me fasal doob gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {}}
+{"text": "Cooperative society mein membership rules kaise hota hai?", "intent": "COOP_GOVERNANCE", "language": "hinglish", "entities": {"topic": "membership rules"}}
+{"text": "Loan par interest kaise calculate hota hai?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "Complaint kaha kare?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {}}
+{"text": "soybean ka insurance kharif season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "soybean", "season": "kharif"}}
+{"text": "Inflation ka paison par kya asar padta hai?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "What is the interest rate on a cooperative bank savings account?", "intent": "BANKING", "language": "en", "entities": {}}
+{"text": "I don't understand this field on the form", "intent": "FORM_ASSISTANCE", "language": "en", "entities": {}}
+{"text": "How do I apply for a crop loan?", "intent": "LOAN", "language": "en", "entities": {"loan_type": "crop loan"}}
+{"text": "How can I become a PACS member?", "intent": "PACS_MEMBERSHIP", "language": "en", "entities": {}}
+{"text": "Is there government support for tractor purchase?", "intent": "AGRICULTURAL_SUPPORT", "language": "en", "entities": {"topic": "tractor purchase"}}
+{"text": "Is there a scheme for women in agriculture?", "intent": "GOVT_SCHEME", "language": "en", "entities": {}}
+{"text": "Is there a subsidy for drip irrigation?", "intent": "AGRICULTURAL_SUPPORT", "language": "en", "entities": {}}
+{"text": "Ye scheme application kaise bhare?", "intent": "FORM_ASSISTANCE", "language": "hinglish", "entities": {"form": "scheme application"}}
+{"text": "PACS me member banne ke liye kya chahiye?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "Bachat karne ka sabse accha tarika kya hai?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "How does board voting work in a cooperative society?", "intent": "COOP_GOVERNANCE", "language": "en", "entities": {"topic": "board voting"}}
+{"text": "Ye grievance form kaise bhare?", "intent": "FORM_ASSISTANCE", "language": "hinglish", "entities": {"form": "grievance form"}}
+{"text": "PACS staff ne mera kaam nahi kiya, complaint kaise kare?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "STAFF"}}
+{"text": "Net banking activate kaise kare?", "intent": "BANKING", "language": "hinglish", "entities": {}}
+{"text": "Is there government support for warehouse?", "intent": "AGRICULTURAL_SUPPORT", "language": "en", "entities": {"topic": "warehouse"}}
+{"text": "Loan default hone par kya hota hai?", "intent": "LOAN", "language": "hinglish", "entities": {}}
+{"text": "Can I prepay my loan without a penalty?", "intent": "LOAN", "language": "en", "entities": {}}
+{"text": "sugarcane ka insurance zaid season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "sugarcane", "season": "zaid"}}
+{"text": "Fasal bima yojana ka last date kya hai?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {}}
+{"text": "sugarcane ka insurance rabi season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "sugarcane", "season": "rabi"}}
+{"text": "meri bajra crop damage ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "bajra"}}
+{"text": "ब्याज दर बढ़ने से EMI par kya farak padta hai?", "intent": "FINANCIAL_LITERACY", "language": "hi", "entities": {}}
+{"text": "Small and marginal farmers ke liye kya benefits milte hain?", "intent": "GOVT_SCHEME", "language": "hinglish", "entities": {}}
+{"text": "How do I start budgeting my monthly income?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "gehu barbad ho gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "gehu"}}
+{"text": "किसानों के लिए कौन सी सरकारी योजनाएं हैं?", "intent": "GOVT_SCHEME", "language": "hi", "entities": {}}
+{"text": "meri crop damage ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {}}
+{"text": "Village level cooperative society kya hoti hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "home loan ke liye eligibility kya hai?", "intent": "LOAN", "language": "hinglish", "entities": {"loan_type": "home loan"}}
+{"text": "Is loan statement ko samjhao", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {"document_type": "loan statement"}}
+{"text": "How do I learn Python?", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "PACS ka member banane ke liye documents kya lagenge?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "Is there government support for pesticide?", "intent": "AGRICULTURAL_SUPPORT", "language": "en", "entities": {"topic": "pesticide"}}
+{"text": "What does the Cooperative Societies Act say about dispute resolution?", "intent": "COOP_LAW", "language": "en", "entities": {"topic": "dispute resolution"}}
+{"text": "a locker khulwane ke liye kya karna hoga?", "intent": "BANKING", "language": "hinglish", "entities": {"service": "a locker"}}
+{"text": "groundnut ka insurance kharif season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "groundnut", "season": "kharif"}}
+{"text": "Cooperative societies act mein amendment of by-laws ke baare mein kya likha hai?", "intent": "COOP_LAW", "language": "hinglish", "entities": {"topic": "amendment of by-laws"}}
+{"text": "fasal kharab ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {}}
+{"text": "Meri fasal baarish se kharab ho gayi, insurance ka claim kaise karu?", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {}}
+{"text": "I want to escalate my complaint to a higher authority", "intent": "GRIEVANCE", "language": "en", "entities": {}}
+{"text": "My rice crop was destroyed by flooding, what should I do?", "intent": "CROP_DAMAGE", "language": "en", "entities": {"crop": "rice"}}
+{"text": "Is certificate ko samjhao", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {"document_type": "certificate"}}
+{"text": "How do FPOs (Farmer Producer Organizations) help farmers?", "intent": "AGRICULTURAL_SUPPORT", "language": "en", "entities": {}}
+{"text": "How is loan eligibility calculated?", "intent": "LOAN", "language": "en", "entities": {}}
+{"text": "sugarcane kharab ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "sugarcane"}}
+{"text": "बैंक अधिकारी ने गलत जानकारी दी, शिकायत कैसे करूं?", "intent": "GRIEVANCE", "language": "hi", "entities": {"category": "STAFF"}}
+{"text": "Complaint darj karne ke baad receipt milti hai kya?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {}}
+{"text": "rice nuksan ho gaya, ab kya karu?", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "rice"}}
+{"text": "Cooperative societies act mein dispute resolution ke baare mein kya likha hai?", "intent": "COOP_LAW", "language": "hinglish", "entities": {"topic": "dispute resolution"}}
+{"text": "How can I track my monthly expenses?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "makka ka insurance rabi season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "makka", "season": "rabi"}}
+{"text": "PACS kis ministry ke under aata hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "Kya women bhi PACS ki member ban sakti hain?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "a savings account khulwane ke liye kya karna hoga?", "intent": "BANKING", "language": "hinglish", "entities": {"service": "a savings account"}}
+{"text": "Bacchon ke liye koi game suggest karo", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "What does this letter from the cooperative office mean?", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {}}
+{"text": "Passbook update kaise karwaye?", "intent": "BANKING", "language": "hinglish", "entities": {}}
+{"text": "Kya koi bhi kisan PACS ka member ban sakta hai?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "फॉर्म भरने में मदद चाहिए", "intent": "FORM_ASSISTANCE", "language": "hi", "entities": {}}
+{"text": "मंडी में उपज कैसे बेचें?", "intent": "AGRICULTURAL_SUPPORT", "language": "hi", "entities": {}}
+{"text": "फॉर्म में कौन सी जानकारी भरनी है?", "intent": "FORM_ASSISTANCE", "language": "hi", "entities": {}}
+{"text": "Phone ka naya model kaunsa aaya hai?", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "This insurance policy document has terms I don't understand", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {}}
+{"text": "PACS membership cancel kaise kare?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "sukhe se rice ki fasal kharab ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "rice"}}
+{"text": "Bank account kholne ke liye kya documents chahiye?", "intent": "BANKING", "language": "hinglish", "entities": {}}
+{"text": "This is a legal notice, can you explain the important parts?", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {}}
+{"text": "PACS kya hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "makka barbad ho gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "makka"}}
+{"text": "Mobile banking app kaise install kare?", "intent": "BANKING", "language": "hinglish", "entities": {}}
+{"text": "प्राइमरी एग्रीकल्चर क्रेडिट सोसाइटी क्या होती है?", "intent": "PACS_INFO", "language": "hi", "entities": {}}
+{"text": "baarish me makka chali gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "makka"}}
+{"text": "Tell me a fun fact", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "Form mein signature kaha karna hai?", "intent": "FORM_ASSISTANCE", "language": "hinglish", "entities": {}}
+{"text": "यह प्रमाणपत्र असली है या नकली कैसे जानें?", "intent": "DOCUMENT_EXPLANATION", "language": "hi", "entities": {}}
+{"text": "PACS mein judne ka process kya hai?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "सहकारी अधिनियम के तहत सदस्यों के अधिकार क्या हैं?", "intent": "COOP_LAW", "language": "hi", "entities": {}}
+{"text": "How does compound interest work over years?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "sugarcane ka insurance kharif season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "sugarcane", "season": "kharif"}}
+{"text": "Kisan credit card kaise banwaye?", "intent": "LOAN", "language": "hinglish", "entities": {}}
+{"text": "Is there government support for cold storage?", "intent": "AGRICULTURAL_SUPPORT", "language": "en", "entities": {"topic": "cold storage"}}
+{"text": "What documents are needed to apply for a gold loan?", "intent": "LOAN", "language": "en", "entities": {}}
+{"text": "PACS ka member banane ke liye documents kya lagenge?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "dhaan ka insurance rabi season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "dhaan", "season": "rabi"}}
+{"text": "meri gehu crop damage ho gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "gehu"}}
+{"text": "meri gehu ki fasal beema claim ke layak hai kya?", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "gehu"}}
+{"text": "PACS सदस्यता नवीनीकरण कैसे करें?", "intent": "PACS_MEMBERSHIP", "language": "hi", "entities": {}}
+{"text": "Kisan credit card ki limit kaise badhti hai?", "intent": "LOAN", "language": "hinglish", "entities": {}}
+{"text": "Cheque bounce hone par kya penalty lagti hai?", "intent": "BANKING", "language": "hinglish", "entities": {}}
+{"text": "इस दस्तावेज़ में क्या लिखा है?", "intent": "DOCUMENT_EXPLANATION", "language": "hi", "entities": {}}
+{"text": "Cooperative society ka registration kaise kare?", "intent": "COOP_REGISTRATION", "language": "hinglish", "entities": {}}
+{"text": "How do I check the status of my complaint?", "intent": "GRIEVANCE", "language": "en", "entities": {}}
+{"text": "मेरी शिकायत का स्टेटस कैसे देखूं?", "intent": "GRIEVANCE", "language": "hi", "entities": {}}
+{"text": "pesticide ke liye koi sarkari sahayata hai kya?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {"topic": "pesticide"}}
+{"text": "Paise invest karne se pehle kya dhyan rakhein?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "keeton ne meri sugarcane ki fasal barbad kar di", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "sugarcane"}}
+{"text": "What is the application process for this scheme?", "intent": "GOVT_SCHEME", "language": "en", "entities": {}}
+{"text": "Loan repay karne ka schedule kaise dekhein?", "intent": "LOAN", "language": "hinglish", "entities": {}}
+{"text": "Mera refund abhi tak nahi aaya", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "PAYMENT"}}
+{"text": "Cooperative society ka registration certificate kaise milta hai?", "intent": "COOP_REGISTRATION", "language": "hinglish", "entities": {}}
+{"text": "गांव की सहकारी समिति क्या होती है", "intent": "PACS_INFO", "language": "hi", "entities": {}}
+{"text": "How do I apply for a kisan credit card?", "intent": "LOAN", "language": "en", "entities": {"loan_type": "kisan credit card"}}
+{"text": "Cooperative society ke board election ka process kya hai?", "intent": "COOP_GOVERNANCE", "language": "hinglish", "entities": {}}
+{"text": "Society ke fund ka misuse ho to kanooni kya vikalp hai?", "intent": "COOP_LAW", "language": "hinglish", "entities": {}}
+{"text": "PACS kya hota hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "सहकारी समिति की वार्षिक बैठक कब होती है?", "intent": "COOP_GOVERNANCE", "language": "hi", "entities": {}}
+{"text": "Main PACS join karna chahta hoon, kaise karu?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "What's the difference between a PACS and an FPO?", "intent": "PACS_INFO", "language": "en", "entities": {}}
+{"text": "What does the Cooperative Societies Act say about member rights?", "intent": "COOP_LAW", "language": "en", "entities": {"topic": "member rights"}}
+{"text": "gehu ka insurance zaid season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "gehu", "season": "zaid"}}
+{"text": "Tell me a joke", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "bajra ka insurance rabi season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "bajra", "season": "rabi"}}
+{"text": "What is the process to form a cooperative society?", "intent": "COOP_REGISTRATION", "language": "en", "entities": {}}
+{"text": "wheat ka insurance rabi season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "wheat", "season": "rabi"}}
+{"text": "Nobody is responding to my written complaint", "intent": "GRIEVANCE", "language": "en", "entities": {"category": "DELAY"}}
+{"text": "Cricket score kya hai abhi?", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "बैंक खाता आधार से लिंक कैसे करें?", "intent": "BANKING", "language": "hi", "entities": {}}
+{"text": "Who can vote in a cooperative society's board election?", "intent": "COOP_GOVERNANCE", "language": "en", "entities": {}}
+{"text": "Mera application 3 mahine se pending hai, ab kya karu?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "DELAY"}}
+{"text": "Can you explain this notice?", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {"document_type": "notice"}}
+{"text": "Aaj ki taza khabrein sunao", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "What's your favorite color?", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "PACS ka full form kya hai?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "Is there an age limit to join a PACS?", "intent": "PACS_MEMBERSHIP", "language": "en", "entities": {}}
+{"text": "Is there government support for fertilizer?", "intent": "AGRICULTURAL_SUPPORT", "language": "en", "entities": {"topic": "fertilizer"}}
+{"text": "What does the Cooperative Societies Act say about record keeping?", "intent": "COOP_LAW", "language": "en", "entities": {"topic": "record keeping"}}
+{"text": "Fasal ki storage ke liye godam kaise milega?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {}}
+{"text": "What is a good credit score range?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "personal loan ke liye eligibility kya hai?", "intent": "LOAN", "language": "hinglish", "entities": {"loan_type": "personal loan"}}
+{"text": "Is there government support for market linkage?", "intent": "AGRICULTURAL_SUPPORT", "language": "en", "entities": {"topic": "market linkage"}}
+{"text": "Purana loan chukaye bina naya loan mil sakta hai?", "intent": "LOAN", "language": "hinglish", "entities": {}}
+{"text": "Mujhe scheme ki eligibility check karni hai", "intent": "GOVT_SCHEME", "language": "hinglish", "entities": {}}
+{"text": "What is PACS?", "intent": "PACS_INFO", "language": "en", "entities": {}}
+{"text": "baarish me soybean chali gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "soybean"}}
+{"text": "keeton ne meri makka ki fasal barbad kar di", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "makka"}}
+{"text": "rice ka insurance kharif season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "rice", "season": "kharif"}}
+{"text": "Can you walk me through this scheme application?", "intent": "FORM_ASSISTANCE", "language": "en", "entities": {"form": "scheme application"}}
+{"text": "PACS ke baare mein bataiye", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "dhaan nuksan ho gaya, ab kya karu?", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "dhaan"}}
+{"text": "PACS और सहकारी बैंक में क्या संबंध है?", "intent": "PACS_INFO", "language": "hi", "entities": {}}
+{"text": "How many PACS typically operate in one district?", "intent": "PACS_INFO", "language": "en", "entities": {}}
+{"text": "makka ka insurance kharif season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "makka", "season": "kharif"}}
+{"text": "How does audit work in a cooperative society?", "intent": "COOP_GOVERNANCE", "language": "en", "entities": {"topic": "audit"}}
+{"text": "Is notice ko samjhao.", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {}}
+{"text": "keeton ne meri dhaan ki fasal barbad kar di", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "dhaan"}}
+{"text": "My crop insurance claim was rejected. Where do I complain?", "intent": "GRIEVANCE", "language": "en", "entities": {"category": "INSURANCE"}}
+{"text": "gold loan ke liye eligibility kya hai?", "intent": "LOAN", "language": "hinglish", "entities": {"loan_type": "gold loan"}}
+{"text": "Can you explain this certificate?", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {"document_type": "certificate"}}
+{"text": "Bus timing bata do", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "Mera crop insurance claim reject ho gaya. Complaint kaha karu?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {}}
+{"text": "Scheme application form mein kya likhna hai?", "intent": "FORM_ASSISTANCE", "language": "hinglish", "entities": {}}
+{"text": "Farmers ke liye koi naya scheme aaya hai kya?", "intent": "GOVT_SCHEME", "language": "hinglish", "entities": {}}
+{"text": "keeton ne meri wheat ki fasal barbad kar di", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "wheat"}}
+{"text": "Complaint number kho gaya, kaise track kare?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {}}
+{"text": "Is letter ko samjhao", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {"document_type": "letter"}}
+{"text": "Ye receipt kis payment ki hai samajh nahi aa raha", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {}}
+{"text": "cotton ka insurance rabi season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "cotton", "season": "rabi"}}
+{"text": "What happens if I don't maintain the minimum balance?", "intent": "BANKING", "language": "en", "entities": {}}
+{"text": "PACS ki sthapna kab hui thi?", "intent": "PACS_INFO", "language": "hinglish", "entities": {}}
+{"text": "Society election mein gadbadi hui, kaha report kare?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "GOVERNANCE"}}
+{"text": "Is notice ko samjhao", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {"document_type": "notice"}}
+{"text": "baarish me cotton chali gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "cotton"}}
+{"text": "Is this cooperative by-law legally valid?", "intent": "COOP_LAW", "language": "en", "entities": {}}
+{"text": "Certificate mein ye seal ka kya matlab hai?", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {}}
+{"text": "फसल बीमा कैसे कराएं?", "intent": "CROP_INSURANCE", "language": "hi", "entities": {}}
+{"text": "Complaint kaha kare?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {}}
+{"text": "Can you walk me through this membership form?", "intent": "FORM_ASSISTANCE", "language": "en", "entities": {"form": "membership form"}}
+{"text": "Cooperative societies act mein liquidation ke baare mein kya likha hai?", "intent": "COOP_LAW", "language": "hinglish", "entities": {"topic": "liquidation"}}
+{"text": "Can you recommend a good smartphone under 15000?", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "cotton ka insurance zaid season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "cotton", "season": "zaid"}}
+{"text": "crop loan ke liye eligibility kya hai?", "intent": "LOAN", "language": "hinglish", "entities": {"loan_type": "crop loan"}}
+{"text": "a fixed deposit khulwane ke liye kya karna hoga?", "intent": "BANKING", "language": "hinglish", "entities": {"service": "a fixed deposit"}}
+{"text": "What services does a PACS provide?", "intent": "PACS_INFO", "language": "en", "entities": {}}
+{"text": "How do I open a savings account at a cooperative bank?", "intent": "BANKING", "language": "en", "entities": {}}
+{"text": "Mujhe scheme ka paisa nahi mila, shikayat kaise darj kare?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "PAYMENT"}}
+{"text": "soybean barbad ho gyi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "soybean"}}
+{"text": "Movie recommend karo", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "What's the minimum share capital to register a cooperative?", "intent": "COOP_REGISTRATION", "language": "en", "entities": {}}
+{"text": "What does 'principal amount' mean in a loan?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "Irrigation ke liye koi subsidy hai kya?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {}}
+{"text": "Naye cooperative society banane ke liye kya karna hoga?", "intent": "COOP_REGISTRATION", "language": "hinglish", "entities": {}}
+{"text": "Cooperative society register karne ke liye minimum kitne members chahiye?", "intent": "COOP_REGISTRATION", "language": "hinglish", "entities": {}}
+{"text": "Mera application bina kisi karan reject ho gaya", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "DELAY"}}
+{"text": "a cheque book khulwane ke liye kya karna hoga?", "intent": "BANKING", "language": "hinglish", "entities": {"service": "a cheque book"}}
+{"text": "baarish me rice chali gayi", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "rice"}}
+{"text": "Cooperative society mein annual meeting kaise hota hai?", "intent": "COOP_GOVERNANCE", "language": "hinglish", "entities": {"topic": "annual meeting"}}
+{"text": "Society registration ke liye kaunse documents chahiye?", "intent": "COOP_REGISTRATION", "language": "hinglish", "entities": {}}
+{"text": "How do I open a savings account at my PACS bank?", "intent": "BANKING", "language": "en", "entities": {"service": "a savings account"}}
+{"text": "Cooperative registration ke baad kya karna padta hai?", "intent": "COOP_REGISTRATION", "language": "hinglish", "entities": {}}
+{"text": "PMFBY Kharif Chhattisgarh", "intent": "CROP_INSURANCE", "language": "en", "entities": {}}
+{"text": "सहकारी समिति भंग कैसे होती है?", "intent": "COOP_LAW", "language": "hi", "entities": {}}
+{"text": "ATM card kho gaya, kya karu?", "intent": "BANKING", "language": "hinglish", "entities": {}}
+{"text": "What's the difference between simple and compound interest?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "PACS me naam kaise add karwaye?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "बचत खाते पर ब्याज कैसे मिलता है?", "intent": "FINANCIAL_LITERACY", "language": "hi", "entities": {}}
+{"text": "युवा किसानों के लिए कोई योजना है?", "intent": "GOVT_SCHEME", "language": "hi", "entities": {}}
+{"text": "Cooperative society mein election kaise hota hai?", "intent": "COOP_GOVERNANCE", "language": "hinglish", "entities": {"topic": "election"}}
+{"text": "Society ke fund mein gadbadi lag rahi hai, kya karu?", "intent": "GRIEVANCE", "language": "hinglish", "entities": {"category": "GOVERNANCE"}}
+{"text": "PACS me naam kaise add karwaye?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "Mujhe ye sarkari notice samajh nahi aaya", "intent": "DOCUMENT_EXPLANATION", "language": "hinglish", "entities": {}}
+{"text": "Can you walk me through this loan application?", "intent": "FORM_ASSISTANCE", "language": "en", "entities": {"form": "loan application"}}
+{"text": "Yojana ke liye kaunse documents chahiye?", "intent": "GOVT_SCHEME", "language": "hinglish", "entities": {}}
+{"text": "Can you explain the terms on the back of this form?", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {}}
+{"text": "cotton ka insurance kharif season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "cotton", "season": "kharif"}}
+{"text": "Can you explain this loan statement?", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {"document_type": "loan statement"}}
+{"text": "fertilizer ke liye koi sarkari sahayata hai kya?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {"topic": "fertilizer"}}
+{"text": "What does the Cooperative Societies Act say about liquidation?", "intent": "COOP_LAW", "language": "en", "entities": {"topic": "liquidation"}}
+{"text": "How long does cooperative registration usually take?", "intent": "COOP_REGISTRATION", "language": "en", "entities": {}}
+{"text": "Best restaurant nearby kaunsa hai?", "intent": "UNKNOWN", "language": "hinglish", "entities": {}}
+{"text": "ओलावृष्टि से soybean की फसल खराब हो गई", "intent": "CROP_DAMAGE", "language": "hi", "entities": {"crop": "soybean"}}
+{"text": "आज का पंचांग बताओ", "intent": "UNKNOWN", "language": "hi", "entities": {}}
+{"text": "What does this insurance policy's exclusion clause mean?", "intent": "DOCUMENT_EXPLANATION", "language": "en", "entities": {}}
+{"text": "Cooperative bank mein account kaise khole?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "Ye insurance claim form kaise bhare?", "intent": "FORM_ASSISTANCE", "language": "hinglish", "entities": {"form": "insurance claim form"}}
+{"text": "cold storage ke liye koi sarkari sahayata hai kya?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {"topic": "cold storage"}}
+{"text": "PACS ka member kaise bane?", "intent": "PACS_MEMBERSHIP", "language": "hinglish", "entities": {}}
+{"text": "Society ke bye-laws kaise banaye?", "intent": "COOP_REGISTRATION", "language": "hinglish", "entities": {}}
+{"text": "Cooperative society mein audit kaise hota hai?", "intent": "COOP_GOVERNANCE", "language": "hinglish", "entities": {"topic": "audit"}}
+{"text": "cotton nuksan ho gaya, ab kya karu?", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "cotton"}}
+{"text": "Does every village have its own PACS?", "intent": "PACS_INFO", "language": "en", "entities": {}}
+{"text": "makka ka insurance zaid season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "makka", "season": "zaid"}}
+{"text": "meri cotton ki fasal beema claim ke layak hai kya?", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "cotton"}}
+{"text": "meri bajra ki fasal beema claim ke layak hai kya?", "intent": "CROP_DAMAGE", "language": "hinglish", "entities": {"crop": "bajra"}}
+{"text": "kisan credit card ke liye eligibility kya hai?", "intent": "LOAN", "language": "hinglish", "entities": {"loan_type": "kisan credit card"}}
+{"text": "What time is it?", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "Can a person from another village join our PACS?", "intent": "PACS_MEMBERSHIP", "language": "en", "entities": {}}
+{"text": "a recurring deposit khulwane ke liye kya karna hoga?", "intent": "BANKING", "language": "hinglish", "entities": {"service": "a recurring deposit"}}
+{"text": "Tractor kharidne ke liye loan kaise milega?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {}}
+{"text": "Ye form kaise bhare?", "intent": "FORM_ASSISTANCE", "language": "hinglish", "entities": {}}
+{"text": "market linkage ke liye koi sarkari sahayata hai kya?", "intent": "AGRICULTURAL_SUPPORT", "language": "hinglish", "entities": {"topic": "market linkage"}}
+{"text": "I received the wrong amount from a scheme payout", "intent": "GRIEVANCE", "language": "en", "entities": {"category": "PAYMENT"}}
+{"text": "Can you walk me through this insurance claim form?", "intent": "FORM_ASSISTANCE", "language": "en", "entities": {"form": "insurance claim form"}}
+{"text": "bajra ka insurance kharif season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "bajra", "season": "kharif"}}
+{"text": "What's trending on social media?", "intent": "UNKNOWN", "language": "en", "entities": {}}
+{"text": "How do I register a new cooperative society?", "intent": "COOP_REGISTRATION", "language": "en", "entities": {}}
+{"text": "Mutual fund aur FD mein kya better hai?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "सहकारी समिति का पंजीकरण कैसे करें?", "intent": "COOP_REGISTRATION", "language": "hi", "entities": {}}
+{"text": "What's the difference between secured and unsecured loans?", "intent": "LOAN", "language": "en", "entities": {}}
+{"text": "Where is my district's grievance redressal office?", "intent": "GRIEVANCE", "language": "en", "entities": {}}
+{"text": "Cooperative society mein board voting kaise hota hai?", "intent": "COOP_GOVERNANCE", "language": "hinglish", "entities": {"topic": "board voting"}}
+{"text": "How do I apply for a personal loan?", "intent": "LOAN", "language": "en", "entities": {"loan_type": "personal loan"}}
+{"text": "wheat ka insurance kharif season ke liye kaise milega?", "intent": "CROP_INSURANCE", "language": "hinglish", "entities": {"crop": "wheat", "season": "kharif"}}
+{"text": "What's the benefit of a fixed deposit over a savings account?", "intent": "FINANCIAL_LITERACY", "language": "en", "entities": {}}
+{"text": "UPI se payment safe hai kya?", "intent": "FINANCIAL_LITERACY", "language": "hinglish", "entities": {}}
+{"text": "सहकारी समिति पंजीकरण प्रमाणपत्र कहां से मिलेगा?", "intent": "COOP_REGISTRATION", "language": "hi", "entities": {}}

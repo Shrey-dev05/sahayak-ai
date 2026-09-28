@@ -1,0 +1,2591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sahayak AI — Mobile Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<!-- Client-side PDF generation engine -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{
+  --bg:#F8FAF9;
+  --surface:#FFFFFF;
+  --ink:#0F172A;
+  --muted:#64748B;
+  --indigo:#1E3A8A;
+  --indigo-d:#0F172A;
+  --marigold:#F59E0B;
+  --marigold-d:#D97706;
+  --alert:#DC2626;
+  --alert-bg:#FEF2F2;
+  --green:#059669;
+  --green-bg:#ECFDF5;
+  --line:#E2E8F0;
+  --card-border:#CBD5E1;
+  --shadow-sm:0 2px 4px rgba(15, 23, 42, 0.04);
+  --shadow-card:0 10px 25px -5px rgba(15, 23, 42, 0.07), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,.brand,.badge-title,.portal-name,.track-title{font-family:'Baloo 2',system-ui,sans-serif}
+.wrap{max-width:540px;margin:0 auto;padding:14px 14px 48px}
+
+/* GIGW 3.0 National Masthead & Accessibility Strip */
+.tricolor-bar{
+  height:4px;
+  width:100%;
+  background:linear-gradient(90deg, #FF9933 0%, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%, #138808 100%);
+  position:sticky;
+  top:0;
+  z-index:9999;
+}
+.skip-link{
+  position:absolute;
+  top:-60px;
+  left:10px;
+  background:#173047;
+  color:#FFEB3B;
+  border:2px solid #FFEB3B;
+  padding:6px 14px;
+  font-weight:700;
+  font-size:.82rem;
+  z-index:99999;
+  border-radius:4px;
+  text-decoration:none;
+  transition:top .2s ease;
+}
+.skip-link:focus{top:8px}
+
+.gov-masthead{
+  background:#0B132B;
+  color:#E2E8F0;
+  padding:6px 14px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.gov-masthead-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+}
+.gov-identity{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:700;
+  color:#F8FAFC;
+  letter-spacing:.2px;
+  font-size:.74rem;
+  white-space:nowrap;
+}
+.gov-access-bar{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:nowrap;
+}
+.access-btn-group{
+  display:inline-flex;
+  background:rgba(255,255,255,0.12);
+  border-radius:6px;
+  padding:2px;
+  border:1px solid rgba(255,255,255,0.18);
+}
+.access-btn{
+  background:transparent;
+  color:#F8FAFC;
+  border:none;
+  padding:3px 7px;
+  font-size:.7rem;
+  font-weight:700;
+  cursor:pointer;
+  border-radius:4px;
+  line-height:1.1;
+  transition:background .15s ease;
+}
+.access-btn:hover,.access-btn:focus{
+  background:rgba(255,255,255,0.25);
+  outline:none;
+}
+.access-btn.active{
+  background:#1E3A8A;
+  color:#FFFFFF;
+}
+.contrast-btn{
+  background:rgba(255,255,255,0.12);
+  color:#F8FAFC;
+  border:1px solid rgba(255,255,255,0.18);
+  padding:3px 8px;
+  border-radius:6px;
+  font-size:.7rem;
+  font-weight:700;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  transition:all .15s;
+  white-space:nowrap;
+  line-height:1.1;
+}
+.contrast-btn:hover,.contrast-btn.active{
+  background:rgba(255,255,255,0.28);
+  color:#FFEB3B;
+  border-color:#FFEB3B;
+}
+
+/* Official Portal Brand Bar with State Emblem */
+.portal-header{
+  background:#FFFFFF;
+  border-bottom:2px solid #E2E8F0;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  box-shadow:0 2px 6px rgba(15, 23, 42, 0.04);
+}
+.portal-header-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1;
+  min-width:0;
+}
+.emblem-wrap{
+  width:40px;
+  height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  color:#173047;
+}
+.emblem-svg{
+  width:100%;
+  height:100%;
+}
+.portal-title-block{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  flex:1;
+}
+.portal-ministry{
+  font-size:.62rem;
+  font-weight:700;
+  color:#64748B;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+  line-height:1.2;
+}
+.portal-name{
+  font-size:1.15rem;
+  font-weight:800;
+  color:#173047;
+  line-height:1.2;
+  margin:2px 0 1px;
+}
+.portal-sub{
+  font-size:.68rem;
+  color:#059669;
+  font-weight:700;
+  margin-top:1px;
+  line-height:1.3;
+}
+.digital-india-badge{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  text-align:right;
+  flex-shrink:0;
+}
+.digital-india-logo{
+  font-size:.68rem;
+  font-weight:800;
+  color:#FF9933;
+  letter-spacing:.3px;
+  background:#FFF7ED;
+  border:1px solid #FFEDD5;
+  padding:3px 8px;
+  border-radius:6px;
+  white-space:nowrap;
+}
+.verified-gov-tag{
+  font-size:.62rem;
+  color:#059669;
+  font-weight:700;
+  margin-top:3px;
+  display:flex;
+  align-items:center;
+  gap:3px;
+  white-space:nowrap;
+}
+
+/* Lang Toggle Button (GIGW 3.0 accessible) */
+.lang-toggle-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  background:linear-gradient(135deg, #1E3A8A 0%, #1E40AF 100%);
+  color:#FFFFFF;
+  border:1.5px solid #93C5FD;
+  box-shadow:0 2px 8px rgba(30, 58, 138, 0.2);
+  padding:3px 10px;
+  border-radius:999px;
+  font-size:.72rem;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .18s ease;
+  letter-spacing:.2px;
+  white-space:nowrap;
+  line-height:1.1;
+}
+.lang-toggle-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(30, 58, 138, 0.3);
+}
+.lang-toggle-btn:active{transform:scale(0.97)}
+.lang-toggle-btn .lang-icon{font-size:.82rem}
+
+/* Grievance Tracking / Case Card */
+.grievance-track-card{
+  background:linear-gradient(135deg, #173047 0%, #0F172A 100%);
+  color:#FFFFFF;
+  border-radius:18px;
+  padding:15px 16px;
+  margin:12px 0 16px;
+  box-shadow:0 10px 25px rgba(23, 48, 71, 0.2);
+  border:1.5px solid #334155;
+  position:relative;
+  overflow:hidden;
+}
+.grievance-track-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+}
+.track-top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.track-id-badge{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.22);
+  padding:4px 9px;
+  border-radius:8px;
+  font-size:.75rem;
+  font-weight:700;
+  color:#FFEB3B;
+  letter-spacing:.4px;
+  white-space:nowrap;
+}
+.track-status-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  background:#ECFDF5;
+  color:#065F46;
+  padding:3px 9px;
+  border-radius:999px;
+  font-size:.72rem;
+  font-weight:700;
+  white-space:nowrap;
+}
+.track-status-dot{
+  width:7px;height:7px;border-radius:50%;background:#059669;
+  animation:pulseDot 1.5s infinite;
+  flex-shrink:0;
+}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(0.85)}}
+.track-title{
+  font-size:1.12rem;
+  font-weight:700;
+  margin:0 0 5px;
+  line-height:1.25;
+}
+.track-sub{
+  font-size:.82rem;
+  color:#E2E8F0;
+  opacity:.92;
+  line-height:1.45;
+  margin:0;
+}
+.track-meta-grid{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px dashed rgba(255,255,255,0.2);
+}
+.track-meta-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:9px;
+  padding:7px 11px;
+  gap:10px;
+}
+.track-meta-label{
+  font-size:.67rem;
+  color:#94A3B8;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.track-meta-val{
+  font-size:.77rem;
+  font-weight:700;
+  color:#F8FAFC;
+  text-align:right;
+  line-height:1.3;
+}
+
+/* Backward compatibility banner class */
+.banner{
+  background:linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
+  color:#fff;
+  border-radius:20px;
+  padding:18px 20px;
+  margin-bottom:16px;
+  box-shadow:0 12px 28px rgba(30, 58, 138, 0.2);
+}
+.banner h1{margin:0 0 6px;font-size:1.22rem;font-weight:700}
+.banner p{margin:0;font-size:.88rem;opacity:.92}
+.banner-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.18);padding:4px 12px;border-radius:999px;font-size:.74rem}
+
+/* Main Card Containers */
+.section{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:20px 18px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow-card);
+}
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.section h2{margin:0;font-size:1.08rem;color:var(--indigo);font-weight:700;display:flex;align-items:center;gap:8px}
+
+/* Rural-Friendly Action Guide Card */
+.action-guide-card{
+  background:#FFFFFF;
+  border:2px solid var(--marigold);
+  border-radius:20px;
+  padding:16px 15px;
+  margin-bottom:16px;
+  box-shadow:0 12px 30px rgba(245, 158, 11, 0.12);
+}
+.guide-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:12px;
+  border-bottom:1.5px dashed var(--line);
+  padding-bottom:10px;
+}
+.guide-title{font-size:1.1rem;font-weight:700;color:var(--indigo);margin:0;line-height:1.25}
+.guide-subtitle{font-size:.8rem;color:var(--muted);margin-top:3px;line-height:1.35}
+
+/* Top Quick Action Bar: Audio & PDF */
+.action-bar{display:flex;gap:8px;margin-bottom:14px}
+.audio-btn,.pdf-btn{
+  flex:1;
+  border:none;
+  border-radius:12px;
+  padding:10px 8px;
+  font-weight:700;
+  font-size:.82rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  gap:6px;
+  min-height:44px;
+  line-height:1.25;
+  transition:all .18s ease;
+}
+.audio-btn{background:#EFF6FF;color:var(--indigo);border:1px solid #DBEAFE}
+.audio-btn:hover{background:#DBEAFE}
+.audio-btn.speaking{
+  background:var(--indigo);
+  color:#fff;
+  border-color:var(--indigo);
+  animation:pulseAudio 1.2s infinite;
+}
+@keyframes pulseAudio{0%,100%{box-shadow:0 0 0 0 rgba(30,58,138,0.4)}50%{box-shadow:0 0 0 6px rgba(30,58,138,0)}}
+
+.pdf-btn{
+  background:linear-gradient(135deg, var(--marigold) 0%, var(--marigold-d) 100%);
+  color:#fff;
+  box-shadow:0 4px 14px rgba(245, 158, 11, 0.28);
+}
+.pdf-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(245, 158, 11, 0.38)}
+
+/* Visual Micro-Cards inside Action Guide */
+.micro-card{
+  background:#F8FAFC;
+  border:1px solid #E2E8F0;
+  border-radius:14px;
+  padding:13px 12px;
+  margin-bottom:12px;
+}
+.micro-card-title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin-bottom:10px;
+  flex-wrap:wrap;
+}
+.micro-card-title{
+  font-family:'Baloo 2',sans-serif;
+  font-weight:700;
+  font-size:.95rem;
+  color:var(--indigo);
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  line-height:1.25;
+}
+.micro-card-title-row .micro-card-title{margin-bottom:0}
+.check-progress-pill{
+  font-size:.74rem;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:999px;
+  background:#EFF6FF;
+  color:var(--indigo);
+  border:1px solid #BFDBFE;
+  transition:all .2s ease;
+  white-space:nowrap;
+}
+.check-progress-pill.all-done{
+  background:#ECFDF5;
+  color:var(--green);
+  border-color:#A7F3D0;
+}
+
+/* Interactive Checkbox List */
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.check-item{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  background:#fff;
+  border:1.5px solid #E2E8F0;
+  border-radius:12px;
+  padding:9px 12px;
+  cursor:pointer;
+  user-select:none;
+  transition:all .15s ease;
+}
+.check-item:hover{border-color:var(--marigold)}
+.check-item input[type=checkbox]{
+  margin-top:2px;
+  accent-color:var(--green);
+  width:18px;height:18px;
+  cursor:pointer;
+  flex-shrink:0;
+}
+.check-label{font-size:.88rem;line-height:1.38;flex:1;color:var(--ink);word-break:break-word}
+.check-item.done{background:#F0FDF4;border-color:var(--green)}
+.check-item.done .check-label{color:#64748B;text-decoration:line-through}
+
+/* Numbered Steps */
+.step-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px}
+.step-item{display:flex;align-items:flex-start;gap:10px}
+.step-badge{
+  background:linear-gradient(135deg, var(--indigo) 0%, #3B82F6 100%);
+  color:#fff;
+  width:24px;height:24px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:700;
+  flex-shrink:0;
+  margin-top:1px;
+  box-shadow:0 2px 5px rgba(30,58,138,0.22);
+}
+.step-content{font-size:.88rem;line-height:1.42;color:var(--ink);flex:1;word-break:break-word}
+
+/* Warning & Alerts */
+.warning-box{
+  background:var(--alert-bg);
+  border:1.5px solid #FCA5A5;
+  border-radius:12px;
+  padding:11px 12px;
+  margin-bottom:12px;
+  display:flex;gap:10px;
+  align-items:flex-start;
+}
+.warning-icon{
+  width:24px;
+  height:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  margin-top:1px;
+}
+.warning-svg{
+  width:22px;
+  height:22px;
+  stroke:#B45309;
+  display:block;
+}
+.warning-text{font-size:.84rem;line-height:1.42;color:#991B1B;flex:1;word-break:break-word}
+
+/* Click-to-Call Helplines */
+.helpline-grid{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-top:10px;
+}
+.phone-chip{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#FFFFFF;
+  border:1.5px solid #BBF7D0;
+  border-radius:12px;
+  padding:9px 12px;
+  text-decoration:none;
+  transition:all .18s ease;
+  box-shadow:var(--shadow-sm);
+  gap:10px;
+}
+.phone-chip:hover{
+  background:#F0FDF4;
+  border-color:var(--green);
+  transform:translateY(-1px);
+}
+.phone-chip-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1;
+  min-width:0;
+}
+.phone-chip-icon{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:#DCFCE7;
+  color:#15803D;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+.phone-svg{
+  width:16px;
+  height:16px;
+  stroke:currentColor;
+  display:block;
+}
+.phone-chip-info{
+  display:flex;
+  flex-direction:column;
+  text-align:left;
+  min-width:0;
+}
+.phone-chip-title{
+  font-size:.83rem;
+  font-weight:700;
+  color:#0F172A;
+  line-height:1.25;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.phone-chip-sub{
+  font-size:.73rem;
+  color:#15803D;
+  font-weight:600;
+  margin-top:1px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.call-badge{
+  background:#059669;
+  color:#FFFFFF;
+  font-size:.74rem;
+  font-weight:700;
+  padding:4px 10px;
+  border-radius:999px;
+  letter-spacing:.2px;
+  flex-shrink:0;
+  white-space:nowrap;
+}
+
+/* Quick Suggestion Chips */
+.quick-chip-row{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:4px 2px 10px;
+  margin-top:12px;
+  -webkit-overflow-scrolling:touch;
+}
+.quick-chip-row::-webkit-scrollbar{display:none}
+.quick-chip{
+  flex-shrink:0;
+  background:#EFF6FF;
+  border:1.5px solid #BFDBFE;
+  color:#1E40AF;
+  padding:7px 13px;
+  border-radius:999px;
+  font-size:.82rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.quick-chip:hover{
+  background:#DBEAFE;
+  border-color:#93C5FD;
+  transform:translateY(-1px);
+}
+.quick-chip:active{transform:scale(0.97)}
+
+/* Chat History / Continuation */
+.log{display:flex;flex-direction:column;gap:14px;max-height:380px;overflow-y:auto;padding-right:4px}
+.log::-webkit-scrollbar{width:4px}
+.log::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:4px}
+.bubble{
+  padding:14px 16px;
+  border-radius:18px;
+  font-size:.94rem;
+  line-height:1.48;
+  max-width:90%;
+  box-shadow:var(--shadow-sm);
+}
+.bubble.user{
+  align-self:flex-end;
+  background:linear-gradient(135deg, var(--indigo) 0%, #1E40AF 100%);
+  color:#fff;
+  border-bottom-right-radius:4px;
+}
+.bubble.assistant{
+  align-self:flex-start;
+  background:#FFFFFF;
+  border:1px solid #E2E8F0;
+  border-bottom-left-radius:4px;
+  color:var(--ink);
+}
+.bubble .src{
+  margin-top:8px;
+  font-size:.78rem;
+  color:var(--muted);
+  border-top:1px dashed var(--line);
+  padding-top:8px;
+}
+
+/* Rich Formatted Solution Cards inside Mobile Chat */
+.bubble .kiosk-card-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1E40AF;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: .82rem;
+  font-weight: 700;
+  margin: 6px 0 8px;
+}
+.bubble .kiosk-step-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 9px 12px;
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+.bubble .kiosk-step-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .78rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.bubble .step-check { background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0; }
+.bubble .step-doc { background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE; }
+.bubble .step-warn { background: #FFFBEB; color: #D97706; border: 1px solid #FDE68A; }
+.bubble .step-phone { background: #F0FDF4; color: #16A34A; border: 1px solid #BBF7D0; }
+.bubble .kiosk-step-text {
+  font-size: .88rem;
+  color: #1E293B;
+  flex: 1;
+}
+.bubble .kiosk-step-text strong { color: #0F172A; font-weight: 700; }
+.bubble .kiosk-alert-tag {
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FCD34D;
+  padding: 1px 7px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: .8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.bubble .kiosk-phone-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #DCFCE7;
+  border: 1px solid #86EFAC;
+  color: #15803D;
+  text-decoration: none;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: .84rem;
+  transition: all .15s;
+}
+.bubble .kiosk-phone-pill:hover { background: #BBF7D0; }
+.bubble .kiosk-body-p {
+  font-size: .9rem;
+  color: #334155;
+  margin-bottom: 8px;
+  line-height: 1.48;
+}
+
+/* Chat Input Row */
+.input-row{display:flex;gap:8px;margin-top:14px;align-items:center}
+.input-row input[type=text]{
+  flex:1;
+  min-width:0;
+  height:44px;
+  padding:0 14px;
+  border-radius:12px;
+  border:1.5px solid var(--line);
+  font-size:.9rem;
+  outline:none;
+  background:#fff;
+  transition:border-color .15s;
+  box-sizing:border-box;
+}
+.input-row input[type=text]:focus{border-color:var(--indigo)}
+.mic-btn,.send-btn{
+  height:44px;
+  border:none;
+  border-radius:12px;
+  color:#fff;
+  cursor:pointer;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  box-sizing:border-box;
+  transition:all .18s ease;
+}
+.mic-btn{
+  width:44px;
+  background:var(--indigo);
+  padding:0;
+}
+.mic-btn:hover{background:#172554;transform:scale(1.04)}
+.mic-btn.on{background:var(--alert);animation:pulseAudio 1s infinite}
+.mic-svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  display:block;
+}
+.send-btn{
+  background:var(--marigold-d);
+  padding:0 18px;
+  font-size:.88rem;
+  letter-spacing:.2px;
+}
+.send-btn:hover{background:#B45309;transform:translateY(-1px)}
+.action-btn-svg{
+  width:18px;
+  height:18px;
+  stroke:currentColor;
+  flex-shrink:0;
+  display:block;
+}
+.section-hdr-svg{
+  width:18px;
+  height:18px;
+  stroke:var(--indigo);
+  display:inline-block;
+  vertical-align:middle;
+  flex-shrink:0;
+}
+
+/* Tools: Camera Upload & Grievance (Top Utilities) */
+.utilities-section{
+  background:#FFFFFF;
+  border:1.5px solid #E2E8F0;
+  border-radius:16px;
+  padding:12px 14px;
+  margin-bottom:14px;
+  box-shadow:0 2px 10px rgba(15, 23, 42, 0.04);
+}
+.utilities-section .section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+.utilities-section .section-header h2{
+  margin:0;
+  font-size:.92rem;
+  color:#173047;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  letter-spacing:.1px;
+}
+.tool-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+@media (max-width:360px){
+  .tool-row{
+    grid-template-columns:1fr;
+  }
+}
+.tool-btn{
+  background:#F8FAFC;
+  border:1.5px solid #CBD5E1;
+  border-radius:12px;
+  padding:8px 10px;
+  font-size:.82rem;
+  font-weight:700;
+  color:#1E293B;
+  min-height:44px;
+  text-align:left;
+  cursor:pointer;
+  transition:all .18s ease;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  box-sizing:border-box;
+}
+.tool-btn:hover{
+  border-color:#1E3A8A;
+  background:#EFF6FF;
+  color:#1E3A8A;
+  transform:translateY(-1px);
+}
+.tool-btn:active{transform:scale(0.98)}
+.tool-btn-icon-wrap{
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  background:#EEF2F6;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  color:var(--indigo);
+}
+.tool-btn:hover .tool-btn-icon-wrap{
+  background:#DBEAFE;
+  color:#1E40AF;
+}
+.tool-btn-svg{
+  width:16px;
+  height:16px;
+  stroke:currentColor;
+  display:block;
+}
+.tool-btn-text{flex:1;line-height:1.25}
+select,textarea{
+  width:100%;
+  padding:11px 14px;
+  border-radius:12px;
+  border:1.5px solid var(--line);
+  font-family:inherit;
+  font-size:.9rem;
+  margin-top:8px;
+  outline:none;
+}
+select:focus,textarea:focus{border-color:var(--indigo)}
+textarea{min-height:75px;resize:vertical}
+.gen-btn{
+  margin-top:10px;
+  background:var(--indigo);
+  color:#fff;
+  border:none;
+  padding:10px 18px;
+  border-radius:12px;
+  font-size:.9rem;
+  cursor:pointer;
+  font-weight:700;
+}
+.draft-box{
+  margin-top:12px;
+  white-space:pre-wrap;
+  background:#F8FAFC;
+  border:1.5px dashed var(--line);
+  border-radius:12px;
+  padding:14px;
+  font-size:.88rem;
+  line-height:1.45;
+}
+.copy-btn{
+  margin-top:8px;
+  background:var(--marigold-d);
+  color:#fff;
+  border:none;
+  padding:8px 16px;
+  border-radius:10px;
+  font-size:.84rem;
+  cursor:pointer;
+  font-weight:600;
+}
+.thumb{max-width:100%;border-radius:12px;margin-top:10px;border:1px solid var(--line)}
+.invalid{text-align:center;padding:48px 16px;color:var(--muted)}
+.pill-btn{
+  background:#fff;
+  border:1px solid var(--line);
+  color:var(--ink);
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:.84rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .15s;
+}
+.pill-btn:hover{background:#F1F5F9;border-color:#CBD5E1}
+
+.bubble-audio-btn{
+  margin-top:10px;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  background:#F8FAFC;
+  border:1.5px solid #CBD5E1;
+  border-radius:999px;
+  padding:5px 14px;
+  font-size:.8rem;
+  font-weight:700;
+  color:var(--indigo);
+  cursor:pointer;
+  transition:all .15s;
+}
+.bubble-audio-btn:hover{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.bubble-audio-btn.playing{background:var(--alert);color:#fff;border-color:var(--alert);animation:pulseAudio 1.2s infinite}
+
+/* Hidden Printable / PDF Container */
+#pdfPrintContainer{
+  display:none;background:#fff;padding:24px;font-family:system-ui,sans-serif;color:#173047;
+}
+@media print{
+  body *{visibility:hidden}
+  #pdfPrintContainer,#pdfPrintContainer *{visibility:visible}
+  #pdfPrintContainer{display:block;position:absolute;left:0;top:0;width:100%}
+}
+
+/* GIGW 3.0 Mandatory Footer */
+.gov-footer{
+  background:#0B132B;
+  color:#94A3B8;
+  padding:24px 16px 36px;
+  font-size:.78rem;
+  border-top:3px solid #1E293B;
+  margin-top:24px;
+}
+.footer-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px 16px;
+  padding-bottom:16px;
+  margin-bottom:16px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.footer-links a{
+  color:#CBD5E1;
+  text-decoration:none;
+  font-weight:600;
+  transition:color .15s;
+}
+.footer-links a:hover,.footer-links a:focus{
+  color:#FF9933;
+  text-decoration:underline;
+}
+.footer-compliance{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:14px;
+}
+.compliance-chip{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  padding:3px 9px;
+  border-radius:6px;
+  font-size:.7rem;
+  font-weight:700;
+  color:#E2E8F0;
+}
+.footer-copy{
+  line-height:1.55;
+  color:#94A3B8;
+  font-size:.74rem;
+}
+.footer-updated{
+  margin-top:10px;
+  font-size:.7rem;
+  color:#64748B;
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+
+/* GIGW 3.0 High Contrast Accessibility Theme */
+body.high-contrast{
+  background:#000000 !important;
+  color:#FFFFFF !important;
+}
+body.high-contrast .portal-header,
+body.high-contrast .section,
+body.high-contrast .action-guide-card,
+body.high-contrast .micro-card,
+body.high-contrast .check-item,
+body.high-contrast .gov-footer{
+  background:#0A0A0A !important;
+  border-color:#FFEB3B !important;
+  color:#FFFFFF !important;
+}
+body.high-contrast .track-meta-item{
+  background:#111111 !important;
+  border-color:#FFEB3B !important;
+  color:#FFFFFF !important;
+}
+body.high-contrast .track-meta-val{
+  color:#FFEB3B !important;
+}
+body.high-contrast h1, body.high-contrast h2, body.high-contrast h3,
+body.high-contrast .portal-name, body.high-contrast .guide-title,
+body.high-contrast .micro-card-title, body.high-contrast a,
+body.high-contrast .check-label, body.high-contrast .step-content,
+body.high-contrast .phone-chip-title{
+  color:#FFEB3B !important;
+}
+body.high-contrast .lang-toggle-btn,
+body.high-contrast .access-btn.active,
+body.high-contrast .send-btn,
+body.high-contrast .gen-btn,
+body.high-contrast .mic-btn,
+body.high-contrast .tool-btn{
+  background:#000000 !important;
+  color:#FFEB3B !important;
+  border:2px solid #FFEB3B !important;
+}
+body.high-contrast .tool-btn-icon-wrap{
+  background:#111111 !important;
+  color:#FFEB3B !important;
+}
+body.high-contrast .section-hdr-svg,
+body.high-contrast .action-btn-svg,
+body.high-contrast .tool-btn-svg,
+body.high-contrast .phone-svg{
+  stroke:#FFEB3B !important;
+}
+body.high-contrast .warning-svg{
+  stroke:#FF4444 !important;
+}
+body.high-contrast .pdf-btn{
+  background:#FFEB3B !important;
+  color:#000000 !important;
+  border:2px solid #FFFFFF !important;
+}
+body.high-contrast .phone-chip{
+  background:#000000 !important;
+  border:2px solid #FFEB3B !important;
+  color:#FFEB3B !important;
+}
+body.high-contrast .call-badge{
+  background:#FFEB3B !important;
+  color:#000000 !important;
+}
+body.high-contrast .check-item.done{
+  background:#111111 !important;
+  border-color:#00FF66 !important;
+}
+body.high-contrast .check-item.done .check-label{
+  color:#00FF66 !important;
+}
+body.high-contrast .bubble.user{
+  background:#111111 !important;
+  border:2px solid #FFEB3B !important;
+  color:#FFFFFF !important;
+}
+body.high-contrast .bubble.assistant{
+  background:#000000 !important;
+  border:2px solid #FFFFFF !important;
+  color:#FFFFFF !important;
+}
+body.high-contrast .quick-chip{
+  background:#000000 !important;
+  border:1.5px solid #FFEB3B !important;
+  color:#FFEB3B !important;
+}
+body.high-contrast .warning-box{
+  background:#1A0000 !important;
+  border:2px solid #FF4444 !important;
+}
+body.high-contrast .warning-text{
+  color:#FFDDDD !important;
+}
+body.high-contrast .gov-access-bar{
+  background:#000000 !important;
+  border-color:#FFEB3B !important;
+}
+
+/* ── Mobile Responsive Breakpoints (≤500px) ── */
+@media (max-width:500px){
+  .wrap{padding:10px 12px 44px}
+  .gov-masthead{padding:6px 12px 7px}
+  .gov-masthead-row{
+    flex-direction:column;
+    align-items:stretch;
+    gap:5px;
+  }
+  .gov-identity{
+    justify-content:center;
+    text-align:center;
+    font-size:.72rem;
+  }
+  .gov-access-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+    padding-top:4px;
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+  .portal-header{
+    flex-direction:column;
+    align-items:stretch;
+    padding:0;
+    gap:0;
+  }
+  .portal-header-left{
+    padding:10px 14px 8px;
+    width:100%;
+    box-sizing:border-box;
+  }
+  .digital-india-badge{
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    padding:5px 14px;
+    background:#F8FAFC;
+    border-top:1px solid #EDF2F7;
+    box-sizing:border-box;
+  }
+  .verified-gov-tag{margin-top:0}
+  .portal-name{font-size:1.05rem}
+  .portal-ministry{font-size:.58rem}
+  .portal-sub{font-size:.64rem}
+  .track-meta-grid{grid-template-columns:1fr}
+}
+
+/* ── Small Mobile Responsive Breakpoint (≤360px) ── */
+@media (max-width:360px){
+  .wrap{padding:8px 10px 40px}
+  .action-bar{flex-direction:column}
+  .gov-identity{font-size:.66rem}
+  .access-btn{padding:3px 5px;font-size:.65rem}
+  .contrast-btn{padding:3px 5px;font-size:.64rem}
+  .lang-toggle-btn{padding:3px 7px;font-size:.64rem}
+  .emblem-wrap{width:32px;height:38px}
+  .portal-name{font-size:.95rem}
+  .portal-ministry{font-size:.54rem}
+  .portal-sub{font-size:.58rem}
+  .digital-india-logo{font-size:.58rem;padding:2px 5px}
+  .verified-gov-tag{font-size:.56rem}
+  .track-title{font-size:1rem}
+  .track-sub{font-size:.76rem}
+  .tool-row{flex-direction:column}
+  .tool-btn{min-width:100%}
+}
+</style>
+</head>
+<body><div id="app">Loading Jan Samadhan Portal…</div>
+
+<!-- Off-screen container specifically formatted for printable Action Guide PDF -->
+<div id="pdfPrintContainer"></div>
+
+<script>
+const API = '';
+const UI = {
+  en: {
+    govOfIndia: 'भारत सरकार | Government of India',
+    govMinistry: 'Ministry of Agriculture & Farmers Welfare',
+    portalName: 'Jan Samadhan',
+    portalSub: 'National Citizen Grievance & Issue Redressal Portal',
+    digitalIndia: 'Digital India',
+    verifiedPortal: 'Verified Government Service',
+    skipToContent: 'Skip to Main Content',
+    contrastToggle: 'Contrast',
+    fontSize: 'Text Size',
+    caseLabel: 'Grievance Case ID',
+    caseStatus: 'Active Investigation',
+    caseSlaLabel: 'Citizen Charter SLA',
+    caseSlaVal: 'Resolution within 72 Hours',
+    nodalDeptLabel: 'Nodal Authority',
+    nodalDeptVal: 'PACS / District Grievance Cell',
+    title: 'Citizen Issue Redressal Dashboard',
+    sub: 'Your registered grievance case details, official action directive, and verified resolution steps are listed below.',
+    translateBtn: 'A/अ हिन्दी',
+    guideHeader: 'Official Resolution Directive & Action Plan',
+    guideSubtitle: 'Statutory Step-by-Step Instructions & Document Verification',
+    listenBtn: 'Listen to Official Directive',
+    stopBtn: 'Stop Audio',
+    downloadPdfBtn: 'Download Official PDF Order',
+    generatingPdf: 'Generating Official PDF…',
+    docSection: 'Mandatory Supporting Documents to Carry',
+    docProgress: 'verified',
+    allDocsReady: '✓ All Supporting Documents Verified',
+    stepSection: 'Statutory Resolution Process (Step-by-Step)',
+    warningSection: 'Statutory Deadlines & Compliance Warnings',
+    helplineSection: 'National Official Grievance & Kisan Helplines',
+    callBadge: 'Call',
+    callKcc: 'Kisan Call Center',
+    callKccDesc: 'Crop Insurance & Advisory (24x7 Toll-Free)',
+    callPmkisan: 'PM-KISAN Helpline',
+    callPmkisanDesc: 'Installment & e-KYC Verification',
+    callGriev: 'National Consumer / Grievance Redressal',
+    callGrievDesc: 'Cooperative & Banking Dispute Resolution',
+    chatHeader: 'Citizen Resolution Dialogue & Support',
+    chatPlaceholder: 'Ask a query or tap a quick resolution option below…',
+    send: 'Submit',
+    quickPdf: 'Download Official PDF Order',
+    quickDocs: 'Mandatory Documents Checklist',
+    quickDeadline: 'What is the 72-Hour Deadline Rule?',
+    quickPacs: 'What to say at PACS / Bank?',
+    toolsHeader: 'Citizen Redressal Utilities & Evidence Upload',
+    scanBtn: 'Upload Evidence / Document Photo',
+    grievBtn: 'Draft Formal Grievance Letter (CPGRAMS)',
+    invalidSession: 'Session expired or not found. Please scan a fresh QR code from the kiosk screen.',
+    connErr: 'Could not connect to Government backend server. Please verify network connection.',
+    category: 'Select Complaint / Grievance Category:',
+    describeIssue: 'Describe what happened in simple and clear words:',
+    genDraft: 'Generate Formal CPGRAMS Draft',
+    copy: 'Copy Official Text',
+    copied: 'Copied to Clipboard!',
+    sourceLabel: 'Verified Government Norms',
+    listenAudio: 'Listen Audio',
+    liveSession: 'Connected to Kiosk (Live Case Session)',
+    footerPolicies: 'Website Policies',
+    footerTerms: 'Terms of Use',
+    footerPrivacy: 'Privacy Policy',
+    footerAccess: 'Accessibility Statement',
+    footerHelp: 'Help & FAQ',
+    footerCpgrams: 'CPGRAMS Portal',
+    footerContact: 'Contact Us',
+    footerOwnership: 'Content Owned and Maintained by Department of Agriculture & Farmers Welfare, Ministry of Agriculture & Farmers Welfare, Government of India.',
+    footerGIGW: 'GIGW 3.0 Compliant',
+    footerWcag: 'W3C WCAG 2.1 AA Certified',
+    footerNic: 'Digital India Initiative',
+    footerUpdated: 'Last Updated: 26 September 2026',
+    cats: ['Fasal Bima / Insurance Issue','KCC / Bank Loan Delay','Cooperative Membership Dispute','PM-KISAN Payment Blocked','Other Rural Grievance']
+  },
+  hi: {
+    govOfIndia: 'भारत सरकार | Government of India',
+    govMinistry: 'कृषि एवं किसान कल्याण मंत्रालय',
+    portalName: 'जन समाधान',
+    portalSub: 'राष्ट्रीय नागरिक समस्या निवारण एवं किसान सहायता पोर्टल',
+    digitalIndia: 'डिजिटल इंडिया',
+    verifiedPortal: 'सत्यापित भारत सरकार सेवा',
+    skipToContent: 'मुख्य सामग्री पर जाएं',
+    contrastToggle: 'कंट्रास्ट',
+    fontSize: 'फ़ॉन्ट आकार',
+    caseLabel: 'शिकायत संदर्भ संख्या',
+    caseStatus: 'सक्रिय जांच प्रक्रिया',
+    caseSlaLabel: 'नागरिक अधिकार पत्र समय-सीमा',
+    caseSlaVal: '72 घंटे में अनिवार्य समाधान',
+    nodalDeptLabel: 'संबद्ध नोडल प्रभाग',
+    nodalDeptVal: 'पैक्स समिति / जिला शिकायत निवारण प्रभाग',
+    title: 'नागरिक समस्या निवारण डैशबोर्ड',
+    sub: 'आपकी दर्ज शिकायत का विवरण, प्रशासनिक समाधान निर्देश और आवश्यक कदम नीचे सूचीबद्ध हैं।',
+    translateBtn: 'A/अ English',
+    guideHeader: 'प्रशासनिक समाधान निर्देश एवं कार्य योजना',
+    guideSubtitle: 'सत्यापित सरकारी नियम, आवश्यक कागज़ात और चरणबद्ध प्रक्रिया',
+    listenBtn: 'आधिकारिक निर्देश सुनें',
+    stopBtn: 'आवाज़ बंद करें',
+    downloadPdfBtn: 'आधिकारिक आदेश PDF डाउनलोड करें',
+    generatingPdf: 'सरकारी आदेश PDF बन रहा है…',
+    docSection: 'साथ ले जाने वाले आवश्यक सरकारी दस्तावेज़',
+    docProgress: 'तैयार',
+    allDocsReady: '✓ सभी आवश्यक कागज़ात सत्यापित व तैयार',
+    stepSection: 'वैधानिक समाधान प्रक्रिया (चरणबद्ध निर्देश)',
+    warningSection: 'वैधानिक समय-सीमा व चेतावनी',
+    helplineSection: 'राष्ट्रीय आधिकारिक हेल्पलाइन (एक टैप में सीधा कॉल)',
+    callBadge: 'कॉल करें',
+    callKcc: 'किसान कॉल सेंटर',
+    callKccDesc: 'फसल बीमा व कृषि सलाह (24x7 निःशुल्क)',
+    callPmkisan: 'PM-किसान हेल्पलाइन',
+    callPmkisanDesc: 'किस्त व ई-केवाईसी सत्यापन सहायता',
+    callGriev: 'राष्ट्रीय उपभोक्ता व शिकायत हेल्पलाइन',
+    callGrievDesc: 'सहकारी व बैंक विवाद निवारण',
+    chatHeader: 'जन समाधान संवाद कक्ष एवं सहायता',
+    chatPlaceholder: 'कोई सवाल पूछें या नीचे दिया विकल्प चुनें…',
+    send: 'पूछें',
+    quickPdf: 'आधिकारिक PDF आदेश',
+    quickDocs: 'ज़रूरी दस्तावेज़ सूची?',
+    quickDeadline: '72 घंटे की समय-सीमा नियम क्या है?',
+    quickPacs: 'पैक्स समिति में क्या कहें?',
+    toolsHeader: 'जनोपयोगी सेवाएं व साक्ष्य दस्तावेज़ अपलोड',
+    scanBtn: 'साक्ष्य / दस्तावेज़ फोटो अपलोड करें',
+    grievBtn: 'औपचारिक CPGRAMS शिकायत पत्र लिखें',
+    invalidSession: 'यह लिंक पुराना लग रहा है। कृपया कियोस्क से नया QR कोड स्कैन करें।',
+    connErr: 'सरकारी सर्वर से संपर्क नहीं हो सका। कृपया इंटरनेट कनेक्शन जांचें।',
+    category: 'शिकायत / समस्या की श्रेणी चुनें:',
+    describeIssue: 'जो समस्या हुई उसे स्पष्ट शब्दों में लिखें:',
+    genDraft: 'सरकारी CPGRAMS ड्राफ्ट तैयार करें',
+    copy: 'टेक्स्ट कॉपी करें',
+    copied: 'कॉपी हो गया!',
+    sourceLabel: 'सत्यापित सरकारी नियम',
+    listenAudio: 'आवाज़ सुनें',
+    liveSession: 'सहायक कियोस्क से सीधा जुड़ा हुआ (सक्रिय सत्र)',
+    footerPolicies: 'वेबसाइट नीतियां',
+    footerTerms: 'उपयोग की शर्तें',
+    footerPrivacy: 'गोपनीयता नीति',
+    footerAccess: 'पहुंच योग्यता (Accessibility)',
+    footerHelp: 'मदद एवं प्रश्नोत्तरी',
+    footerCpgrams: 'CPGRAMS शिकायत पोर्टल',
+    footerContact: 'संपर्क सूत्र',
+    footerOwnership: 'यह आधिकारिक पोर्टल भारत सरकार के कृषि एवं किसान कल्याण मंत्रालय द्वारा संचालित एवं प्रबंधित है।',
+    footerGIGW: 'GIGW 3.0 मानक प्रमाणित',
+    footerWcag: 'W3C WCAG 2.1 AA प्रमाणित',
+    footerNic: 'डिजिटल भारत पहल',
+    footerUpdated: 'अंतिम अद्यतन: 26 सितम्बर 2026',
+    cats: ['फसल बीमा क्लेम समस्या','KCC / ऋण में देरी या कटौती','पैक्स सहकारी सदस्यता विवाद','PM-किसान किस्त नहीं आई','अन्य समस्या']
+  }
+};
+UI.hinglish = UI.hi;
+
+const DEFAULT_PLANS = {
+  en: {
+    title: 'Crop Loss & Rural Assistance Action Guide',
+    documents: [
+      'Aadhaar Card (Original & 1 Photocopy)',
+      'Land Ownership Record (7/12, Khasra, or Khatauni)',
+      'Bank Passbook & Active Bank Account Details',
+      'Crop Sowing Certificate / Crop Loss Photographs'
+    ],
+    steps: [
+      'Gather all 4 required documents and photograph the field damage.',
+      'Submit individual claim intimation on the PMFBY portal, CSC Center, or nearest bank.',
+      'Always collect and save the stamped official acknowledgment receipt.',
+      'Use the claim reference number to track compensation deposit into your bank account.'
+    ],
+    warnings: [
+      'PMFBY 72-Hour Rule: Crop loss must be reported within 72 hours of damage.',
+      'Never leave the office without your signed & stamped claim acknowledgment slip.'
+    ]
+  },
+  hi: {
+    title: 'फसल क्षति एवं ग्रामीण सहायता कार्य योजना',
+    documents: [
+      'आधार कार्ड (मूल प्रति एवं छायाप्रति)',
+      'ज़मीन के मालिकाना दस्तावेज़ (खसरा / खतौनी / 7-12 नकल)',
+      'बैंक पासबुक एवं चालू बैंक खाते का विवरण',
+      'फसल बुवाई प्रमाणपत्र / फसल नुकसान के स्पष्ट फोटो'
+    ],
+    steps: [
+      'अपने सभी 4 ज़रूरी कागज़ात और खेत में हुए नुकसान के फोटो तैयार करें।',
+      'PMFBY पोर्टल, CSC जनसेवा केंद्र अथवा स्थानीय बैंक शाखा में व्यक्तिगत दावा दर्ज करें।',
+      'आवेदन जमा करने के बाद मुहर लगी आधिकारिक पावती रसीद (Acknowledgment Slip) अवश्य प्राप्त करें।',
+      'मुआवज़ा खाते में आने की स्थिति ट्रैक करने के लिए दावा संख्या (Claim Number) सुरक्षित रखें।'
+    ],
+    warnings: [
+      'PMFBY 72-घंटे नियम: फसल नुकसान होने के 72 घंटे के अंदर सूचना दर्ज कराना अनिवार्य है।',
+      'बिना मुहर लगी पावती रसीद लिए बैंक या कार्यालय से वापस न लौटें।'
+    ]
+  }
+};
+
+const esc = s => { const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; };
+
+// High-Readability Solution Formatter for Mobile Companion
+function formatRichSolution(raw, lang) {
+  if (!raw || !raw.trim()) return '';
+  const text = raw.trim();
+  const rawLines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+  let html = '';
+
+  const phoneRe = /(\b(?:14447|1800[- ]?\d{3}[- ]?\d{4}|\d{5,10})\b)/g;
+  const deadlineRe = /(\b\d+\s*(?:घंटे|घंटों|दिन|ghante|ghanton|din|hours?|days?)\b|72\s*(?:घंटे|hours?|ghante)|3\s*(?:दिन|days?|din))/gi;
+  const docKeywords = /(dastaavez|dastavez|document|documents|kaagaz|aadhaar|aadhar|passbook|khasra|khatoni|khatouni|girdawari|patta|pan\s*card|photo|rashan|ration|दस्तावेज़|कागज़ात|कागजात|आधार|पासबुक|खसरा|खतौनी|गिरदावरी|पट्टा)/i;
+  const warnKeywords = /(warning|alert|zaroori|deadline|sachet|dhyaan|72|ghante|hours?|savdhan|चाहिए|चेतावनी|सावधान|समय\s*सीमा|घंटे|दिन)/i;
+  const phoneKeywords = /(helpline|call|toll-free|number|contact|phone|संपर्क|कॉल|हेल्पलाइन|नंबर|14447)/i;
+  const headingKeywords = /^(तुरंत|मुख्य|कदम|key\s+steps|action\s+steps|steps\s+to|samadhan|zaroori\s+kadam|action\s+plan|महत्वपूर्ण)/i;
+
+  function formatInline(str) {
+    let s = esc(str);
+    s = s.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    s = s.replace(deadlineRe, '<span class="kiosk-alert-tag">⏰ $1</span>');
+    s = s.replace(phoneRe, (m, p1) => {
+      const cleanNum = p1.replace(/[- ]/g, '');
+      return `<a class="kiosk-phone-pill" href="tel:${cleanNum}">📞 ${p1}</a>`;
+    });
+    return s;
+  }
+
+  for (let line of rawLines) {
+    const isBullet = /^[\*•\-\–\—]/.test(line);
+    const isNumbered = /^\d+[\.\)]\s*/.test(line);
+    const cleanContent = line.replace(/^[\*•\-\–\—]\s*/, '').replace(/^\d+[\.\)]\s*/, '').trim();
+
+    if (!isBullet && !isNumbered && (cleanContent.endsWith(':') || headingKeywords.test(cleanContent)) && cleanContent.length < 60) {
+      const headingText = cleanContent.replace(/[:：]$/, '');
+      html += `<div class="kiosk-card-heading">📌 ${formatInline(headingText)}</div>`;
+      continue;
+    }
+
+    if (cleanContent.length > 0) {
+      let iconClass = 'step-check';
+      let iconSymbol = '✓';
+
+      if (phoneKeywords.test(cleanContent) || phoneRe.test(cleanContent)) {
+        iconClass = 'step-phone';
+        iconSymbol = '📞';
+      } else if (docKeywords.test(cleanContent)) {
+        iconClass = 'step-doc';
+        iconSymbol = '📋';
+      } else if (warnKeywords.test(cleanContent)) {
+        iconClass = 'step-warn';
+        iconSymbol = '⚠️';
+      }
+
+      html += `
+        <div class="kiosk-step-row">
+          <div class="kiosk-step-icon ${iconClass}">${iconSymbol}</div>
+          <div class="kiosk-step-text">${formatInline(cleanContent)}</div>
+        </div>`;
+    }
+  }
+
+  return html || formatInline(text);
+}
+
+// Clean text for speech synthesis without pronouncing markdown symbols
+function cleanForSpeech(raw, lang) {
+  if (!raw) return '';
+  let s = raw;
+  s = s.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1');
+  s = s.replace(/https?:\/\/\S+|www\.\S+/g, '');
+  s = s.replace(/[*_~`#]+/g, ' ');
+
+  // Format helpline numbers for clear digit-by-digit spoken delivery
+  s = s.replace(/\b1800[- ]?180[- ]?1551\b/g, '1 8 0 0, 1 8 0, 1 5 5 1');
+  s = s.replace(/\b1800[- ]?11[- ]?4000\b/g, '1 8 0 0, 1 1, 4 0 0 0');
+  s = s.replace(/\b14447\b/g, '1 4 4 4 7');
+  s = s.replace(/\b1915\b/g, '1 9 1 5');
+
+  // Scheme acronyms
+  s = s.replace(/\bPM-?KISAN\b/gi, 'P M Kisan');
+  s = s.replace(/\bPMFBY\b/g, 'P M F B Y');
+  s = s.replace(/\bKCC\b/g, 'K C C');
+  s = s.replace(/\bCSC\b/g, 'C S C');
+  s = s.replace(/\bCSCs\b/g, 'C S C centers');
+  s = s.replace(/\bDBT\b/g, 'D B T');
+  s = s.replace(/\bKYC\b/g, 'K Y C');
+  s = s.replace(/\be-?KYC\b/gi, 'E K Y C');
+  s = s.replace(/\bFPO\b/g, 'F P O');
+
+  if (lang === 'hi') {
+    s = s.replace(/\bPACS\b/g, 'पैक्स');
+    s = s.replace(/\b7\s*\/\s*12\b/g, 'सात बारह');
+    s = s.replace(/₹\s*(\d+)/g, '$1 रुपये');
+    s = s.replace(/Rs\.?\s*(\d+)/gi, '$1 रुपये');
+    s = s.replace(/(\d+)\s*%/g, '$1 प्रतिशत');
+    s = s.replace(/([A-Za-z0-9\u0900-\u097F]+)\/([A-Za-z0-9\u0900-\u097F]+)/g, '$1 या $2');
+  } else {
+    s = s.replace(/\bPACS\b/g, 'Paks');
+    s = s.replace(/\b7\s*\/\s*12\b/g, '7 12 land records');
+    s = s.replace(/₹\s*(\d+)/g, '$1 rupees');
+    s = s.replace(/Rs\.?\s*(\d+)/gi, '$1 rupees');
+    s = s.replace(/(\d+)\s*%/g, '$1 percent');
+    s = s.replace(/([A-Za-z0-9]+)/g, '$1');
+    s = s.replace(/([A-Za-z0-9]+)\/([A-Za-z0-9]+)/g, '$1 or $2');
+  }
+
+  s = s.replace(/([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g, '');
+
+  // Natural cadence & sentence pauses between bullet points and lines
+  const lines = s.split('\n').map(l => l.trim()).filter(Boolean);
+  const cleanedLines = [];
+  const endPunc = lang === 'hi' ? '।' : '.';
+  for (let l of lines) {
+    l = l.replace(/^\s*[-+*•]\s+/, '');
+    l = l.replace(/^\s*(?:Step|कदम)?\s*\d+[\.\):\-]\s*/i, '');
+    l = l.replace(/[\[\]{}<>|\\()\"'`~^@#*]/g, ' ');
+    l = l.replace(/\s+/g, ' ').trim();
+    if (l) {
+      if (!/[.!?,;:।]$/.test(l)) l += endPunc;
+      cleanedLines.push(l);
+    }
+  }
+
+  s = cleanedLines.join(' ');
+  s = s.replace(/[-—_+=]+/g, ' ');
+  s = s.replace(/\s+/g, ' ').trim();
+  return s;
+}
+
+let activeMobileAudio = null;
+let currentMobileLang = 'en';
+
+function stopMobileAudio() {
+  if (activeMobileAudio) {
+    activeMobileAudio.pause();
+    activeMobileAudio.currentTime = 0;
+    activeMobileAudio = null;
+  }
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+  }
+  const ab = document.getElementById('listenGuideBtn');
+  if (ab) {
+    ab.classList.remove('speaking');
+    const audioText = document.getElementById('audioBtnText');
+    if (audioText) audioText.textContent = (UI[currentMobileLang] || UI.en).listenBtn;
+  }
+  document.querySelectorAll('.bubble-audio-btn').forEach(b => b.classList.remove('playing'));
+}
+
+function playMobileNeuralAudio(text, lang, onStart, onEnd) {
+  if (activeMobileAudio) {
+    stopMobileAudio();
+    return;
+  }
+  stopMobileAudio();
+  const cleaned = cleanForSpeech(text, lang);
+  if (!cleaned) return;
+
+  const audioUrl = `${API}/voice/tts?text=${encodeURIComponent(cleaned)}&language=${encodeURIComponent(lang || 'en')}`;
+  try {
+    const a = new Audio(audioUrl);
+    activeMobileAudio = a;
+    if (onStart) onStart();
+
+    a.onended = () => {
+      activeMobileAudio = null;
+      if (onEnd) onEnd();
+      stopMobileAudio();
+    };
+    a.onerror = () => {
+      activeMobileAudio = null;
+      speakBrowserFallbackMobile(cleaned, lang, onEnd);
+    };
+    a.play().catch(() => {
+      activeMobileAudio = null;
+      speakBrowserFallbackMobile(cleaned, lang, onEnd);
+    });
+  } catch(e) {
+    speakBrowserFallbackMobile(cleaned, lang, onEnd);
+  }
+}
+
+function speakBrowserFallbackMobile(cleanedText, lang, onEnd) {
+  try {
+    if (!window.speechSynthesis) {
+      if (onEnd) onEnd();
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(cleanedText);
+    const targetLang = (lang === 'hi') ? 'hi-IN' : 'en-IN';
+    u.lang = targetLang;
+    u.rate = 0.93;
+    u.pitch = 1.0;
+
+    const voices = window.speechSynthesis.getVoices();
+    if (voices && voices.length > 0) {
+      const match = voices.find(v => v.lang === targetLang || v.lang.startsWith(targetLang.split('-')[0]));
+      if (match) u.voice = match;
+    }
+
+    u.onend = () => { if (onEnd) onEnd(); stopMobileAudio(); };
+    u.onerror = () => { if (onEnd) onEnd(); stopMobileAudio(); };
+    window.speechSynthesis.speak(u);
+  } catch(e) {
+    if (onEnd) onEnd();
+    stopMobileAudio();
+  }
+}
+
+// Generate high-resolution, print-optimized Sahayak Action Guide PDF
+function generateActionGuidePDF(planData, lastQuery, lang) {
+  const S = UI[lang] || UI.hi;
+  const isHi = (lang === 'hi');
+  const printEl = document.getElementById('pdfPrintContainer');
+  const nowStr = new Date().toLocaleDateString(isHi ? 'hi-IN' : 'en-IN', {
+    day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+  });
+
+  const docsHtml = (planData.documents && planData.documents.length)
+    ? planData.documents.map(d => `<li style="margin-bottom:6px;">☑ <strong>${esc(d)}</strong></li>`).join('')
+    : (isHi
+        ? `<li>☑ आधार कार्ड (Aadhaar Card)</li><li>☑ ज़मीन के कागज़ / 7/12 (Land Records)</li><li>☑ बैंक पासबुक (Bank Passbook)</li>`
+        : `<li>☑ Aadhaar Card</li><li>☑ Land Records (7/12 or Khasra)</li><li>☑ Bank Passbook & Account Details</li>`
+      );
+
+  const stepsHtml = (planData.steps && planData.steps.length)
+    ? planData.steps.map((st, i) => `<li style="margin-bottom:8px;"><strong>${isHi ? 'कदम' : 'Step'} ${i+1}:</strong> ${esc(st)}</li>`).join('')
+    : `<li>${esc(planData.body || (isHi ? 'कृपया अपने स्थानीय सहकारी बैंक अथवा कृषि कार्यालय से संपर्क करें।' : 'Please visit your local cooperative bank or agriculture department office.'))}</li>`;
+
+  const warnHtml = (planData.warnings && planData.warnings.length)
+    ? `<div style="background:#FFF5F5;border:1px solid #E53E3E;padding:12px;border-radius:8px;margin:14px 0;color:#9B2C2C;">
+        <strong>⚠️ ${isHi ? 'महत्वपूर्ण चेतावनी:' : 'Important Warning:'}</strong><br>${planData.warnings.map(w=>`• ${esc(w)}`).join('<br>')}
+       </div>`
+    : `<div style="background:#FFF5F5;border:1px solid #E53E3E;padding:12px;border-radius:8px;margin:14px 0;color:#9B2C2C;">
+        <strong>⚠️ ${isHi ? 'महत्वपूर्ण समय-सीमा:' : 'Important Deadline:'}</strong> ${isHi ? 'फसल नुकसान होने पर 72 घंटे के अंदर PMFBY पोर्टल अथवा टोल-फ्री 14447 पर सूचना दर्ज कराना अनिवार्य है।' : 'Crop damage must be reported within 72 hours via the PMFBY portal or toll-free 14447.'}
+       </div>`;
+
+  const pdfTitle = isHi ? '🌾 SAHAYAK AI — किसान सहायता पत्र' : '🌾 SAHAYAK AI — CITIZEN ACTION GUIDE';
+  const pdfSub = isHi ? 'सहायक किसान एवं नागरिक सहायता कार्य योजना' : 'Citizen Assistance & Action Guide';
+  const dateLabel = isHi ? 'दिनांक' : 'Date';
+  const verifiedBadge = isHi ? 'सत्यापित सरकारी नियम' : 'Verified Official Rules';
+  const queryLabel = isHi ? 'पूछा गया सवाल / Citizen Query:' : 'Citizen Query:';
+  const docHeading = isHi ? '📋 साथ ले जाने वाले आवश्यक दस्तावेज़ (Required Documents)' : '📋 Required Documents to Carry';
+  const stepHeading = isHi ? '🚶 चरणबद्ध कार्य निर्देश (Step-by-Step Actions)' : '🚶 Step-by-Step Action Plan';
+  const helplineHeading = isHi ? '📞 सहायता हेतु आधिकारिक टोल-फ्री हेल्पलाइन:' : '📞 Official Toll-Free Helplines:';
+  const footerNote = isHi ? 'यह पत्र Sahayak AI द्वारा सत्यापित दिशा-निर्देशों के आधार पर तैयार किया गया है। इसे अपने पास सुरक्षित रखें।' : 'This action guide is generated by Sahayak AI based on verified government procedures. Please retain for your records.';
+
+  printEl.innerHTML = `
+    <div style="max-width:680px;margin:0 auto;padding:24px;border:2px solid #24476B;border-radius:12px;background:#fff;color:#26313F;line-height:1.5;">
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #E7A23D;padding-bottom:12px;margin-bottom:16px;">
+        <div>
+          <h1 style="margin:0;font-size:20px;color:#24476B;font-family:'Baloo 2',sans-serif;">${pdfTitle}</h1>
+          <p style="margin:2px 0 0;font-size:13px;color:#6B7686;">${pdfSub}</p>
+        </div>
+        <div style="text-align:right;font-size:11px;color:#6B7686;">
+          <div>${dateLabel}: <strong>${nowStr}</strong></div>
+          <div style="color:#2A7A4C;font-weight:bold;">${verifiedBadge}</div>
+        </div>
+      </div>
+
+      <div style="background:#FAF6EE;padding:10px 14px;border-radius:8px;margin-bottom:16px;">
+        <span style="font-size:12px;color:#6B7686;font-weight:600;">${queryLabel}</span>
+        <div style="font-size:14px;font-weight:bold;color:#24476B;margin-top:2px;">"${esc(lastQuery || planData.title)}"</div>
+      </div>
+
+      <h3 style="color:#24476B;font-size:15px;margin:16px 0 8px;border-bottom:1px solid #E6DFCC;padding-bottom:4px;">
+        ${docHeading}
+      </h3>
+      <ul style="padding-left:18px;margin:0 0 16px;font-size:13px;">${docsHtml}</ul>
+
+      <h3 style="color:#24476B;font-size:15px;margin:16px 0 8px;border-bottom:1px solid #E6DFCC;padding-bottom:4px;">
+        ${stepHeading}
+      </h3>
+      <ol style="padding-left:20px;margin:0 0 16px;font-size:13px;">${stepsHtml}</ol>
+
+      ${warnHtml}
+
+      <div style="background:#EBF2F8;padding:12px;border-radius:8px;margin-top:18px;font-size:12px;">
+        <strong>${helplineHeading}</strong><br>
+        • किसान कॉल सेंटर (Kisan Call Center): <strong>14447 / 1800-180-1551</strong><br>
+        • राष्ट्रीय उपभोक्ता / सहकारी हेल्पलाइन: <strong>1915 / 1800-11-4000</strong>
+      </div>
+
+      <div style="margin-top:20px;border-top:1px dashed #DDD;padding-top:10px;text-align:center;font-size:11px;color:#888;">
+        ${footerNote}
+      </div>
+    </div>`;
+
+  if (window.html2pdf) {
+    const opt = {
+      margin: 8,
+      filename: 'Sahayak_Action_Guide.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    printEl.style.display = 'block';
+    html2pdf().set(opt).from(printEl).save().then(() => {
+      printEl.style.display = 'none';
+    }).catch(() => {
+      printEl.style.display = 'none';
+      window.print();
+    });
+  } else {
+    window.print();
+  }
+}
+
+// Global state persisted across language switches, font scaling, contrast toggle, and chat turns
+let currentSessionCtx = null;
+let checkedDocIndices = new Set();
+let allMessages = [];
+let userCustomPlan = null;
+let lastUserMsg = '';
+let latestDetailedSolution = '';
+let currentFontScale = 16;
+let isHighContrast = false;
+
+function setFontScale(size) {
+  currentFontScale = size;
+  document.documentElement.style.fontSize = size + 'px';
+  localStorage.setItem('sahayak_font_scale', size);
+  const dec = document.getElementById('fontSizeDec');
+  const norm = document.getElementById('fontSizeNormal');
+  const inc = document.getElementById('fontSizeInc');
+  if (dec) dec.classList.toggle('active', size === 14);
+  if (norm) norm.classList.toggle('active', size === 16);
+  if (inc) inc.classList.toggle('active', size === 18);
+}
+
+function toggleHighContrast() {
+  isHighContrast = !isHighContrast;
+  document.body.classList.toggle('high-contrast', isHighContrast);
+  localStorage.setItem('sahayak_high_contrast', isHighContrast ? '1' : '0');
+  const btn = document.getElementById('contrastToggle');
+  if (btn) btn.classList.toggle('active', isHighContrast);
+}
+
+function getPlanData(lang) {
+  const defaults = DEFAULT_PLANS[lang] || DEFAULT_PLANS.hi;
+  if (!userCustomPlan) return defaults;
+  return {
+    title: userCustomPlan.title || defaults.title,
+    documents: (userCustomPlan.documents_required && userCustomPlan.documents_required.length) ? userCustomPlan.documents_required : defaults.documents,
+    steps: (userCustomPlan.steps && userCustomPlan.steps.length) ? userCustomPlan.steps : defaults.steps,
+    warnings: (userCustomPlan.warnings && userCustomPlan.warnings.length) ? userCustomPlan.warnings : defaults.warnings
+  };
+}
+
+function renderDashboard() {
+  const app = document.getElementById('app');
+  if (!currentSessionCtx) return;
+
+  const lang = currentMobileLang;
+  const S = () => UI[lang] || UI.hi;
+  const sessionId = currentSessionCtx.session.id;
+  const planData = getPlanData(lang);
+  const docList = planData.documents;
+  const stepList = planData.steps;
+  const warnList = planData.warnings;
+
+  const allDone = (checkedDocIndices.size > 0 && checkedDocIndices.size === docList.length);
+  const progressText = allDone
+    ? S().allDocsReady
+    : `${checkedDocIndices.size} / ${docList.length} ${S().docProgress}`;
+
+  app.innerHTML = `
+    <!-- GIGW 3.0 National Masthead & Accessibility Strip -->
+    <div class="tricolor-bar"></div>
+    <a href="#mainContent" class="skip-link">${S().skipToContent}</a>
+
+    <header class="gov-masthead" role="banner">
+      <div class="gov-masthead-row">
+        <div class="gov-identity">
+          <span class="flag-icon">🇮🇳</span>
+          <span>${S().govOfIndia}</span>
+        </div>
+        <div class="gov-access-bar">
+          <div class="access-btn-group" role="group" aria-label="${S().fontSize}">
+            <button class="access-btn ${currentFontScale===14?'active':''}" id="fontSizeDec" title="Decrease Font (A-)">A-</button>
+            <button class="access-btn ${currentFontScale===16?'active':''}" id="fontSizeNormal" title="Normal Font (A)">A</button>
+            <button class="access-btn ${currentFontScale===18?'active':''}" id="fontSizeInc" title="Increase Font (A+)">A+</button>
+          </div>
+          <button class="contrast-btn ${isHighContrast?'active':''}" id="contrastToggle" title="${S().contrastToggle}">
+            <span>🌓</span> <span>${S().contrastToggle}</span>
+          </button>
+          <button class="lang-toggle-btn" id="mobiLangBtn" title="Switch English / Hindi">
+            <span class="lang-icon">🌐</span> <span id="mobiLangText">${S().translateBtn}</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Official Portal Brand Bar with State Emblem -->
+    <div class="portal-header">
+      <div class="portal-header-left">
+        <div class="emblem-wrap">
+          <svg class="emblem-svg" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" aria-label="State Emblem of India" role="img">
+            <g fill="currentColor">
+              <path d="M40 215 h120 v6 H40 z"/>
+              <text x="100" y="234" font-size="13" font-weight="bold" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif">सत्यमेव जयते</text>
+              <circle cx="100" cy="195" r="14" fill="none" stroke="currentColor" stroke-width="2.5"/>
+              <circle cx="100" cy="195" r="2.5" fill="currentColor"/>
+              <ellipse cx="60" cy="195" rx="10" ry="6"/>
+              <ellipse cx="140" cy="195" rx="10" ry="6"/>
+              <path d="M78 115 c-4-24 4-50 22-50 s26 26 22 50 c-4 12-6 24-8 40 h-28 c-2-16-4-28-8-40 z"/>
+              <circle cx="91" cy="95" r="3.5"/>
+              <circle cx="109" cy="95" r="3.5"/>
+              <path d="M96 106 q4 3 8 0" stroke="currentColor" stroke-width="2" fill="none"/>
+              <path d="M84 75 c-8-12-2-25 16-25 s24 13 16 25" stroke="currentColor" stroke-width="2" fill="none"/>
+              <path d="M52 105 c-16-10-18-36-2-44 c12-6 20 6 22 18 c2 12-4 28-20 26 z"/>
+              <circle cx="48" cy="85" r="2.5"/>
+              <path d="M148 105 c16-10 18-36 2-44 c-12-6-20 6-22 18 c-2 12 4 28 20 26 z"/>
+              <circle cx="152" cy="85" r="2.5"/>
+              <path d="M68 180 q32 6 64 0 c-2-12-6-20-8-25 h-48 c-2 5-6 13-8 25 z"/>
+            </g>
+          </svg>
+        </div>
+        <div class="portal-title-block">
+          <span class="portal-ministry">${S().govMinistry}</span>
+          <h1 class="portal-name">${S().portalName}</h1>
+          <span class="portal-sub">${S().portalSub}</span>
+        </div>
+      </div>
+      <div class="digital-india-badge">
+        <span class="digital-india-logo">🇮🇳 ${S().digitalIndia}</span>
+        <span class="verified-gov-tag">✓ ${S().verifiedPortal}</span>
+      </div>
+    </div>
+
+    <!-- Main Citizen Portal Content -->
+    <main id="mainContent" class="wrap" role="main">
+      <!-- Official Grievance Case Tracker Card (Citizen Issue Redressal Dashboard) -->
+      <div class="grievance-track-card">
+        <div class="track-top-row">
+          <span class="track-id-badge" id="grievanceRefId">#GRV-2026-IN-${sessionId.slice(0, 8).toUpperCase()}</span>
+          <span class="track-status-pill"><span class="track-status-dot"></span> <span>${S().caseStatus}</span></span>
+        </div>
+        <h2 class="track-title">${S().title}</h2>
+        <p class="track-sub">${S().sub}</p>
+        <div class="track-meta-grid">
+          <div class="track-meta-item">
+            <span class="track-meta-label">${S().caseSlaLabel}</span>
+            <span class="track-meta-val">${S().caseSlaVal}</span>
+          </div>
+          <div class="track-meta-item">
+            <span class="track-meta-label">${S().nodalDeptLabel}</span>
+            <span class="track-meta-val">${S().nodalDeptVal}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Citizen Redressal Utilities & Evidence Upload (Positioned at Top of Dashboard) -->
+      <div class="section utilities-section" id="utilitiesSection">
+        <div class="section-header">
+          <h2>
+            <svg class="section-hdr-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+              <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+              <path d="M7 21h10"/>
+              <path d="M12 3v18"/>
+              <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+            </svg>
+            <span>${S().toolsHeader}</span>
+          </h2>
+        </div>
+        <div class="tool-row">
+          <button class="tool-btn" id="mobiScanBtn">
+            <span class="tool-btn-icon-wrap">
+              <svg class="tool-btn-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+            </span>
+            <span class="tool-btn-text">${S().scanBtn}</span>
+          </button>
+          <button class="tool-btn" id="mobiGrievBtn">
+            <span class="tool-btn-icon-wrap">
+              <svg class="tool-btn-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+              </svg>
+            </span>
+            <span class="tool-btn-text">${S().grievBtn}</span>
+          </button>
+        </div>
+        <div id="mobiToolArea" style="margin-top:10px"></div>
+      </div>
+
+      <!-- Administrative Directive & Action Guide Card -->
+      <div class="action-guide-card" id="actionGuideCard">
+        <div class="guide-top">
+          <div>
+            <h2 class="guide-title">${S().guideHeader}</h2>
+            <div class="guide-subtitle">${S().guideSubtitle}</div>
+          </div>
+        </div>
+
+        <!-- Action Buttons: Audio and PDF Order -->
+        <div class="action-bar">
+          <button class="audio-btn" id="listenGuideBtn">
+            <svg class="action-btn-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+            <span id="audioBtnText">${S().listenBtn}</span>
+          </button>
+          <button class="pdf-btn" id="downloadPdfBtn">
+            <svg class="action-btn-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <span id="pdfBtnText">${S().downloadPdfBtn}</span>
+          </button>
+        </div>
+
+        <!-- 1. Mandatory Documents Checklist Card -->
+        <div class="micro-card">
+          <div class="micro-card-title-row">
+            <div class="micro-card-title">
+              <svg class="section-hdr-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              <span>${S().docSection}</span>
+            </div>
+            <span class="check-progress-pill ${allDone ? 'all-done' : ''}" id="docProgressBadge">${progressText}</span>
+          </div>
+          <ul class="checklist" id="checkListContainer">
+            ${docList.map((doc, idx) => {
+              const isChecked = checkedDocIndices.has(idx);
+              return `
+                <li class="check-item ${isChecked ? 'done' : ''}" data-idx="${idx}">
+                  <input type="checkbox" id="chk_${idx}" ${isChecked ? 'checked' : ''}>
+                  <label class="check-label" for="chk_${idx}">${esc(doc)}</label>
+                </li>
+              `;
+            }).join('')}
+          </ul>
+        </div>
+
+        <!-- 2. Statutory Resolution Process -->
+        <div class="micro-card">
+          <div class="micro-card-title">
+            <svg class="section-hdr-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 11 12 14 22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+            <span>${S().stepSection}</span>
+          </div>
+          <div class="step-list">
+            ${stepList.map((st, i) => `
+              <div class="step-item">
+                <div class="step-badge">${i+1}</div>
+                <div class="step-content">${esc(st)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- 3. Statutory Warnings Box -->
+        <div class="warning-box">
+          <div class="warning-icon" aria-hidden="true">
+            <svg class="warning-svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#B45309" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div class="warning-text">
+            <strong>${S().warningSection}</strong><br>
+            ${warnList.map(w => `• ${esc(w)}`).join('<br>')}
+          </div>
+        </div>
+
+        <!-- 4. Official Helplines Directory -->
+        <div class="micro-card" style="margin-bottom:0">
+          <div class="micro-card-title">
+            <svg class="section-hdr-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <span>${S().helplineSection}</span>
+          </div>
+          <div class="helpline-grid">
+            <a class="phone-chip" href="tel:14447">
+              <div class="phone-chip-left">
+                <div class="phone-chip-icon">
+                  <svg class="phone-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </div>
+                <div class="phone-chip-info">
+                  <span class="phone-chip-title">${S().callKcc} — 14447</span>
+                  <span class="phone-chip-sub">${S().callKccDesc}</span>
+                </div>
+              </div>
+              <span class="call-badge">${S().callBadge}</span>
+            </a>
+            <a class="phone-chip" href="tel:18001801551">
+              <div class="phone-chip-left">
+                <div class="phone-chip-icon">
+                  <svg class="phone-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </div>
+                <div class="phone-chip-info">
+                  <span class="phone-chip-title">${S().callPmkisan} — 1800-180-1551</span>
+                  <span class="phone-chip-sub">${S().callPmkisanDesc}</span>
+                </div>
+              </div>
+              <span class="call-badge">${S().callBadge}</span>
+            </a>
+            <a class="phone-chip" href="tel:1915">
+              <div class="phone-chip-left">
+                <div class="phone-chip-icon">
+                  <svg class="phone-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                </div>
+                <div class="phone-chip-info">
+                  <span class="phone-chip-title">${S().callGriev} — 1915</span>
+                  <span class="phone-chip-sub">${S().callGrievDesc}</span>
+                </div>
+              </div>
+              <span class="call-badge">${S().callBadge}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prior Conversation & Continued Interaction -->
+      <div class="section">
+        <div class="section-header">
+          <h2>
+            <svg class="section-hdr-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>${S().chatHeader}</span>
+          </h2>
+        </div>
+        <div class="log" id="mobiLog"></div>
+
+        <!-- Quick Suggestion Chips for One-Tap Inquiries -->
+        <div class="quick-chip-row">
+          <button class="quick-chip" data-query="${S().quickPdf}">${S().quickPdf}</button>
+          <button class="quick-chip" data-query="${S().quickDocs}">${S().quickDocs}</button>
+          <button class="quick-chip" data-query="${S().quickDeadline}">${S().quickDeadline}</button>
+          <button class="quick-chip" data-query="${S().quickPacs}">${S().quickPacs}</button>
+        </div>
+
+        <div class="input-row">
+          <button class="mic-btn" id="mobiMicBtn" title="Speak" aria-label="Voice input">
+            <svg class="mic-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="22"/>
+              <line x1="8" y1="22" x2="16" y2="22"/>
+            </svg>
+          </button>
+          <input type="text" id="mobiTextInput" placeholder="${S().chatPlaceholder}">
+          <button class="send-btn" id="mobiSendBtn">
+            <span>${S().send}</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- GIGW 3.0 Mandatory Statutory Footer -->
+    <footer class="gov-footer" role="contentinfo">
+      <div class="footer-links">
+        <a href="#policies">${S().footerPolicies}</a>
+        <a href="#terms">${S().footerTerms}</a>
+        <a href="#privacy">${S().footerPrivacy}</a>
+        <a href="#accessibility">${S().footerAccess}</a>
+        <a href="#help">${S().footerHelp}</a>
+        <a href="https://pgportal.gov.in" target="_blank" rel="noopener">${S().footerCpgrams}</a>
+        <a href="#contact">${S().footerContact}</a>
+      </div>
+      <div class="footer-compliance">
+        <span class="compliance-chip">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          ${S().footerGIGW}
+        </span>
+        <span class="compliance-chip">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24"/>
+            <circle cx="12" cy="12" r="4"/>
+          </svg>
+          ${S().footerWcag}
+        </span>
+        <span class="compliance-chip">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;">
+            <path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 2l10 5H2l10-5z"/>
+          </svg>
+          ${S().footerNic}
+        </span>
+      </div>
+      <div class="footer-copy">${S().footerOwnership}</div>
+      <div class="footer-updated">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-1px;margin-right:3px;">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>${S().footerUpdated}</span>
+      </div>
+    </footer>
+  `;
+
+  // Accessibility Font Controls
+  const decBtn = document.getElementById('fontSizeDec');
+  const normBtn = document.getElementById('fontSizeNormal');
+  const incBtn = document.getElementById('fontSizeInc');
+  if (decBtn) decBtn.onclick = () => setFontScale(14);
+  if (normBtn) normBtn.onclick = () => setFontScale(16);
+  if (incBtn) incBtn.onclick = () => setFontScale(18);
+
+  // High Contrast Mode Toggle
+  const contrastBtn = document.getElementById('contrastToggle');
+  if (contrastBtn) contrastBtn.onclick = () => toggleHighContrast();
+
+  // Checklist Checkbox interactivity
+  function updateProgressBadge() {
+    const count = checkedDocIndices.size;
+    const total = docList.length;
+    const badge = document.getElementById('docProgressBadge');
+    if (!badge) return;
+    if (count > 0 && count === total) {
+      badge.classList.add('all-done');
+      badge.textContent = S().allDocsReady;
+    } else {
+      badge.classList.remove('all-done');
+      badge.textContent = `${count} / ${total} ${S().docProgress}`;
+    }
+  }
+
+  document.querySelectorAll('.check-item').forEach(item => {
+    const idx = parseInt(item.getAttribute('data-idx'), 10);
+    const chk = item.querySelector('input[type=checkbox]');
+    chk.addEventListener('change', () => {
+      if (chk.checked) {
+        checkedDocIndices.add(idx);
+        item.classList.add('done');
+      } else {
+        checkedDocIndices.delete(idx);
+        item.classList.remove('done');
+      }
+      updateProgressBadge();
+    });
+  });
+
+  // Language switch handler (English ⇄ Hindi)
+  document.getElementById('mobiLangBtn').onclick = () => {
+    stopMobileAudio();
+    currentMobileLang = (currentMobileLang === 'hi') ? 'en' : 'hi';
+    localStorage.setItem('sahayak_mobile_lang', currentMobileLang);
+    renderDashboard();
+  };
+
+  // Full action guide text for voice reading
+  function getActionGuideSpokenScript() {
+    const dStr = docList.join(', ');
+    const sStr = stepList.map((st, i) => `Step ${i+1}: ${st}`).join('. ');
+    const wStr = warnList.join('. ');
+    if (lang === 'hi') {
+      return `जन समाधान आधिकारिक प्रशासनिक निर्देश। साथ ले जाने वाले आवश्यक सरकारी दस्तावेज़ हैं: ${dStr}। वैधानिक समाधान प्रक्रिया: ${sStr}। महत्वपूर्ण चेतावनी: ${wStr}। सहायता के लिए टोल फ्री 14447 पर कॉल करें।`;
+    } else {
+      return `Jan Samadhan Official Resolution Directive. Mandatory supporting documents: ${dStr}. Statutory resolution process: ${sStr}. Important compliance warnings: ${wStr}. For immediate support, call 14447.`;
+    }
+  }
+
+  // Audio Button Listener
+  const listenBtn = document.getElementById('listenGuideBtn');
+  listenBtn.onclick = () => {
+    if (activeMobileAudio) {
+      stopMobileAudio();
+      return;
+    }
+    const textToSpeak = getActionGuideSpokenScript();
+    const audioText = document.getElementById('audioBtnText');
+    playMobileNeuralAudio(
+      textToSpeak,
+      lang,
+      () => {
+        listenBtn.classList.add('speaking');
+        if (audioText) audioText.textContent = S().stopBtn;
+      },
+      () => {
+        listenBtn.classList.remove('speaking');
+        if (audioText) audioText.textContent = S().listenBtn;
+      }
+    );
+  };
+
+  // PDF Download Button Listener
+  const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+  downloadPdfBtn.onclick = () => {
+    const pdfText = document.getElementById('pdfBtnText');
+    if (pdfText) pdfText.textContent = S().generatingPdf;
+    setTimeout(() => {
+      const curPlan = getPlanData(lang);
+      generateActionGuidePDF({
+        title: lastUserMsg || S().guideHeader,
+        documents: curPlan.documents,
+        steps: curPlan.steps,
+        warnings: curPlan.warnings,
+        body: latestDetailedSolution
+      }, lastUserMsg, lang);
+      if (pdfText) pdfText.textContent = S().downloadPdfBtn;
+    }, 200);
+  };
+
+  // Render prior and active conversation history
+  const log = document.getElementById('mobiLog');
+  function addBubble(role, text, src, audioUrl){
+    const b = document.createElement('div');
+    b.className = 'bubble ' + role;
+    if (role === 'assistant') {
+      b.innerHTML = formatRichSolution(text, lang);
+    } else {
+      let formatted = esc(text)
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/^\s*[\*\-]\s+(.*)$/gm, '• $1')
+        .replace(/\n/g, '<br>');
+      b.innerHTML = formatted;
+    }
+    if (src) {
+      const s = document.createElement('div');
+      s.className = 'src';
+      s.innerHTML = `<span style="font-weight:700">${esc(S().sourceLabel)}:</span> ` + esc(src);
+      b.appendChild(s);
+    }
+    if (role === 'assistant') {
+      const audioAction = document.createElement('button');
+      audioAction.className = 'bubble-audio-btn';
+      audioAction.innerHTML = `
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:middle">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+        <span>${S().listenAudio}</span>`;
+      audioAction.onclick = () => {
+        if (activeMobileAudio && audioAction.classList.contains('playing')) {
+          stopMobileAudio();
+        } else {
+          stopMobileAudio();
+          audioAction.classList.add('playing');
+          playMobileNeuralAudio(
+            text,
+            lang,
+            () => {
+              audioAction.classList.add('playing');
+            },
+            () => {
+              audioAction.classList.remove('playing');
+            }
+          );
+        }
+      };
+      b.appendChild(audioAction);
+    }
+    log.appendChild(b);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  allMessages.forEach(m => addBubble(m.role, m.text, m.src, m.audioUrl));
+
+  // Chat Handler on Mobile
+  async function handleMobileChat(text){
+    if (!text || !text.trim()) return;
+    addBubble('user', text);
+    allMessages.push({role: 'user', text});
+    lastUserMsg = text;
+    const inputEl = document.getElementById('mobiTextInput');
+    if (inputEl) inputEl.value = '';
+
+    // Check if user requested a PDF via chat
+    const isPdfRequest = /\b(pdf|download\s+pdf|make\s+a?\s*pdf|generate\s+pdf|pdf\s+bana|pdf\s+chahiye|pdf\s+banao)\b/i.test(text);
+
+    try {
+      const r = await fetch(`${API}/chat`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({session_id: sessionId, text, language: lang})
+      });
+      const res = await r.json();
+      const detectedLang = res.language || 'en';
+      const src = res.sources && res.sources[0] ? `${res.sources[0].title} — ${res.sources[0].issuer||''}` : null;
+      latestDetailedSolution = res.answer_text;
+      allMessages.push({role: 'assistant', text: res.answer_text, src, audioUrl: res.audio_url});
+
+      if (res.action_plan) {
+        userCustomPlan = res.action_plan;
+      }
+
+      // Automatic Language Identification:
+      // If user spoke/typed in Hindi or English and it differs from current dashboard display,
+      // seamlessly adapt the dashboard language without requiring manual switching!
+      const targetPortalLang = (detectedLang === 'hi') ? 'hi' : 'en';
+      if (targetPortalLang !== currentMobileLang) {
+        currentMobileLang = targetPortalLang;
+        localStorage.setItem('sahayak_mobile_lang', currentMobileLang);
+        renderDashboard();
+      } else {
+        addBubble('assistant', res.answer_text, src, res.audio_url);
+        if (res.action_plan) {
+          const newPlan = getPlanData(lang);
+          const newDocs = newPlan.documents;
+          const checkContainer = document.getElementById('checkListContainer');
+          if (checkContainer) {
+            checkContainer.innerHTML = newDocs.map((doc, idx) => {
+              const isChecked = checkedDocIndices.has(idx);
+              return `
+                <li class="check-item ${isChecked ? 'done' : ''}" data-idx="${idx}">
+                  <input type="checkbox" id="chk_${idx}" ${isChecked ? 'checked' : ''}>
+                  <label class="check-label" for="chk_${idx}">${esc(doc)}</label>
+                </li>
+              `;
+            }).join('');
+            document.querySelectorAll('.check-item').forEach(item => {
+              const idx = parseInt(item.getAttribute('data-idx'), 10);
+              const chk = item.querySelector('input[type=checkbox]');
+              chk.addEventListener('change', () => {
+                if (chk.checked) {
+                  checkedDocIndices.add(idx);
+                  item.classList.add('done');
+                } else {
+                  checkedDocIndices.delete(idx);
+                  item.classList.remove('done');
+                }
+                updateProgressBadge();
+              });
+            });
+            updateProgressBadge();
+          }
+        }
+      }
+
+      // If user requested PDF or backend signaled trigger_pdf
+      if (isPdfRequest || res.trigger_pdf) {
+        setTimeout(() => {
+          const currentPlan = getPlanData(lang);
+          generateActionGuidePDF({
+            title: lastUserMsg || S().guideHeader,
+            documents: currentPlan.documents,
+            steps: currentPlan.steps,
+            warnings: currentPlan.warnings,
+            body: latestDetailedSolution
+          }, lastUserMsg, lang);
+        }, 500);
+      }
+    } catch(e) {
+      addBubble('assistant', S().connErr);
+    }
+  }
+
+  // Quick suggestion chips click listeners
+  document.querySelectorAll('.quick-chip').forEach(chip => {
+    chip.onclick = () => {
+      const q = chip.getAttribute('data-query');
+      if (q) handleMobileChat(q);
+    };
+  });
+
+  document.getElementById('mobiSendBtn').onclick = () => {
+    const inputEl = document.getElementById('mobiTextInput');
+    if (inputEl) handleMobileChat(inputEl.value);
+  };
+  document.getElementById('mobiTextInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleMobileChat(e.target.value);
+  });
+
+  // Speech Recognition on Mobile
+  let recog = null, listening = false;
+  const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const mobiMicBtn = document.getElementById('mobiMicBtn');
+  if (Rec) {
+    recog = new Rec();
+    recog.continuous = false;
+    recog.interimResults = false;
+    recog.onresult = e => handleMobileChat(e.results[0][0].transcript);
+    recog.onerror = () => { listening = false; mobiMicBtn.classList.remove('on'); };
+    recog.onend = () => { listening = false; mobiMicBtn.classList.remove('on'); };
+  }
+  mobiMicBtn.onclick = () => {
+    if (!recog) return;
+    if (listening) { recog.stop(); return; }
+    try {
+      recog.lang = (lang === 'hi') ? 'hi-IN' : 'en-IN';
+      recog.start();
+      listening = true;
+      mobiMicBtn.classList.add('on');
+    } catch(e){}
+  };
+
+  // Mobile tools: Camera Upload & Grievance Drafting
+  const toolArea = document.getElementById('mobiToolArea');
+  document.getElementById('mobiScanBtn').onclick = () => {
+    toolArea.innerHTML = `<input type="file" accept="image/*" capture="environment" id="mobiFileIn" style="margin-top:10px">`;
+    document.getElementById('mobiFileIn').onchange = async (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      const url = URL.createObjectURL(f);
+      toolArea.innerHTML += `<img class="thumb" src="${url}"><p style="font-size:.82rem;color:var(--muted);margin-top:8px">${lang==='hi'?'अपलोड हो रहा है…':'Analyzing document photo…'}</p>`;
+      try {
+        const fd = new FormData();
+        fd.append('session_id', sessionId);
+        fd.append('file', f);
+        const upRes = await fetch(`${API}/upload`, {method:'POST', body: fd});
+        const up = await upRes.json();
+        const anRes = await fetch(`${API}/document/analyze`, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({upload_id: up.id, language: lang})
+        });
+        const analyzed = await anRes.json();
+        addBubble('assistant', analyzed.answer_text);
+        allMessages.push({role: 'assistant', text: analyzed.answer_text});
+      } catch(err) {
+        toolArea.innerHTML += `<p style="color:var(--muted)">${S().connErr}</p>`;
+      }
+    };
+  };
+
+  document.getElementById('mobiGrievBtn').onclick = () => {
+    toolArea.innerHTML = `
+      <label style="font-size:.85rem;color:var(--muted)">${S().category}</label>
+      <select id="mobiCatSel">${S().cats.map(c=>`<option>${c}</option>`).join('')}</select>
+      <label style="font-size:.85rem;color:var(--muted);display:block;margin-top:8px">${S().describeIssue}</label>
+      <textarea id="mobiDescTxt"></textarea>
+      <button class="gen-btn" id="mobiGenBtn">${S().genDraft}</button>
+      <div id="mobiDraftOut"></div>`;
+    document.getElementById('mobiGenBtn').onclick = async () => {
+      const category = document.getElementById('mobiCatSel').value;
+      const description = document.getElementById('mobiDescTxt').value.trim();
+      try {
+        const r = await fetch(`${API}/grievance/draft`, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({session_id: sessionId, category, description, language: lang})
+        });
+        const data = await r.json();
+        document.getElementById('mobiDraftOut').innerHTML = `
+          <div class="draft-box">${esc(data.draft)}</div>
+          <button class="copy-btn" id="mobiCopyBtn">${S().copy}</button>`;
+        document.getElementById('mobiCopyBtn').onclick = () => {
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(data.draft).then(() => {
+              document.getElementById('mobiCopyBtn').textContent = S().copied;
+            });
+          }
+        };
+      } catch(e) {
+        document.getElementById('mobiDraftOut').textContent = S().connErr;
+      }
+    };
+  };
+}
+
+async function init(){
+  const params = new URLSearchParams(location.search);
+  let token = params.get('token');
+  const app = document.getElementById('app');
+  let savedSessionId = localStorage.getItem('sahayak_mobile_session');
+  let ctx = null;
+
+  // Restore saved accessibility preferences
+  const savedFont = localStorage.getItem('sahayak_font_scale');
+  if (savedFont) {
+    currentFontScale = parseInt(savedFont, 10) || 16;
+    document.documentElement.style.fontSize = currentFontScale + 'px';
+  }
+  const savedContrast = localStorage.getItem('sahayak_high_contrast');
+  if (savedContrast === '1') {
+    isHighContrast = true;
+    document.body.classList.add('high-contrast');
+  }
+
+  // Try token join first
+  if (token) {
+    try {
+      const r = await fetch(`${API}/qr/join`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({token})
+      });
+      if (r.ok) {
+        ctx = await r.json();
+        localStorage.setItem('sahayak_mobile_session', ctx.session.id);
+      }
+    } catch(e){}
+  }
+
+  // Graceful fallback to existing session ID (e.g. if user refreshed tab)
+  if (!ctx && savedSessionId) {
+    try {
+      const r = await fetch(`${API}/session/${savedSessionId}`);
+      if (r.ok) ctx = await r.json();
+    } catch(e){}
+  }
+
+  if (!ctx) {
+    app.innerHTML = `
+      <div class="tricolor-bar"></div>
+      <header class="gov-masthead" role="banner">
+        <div class="gov-identity"><span class="flag-icon">🇮🇳</span> <span>${UI.en.govOfIndia}</span></div>
+      </header>
+      <div class="wrap" style="text-align:center;padding:48px 16px;">
+        <div style="font-size:2.8rem;margin-bottom:8px">🏛️</div>
+        <h2 style="font-size:1.15rem;color:var(--indigo);margin:0 0 6px">${UI.en.portalName}</h2>
+        <p style="font-size:.92rem;line-height:1.4">${UI.en.invalidSession}</p>
+        <p style="font-size:.84rem;color:var(--muted);margin-top:6px">${UI.hi.invalidSession}</p>
+      </div>`;
+    return;
+  }
+
+  currentSessionCtx = ctx;
+  const savedLang = localStorage.getItem('sahayak_mobile_lang');
+  currentMobileLang = savedLang || (ctx.session && ctx.session.language === 'en' ? 'en' : 'hi');
+  if (currentMobileLang !== 'en' && currentMobileLang !== 'hi') currentMobileLang = 'hi';
+
+  allMessages = (ctx.messages && ctx.messages.length) ? [...ctx.messages] : [];
+  if (ctx.action_plan) {
+    userCustomPlan = ctx.action_plan;
+  }
+
+  if (allMessages.length) {
+    const userMsgs = allMessages.filter(m => m.role === 'user');
+    if (userMsgs.length) lastUserMsg = userMsgs[userMsgs.length - 1].text;
+    const asstMsgs = allMessages.filter(m => m.role === 'assistant');
+    if (asstMsgs.length) latestDetailedSolution = asstMsgs[asstMsgs.length - 1].text;
+  }
+
+  renderDashboard();
+}
+
+init();
+</script>
+</body>
+</html>

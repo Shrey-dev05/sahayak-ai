@@ -1,0 +1,6 @@
+﻿services:
+  - type: web
+    name: sahayak-ai
+    env: docker
+    plan: free
+    healthCheckPath: /health

@@ -1,0 +1,25 @@
+Trained on 408 examples, 5-fold stratified cross-validation (best C=8.0).
+Out-of-fold accuracy across all 408 examples: 0.792
+
+                      precision    recall  f1-score   support
+
+AGRICULTURAL_SUPPORT       0.85      0.77      0.81        22
+             BANKING       0.68      0.62      0.65        24
+     COOP_GOVERNANCE       0.78      0.88      0.82        16
+            COOP_LAW       0.71      0.62      0.67        16
+   COOP_REGISTRATION       0.71      0.67      0.69        15
+         CROP_DAMAGE       0.98      0.94      0.96        49
+      CROP_INSURANCE       0.90      0.88      0.89        41
+DOCUMENT_EXPLANATION       0.79      0.88      0.84        26
+  FINANCIAL_LITERACY       0.56      0.65      0.60        31
+     FORM_ASSISTANCE       0.89      0.89      0.89        18
+         GOVT_SCHEME       0.65      0.69      0.67        16
+           GRIEVANCE       0.68      0.81      0.74        31
+                LOAN       0.79      0.83      0.81        23
+           PACS_INFO       0.80      0.80      0.80        30
+     PACS_MEMBERSHIP       0.96      0.92      0.94        25
+             UNKNOWN       0.78      0.56      0.65        25
+
+            accuracy                           0.79       408
+           macro avg       0.78      0.77      0.78       408
+        weighted avg       0.80      0.79      0.79       408

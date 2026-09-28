@@ -1,0 +1,12 @@
+﻿.venv
+__pycache__
+*.pyc
+.pytest_cache
+.git
+.gitignore
+.env
+backend/.venv
+backend/__pycache__
+backend/.pytest_cache
+backend/tests
+backend/*.mp3

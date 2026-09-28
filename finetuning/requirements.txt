@@ -1,0 +1,7 @@
+transformers
+datasets
+accelerate
+peft
+trl
+bitsandbytes   # only needed for 4-bit/8-bit loading on limited-VRAM GPUs
+torch          # install the build matching your CUDA version separately if needed

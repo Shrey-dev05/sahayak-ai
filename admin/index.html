@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sahayak AI — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAF6EE;--surface:#FFFFFF;--ink:#26313F;--muted:#6B7686;--indigo:#24476B;
+--marigold:#E7A23D;--marigold-d:#C77E17;--success:#3F7D58;--alert:#B4483A;--warn:#B4833A;--line:#E6DFCC}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,sans-serif}
+h1,h2{font-family:'Baloo 2',system-ui,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:24px 18px 60px}
+.brand{font-weight:700;font-size:1.15rem;color:var(--indigo);display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--marigold)}
+.subtitle{color:var(--muted);font-size:.9rem;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:760px){.grid{grid-template-columns:1.1fr .9fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+.panel h2{margin:0 0 12px;font-size:1.02rem;color:var(--indigo)}
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:none}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.74rem;font-weight:600}
+.badge.approved{background:#e3f0e8;color:var(--success)}
+.badge.pending{background:#f5ead6;color:var(--warn)}
+.badge.superseded{background:#f0e3e3;color:var(--alert)}
+.row-actions{display:flex;gap:6px;margin-top:4px}
+button{font-family:inherit;cursor:pointer;border:none;border-radius:8px;font-size:.78rem;padding:5px 10px;transition:all .15s}
+.approve-btn{background:var(--success);color:#fff}
+.supersede-btn{background:var(--bg);border:1px solid var(--line);color:var(--ink)}
+.supersede-btn:hover{background:#f0e3e3;border-color:var(--alert);color:var(--alert)}
+.restore-btn{background:#e8f0fe;border:1.5px solid #4285f4;color:#1967d2;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.restore-btn:hover{background:#d2e3fc;color:#1557b0;transform:translateY(-1px)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0F172A;color:#FFFFFF;padding:10px 18px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.25);display:flex;align-items:center;gap:12px;font-size:.85rem;z-index:999;transition:opacity .2s}
+.toast-undo-btn{background:#38BDF8;color:#0F172A;font-weight:700;padding:4px 10px;border-radius:6px;border:none;cursor:pointer}
+.toast-undo-btn:hover{background:#7DD3FC}
+label{display:block;font-size:.82rem;color:var(--muted);margin-top:10px}
+input[type=text],textarea{width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--line);font-family:inherit;font-size:.88rem;margin-top:4px}
+textarea{min-height:120px;resize:vertical}
+.submit-btn{margin-top:14px;background:var(--indigo);color:#fff;padding:9px 18px;border-radius:10px;font-size:.88rem;font-weight:600}
+.hint{font-size:.78rem;color:var(--muted);margin-top:16px;line-height:1.5}
+.empty{color:var(--muted);font-size:.85rem;padding:10px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span class="dot"></span> Sahayak AI — Admin</div>
+  <div class="subtitle">Document review, verification and versioning (plan section 13). No authentication is implemented in this prototype — add real admin login before deploying this page anywhere public.</div>
+  <div class="grid">
+    <div class="panel">
+      <h2>Knowledge base</h2>
+      <table id="docTable"><thead><tr><th>Document</th><th>Status</th><th>Chunks</th><th></th></tr></thead><tbody></tbody></table>
+      <div class="empty" id="emptyMsg" style="display:none">No documents yet.</div>
+    </div>
+    <div class="panel">
+      <h2>Upload a document</h2>
+      <label>Title</label><input type="text" id="title" placeholder="e.g. Crop Insurance Scheme 2026-27">
+      <label>Issuer</label><input type="text" id="issuer" placeholder="e.g. State Cooperative Department">
+      <label>Source URL</label><input type="text" id="sourceUrl" placeholder="https://…">
+      <label>Document text (paste extracted text — a real build would OCR a PDF upload here)</label>
+      <textarea id="text" placeholder="Paste the verified document text…"></textarea>
+      <button class="submit-btn" id="submitBtn">Upload for review</button>
+      <div class="hint">New documents start as <strong>pending</strong> and are invisible to the chatbot until approved here — this is what keeps Sahayak from answering with unverified information.</div>
+    </div>
+  </div>
+</div>
+
+<div id="toastBox" class="toast" style="display:none">
+  <span id="toastText">Document superseded.</span>
+  <button class="toast-undo-btn" id="toastUndo">↩ Undo</button>
+</div>
+
+<script>
+const API = '';
+let lastSupersededId = null;
+let toastTimer = null;
+
+function showUndoToast(docId, docTitle) {
+  lastSupersededId = docId;
+  const box = document.getElementById('toastBox');
+  const txt = document.getElementById('toastText');
+  txt.textContent = `"${docTitle.slice(0, 32)}..." superseded.`;
+  box.style.display = 'flex';
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { box.style.display = 'none'; }, 8000);
+}
+
+document.getElementById('toastUndo').onclick = async () => {
+  if (lastSupersededId) {
+    await fetch(`${API}/admin/documents/${lastSupersededId}/restore`, {method:'POST'});
+    document.getElementById('toastBox').style.display = 'none';
+    lastSupersededId = null;
+    loadDocs();
+  }
+};
+
+async function loadDocs(){
+  const r = await fetch(`${API}/admin/documents`);
+  const docs = await r.json();
+  const tbody = document.querySelector('#docTable tbody');
+  document.getElementById('emptyMsg').style.display = docs.length ? 'none' : 'block';
+  tbody.innerHTML = docs.map(d => `
+    <tr>
+      <td><strong>${escapeHtml(d.title)}</strong><br><span style="color:var(--muted);font-size:.78rem">${escapeHtml(d.issuer||'—')}${d.last_verified_at? ' · verified '+d.last_verified_at:''}</span></td>
+      <td><span class="badge ${d.status}">${d.status}</span></td>
+      <td>${d.chunk_count}</td>
+      <td>
+        <div class="row-actions">
+          ${d.status==='pending' ? `<button class="approve-btn" data-id="${d.id}" data-action="approve">Approve</button>` : ''}
+          ${d.status==='approved' ? `<button class="supersede-btn" data-id="${d.id}" data-title="${escapeHtml(d.title)}" data-action="supersede">Supersede</button>` : ''}
+          ${d.status==='superseded' ? `<button class="restore-btn" data-id="${d.id}" data-action="restore" title="Undo supersede and restore to approved knowledge base">↩ Undo Supersede</button>` : ''}
+        </div>
+      </td>
+    </tr>`).join('');
+  tbody.querySelectorAll('button[data-action]').forEach(btn=>{
+    btn.onclick = async ()=>{
+      const act = btn.dataset.action;
+      const id = btn.dataset.id;
+      const title = btn.dataset.title || '';
+      await fetch(`${API}/admin/documents/${id}/${act}`, {method:'POST'});
+      if (act === 'supersede') {
+        showUndoToast(id, title);
+      }
+      loadDocs();
+    };
+  });
+}
+function escapeHtml(s){ const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
+
+document.getElementById('submitBtn').onclick = async ()=>{
+  const title = document.getElementById('title').value.trim();
+  const text = document.getElementById('text').value.trim();
+  if(!title || !text){ alert('Title and document text are required.'); return; }
+  await fetch(`${API}/admin/documents`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+    title, text,
+    issuer: document.getElementById('issuer').value.trim() || null,
+    source_url: document.getElementById('sourceUrl').value.trim() || null,
+    language: 'en',
+  })});
+  document.getElementById('title').value=''; document.getElementById('issuer').value='';
+  document.getElementById('sourceUrl').value=''; document.getElementById('text').value='';
+  loadDocs();
+};
+loadDocs();
+</script>
+</body>
+</html>
