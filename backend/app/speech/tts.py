@@ -13,8 +13,15 @@ import asyncio
 from pathlib import Path
 from typing import Dict, Optional
 from urllib.parse import quote
-import edge_tts
-from gtts import gTTS
+try:
+    import edge_tts
+except ImportError:
+    edge_tts = None
+
+try:
+    from gtts import gTTS
+except ImportError:
+    gTTS = None
 
 ABBREVIATIONS = {
     r"\bPMFBY\b": "P M F B Y",
@@ -154,46 +161,48 @@ async def generate_speech_bytes(text: str, language: str = "en") -> bytes:
     fallback_voice = FALLBACK_VOICES.get(lang_key, "hi-IN-MadhurNeural")
 
     # 1. Primary: Edge Neural TTS with calm, measured, articulate rate (-3%)
-    try:
-        communicate = edge_tts.Communicate(clean_text, voice, rate="-3%", pitch="+0Hz")
-        audio_stream = io.BytesIO()
-        async for chunk in communicate.stream():
-            if chunk["type"] == "audio":
-                audio_stream.write(chunk["data"])
-        data = audio_stream.getvalue()
-        if len(data) > 1000:
-            cached_file.write_bytes(data)
-            return data
-    except Exception:
-        pass
+    if edge_tts is not None:
+        try:
+            communicate = edge_tts.Communicate(clean_text, voice, rate="-3%", pitch="+0Hz")
+            audio_stream = io.BytesIO()
+            async for chunk in communicate.stream():
+                if chunk["type"] == "audio":
+                    audio_stream.write(chunk["data"])
+            data = audio_stream.getvalue()
+            if len(data) > 1000:
+                cached_file.write_bytes(data)
+                return data
+        except Exception:
+            pass
 
-    # 1b. Secondary Edge Neural fallback voice
-    try:
-        communicate = edge_tts.Communicate(clean_text, fallback_voice, rate="-3%", pitch="+0Hz")
-        audio_stream = io.BytesIO()
-        async for chunk in communicate.stream():
-            if chunk["type"] == "audio":
-                audio_stream.write(chunk["data"])
-        data = audio_stream.getvalue()
-        if len(data) > 1000:
-            cached_file.write_bytes(data)
-            return data
-    except Exception:
-        pass
+        # 1b. Secondary Edge Neural fallback voice
+        try:
+            communicate = edge_tts.Communicate(clean_text, fallback_voice, rate="-3%", pitch="+0Hz")
+            audio_stream = io.BytesIO()
+            async for chunk in communicate.stream():
+                if chunk["type"] == "audio":
+                    audio_stream.write(chunk["data"])
+            data = audio_stream.getvalue()
+            if len(data) > 1000:
+                cached_file.write_bytes(data)
+                return data
+        except Exception:
+            pass
 
     # 2. Tertiary fallback: Google TTS (gTTS)
-    try:
-        gtts_lang = "hi" if lang_key == "hi" else "en"
-        tld = "co.in" if gtts_lang == "en" else "com"
-        tts = gTTS(clean_text, lang=gtts_lang, tld=tld)
-        buf = io.BytesIO()
-        tts.write_to_fp(buf)
-        data = buf.getvalue()
-        if len(data) > 500:
-            cached_file.write_bytes(data)
-            return data
-    except Exception:
-        pass
+    if gTTS is not None:
+        try:
+            gtts_lang = "hi" if lang_key == "hi" else "en"
+            tld = "co.in" if gtts_lang == "en" else "com"
+            tts = gTTS(clean_text, lang=gtts_lang, tld=tld)
+            buf = io.BytesIO()
+            tts.write_to_fp(buf)
+            data = buf.getvalue()
+            if len(data) > 500:
+                cached_file.write_bytes(data)
+                return data
+        except Exception:
+            pass
 
     return b""
 
