@@ -125,7 +125,7 @@ body{
   justify-content:center;
   position:relative;
   z-index:10;
-  margin-top:-4px;
+  margin-top:-6px;
 }
 .robot-container{
   width:165px;
@@ -135,10 +135,6 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:transform .25s ease;
-}
-.robot-container:hover{
-  transform:scale(1.03);
 }
 .robot-halo{
   position:absolute;
@@ -146,7 +142,7 @@ body{
   height:170px;
   border-radius:50%;
   background:radial-gradient(circle, var(--cyan-glow) 0%, transparent 70%);
-  opacity:0.35;
+  opacity:0.4;
   transition:all .4s ease;
   pointer-events:none;
 }
@@ -157,69 +153,22 @@ body{
   animation:rippleHalo 1.2s infinite ease-out;
 }
 .robot-halo.active-speak{
-  background:radial-gradient(circle, rgba(0, 245, 212, 0.45) 0%, rgba(58, 134, 255, 0.2) 50%, transparent 72%);
-  opacity:0.9;
-  transform:scale(1.2);
-  animation:rippleHalo 1.4s infinite ease-out;
+  background:radial-gradient(circle, var(--cyan-glow) 0%, transparent 72%);
+  opacity:0.8;
+  transform:scale(1.15);
+  animation:rippleHalo 1.5s infinite ease-out;
 }
-@keyframes rippleHalo{0%{transform:scale(1);opacity:0.8}100%{transform:scale(1.45);opacity:0}}
-
-/* Futuristic Sonic Voice Wave Rings (Talking Radiance) */
-.voice-ripple{
-  position:absolute;
-  top:50%;left:50%;
-  width:120px;height:120px;
-  border-radius:50%;
-  border:2px solid rgba(0,245,212,0.65);
-  box-shadow:0 0 24px rgba(0,245,212,0.35), inset 0 0 16px rgba(0,245,212,0.2);
-  pointer-events:none;
-  opacity:0;
-  transform:translate(-50%,-50%) scale(0.8);
-  transition:opacity .3s;
-}
-.state-speaking .voice-ripple.vr-1{
-  animation:voiceRippleWave 1.8s cubic-bezier(0.12, 0.7, 0.24, 1) infinite;
-}
-.state-speaking .voice-ripple.vr-2{
-  animation:voiceRippleWave 1.8s cubic-bezier(0.12, 0.7, 0.24, 1) infinite 0.6s;
-}
-.state-speaking .voice-ripple.vr-3{
-  animation:voiceRippleWave 1.8s cubic-bezier(0.12, 0.7, 0.24, 1) infinite 1.2s;
-}
-@keyframes voiceRippleWave{
-  0%{width:115px;height:115px;opacity:0.9;transform:translate(-50%,-50%) scale(0.85)}
-  50%{opacity:0.5}
-  100%{width:255px;height:255px;opacity:0;transform:translate(-50%,-50%) scale(1.4)}
-}
-
+@keyframes rippleHalo{0%{transform:scale(1);opacity:0.8}100%{transform:scale(1.4);opacity:0}}
 .robot-svg{
   width:100%;
   height:100%;
   animation:floatBob 3.6s ease-in-out infinite;
-  filter:drop-shadow(0 12px 28px rgba(0,0,0,0.6));
-  position:relative;
-  z-index:2;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,0.55));
 }
 @keyframes floatBob{
   0%,100%{transform:translateY(0)}
   50%{transform:translateY(-8px)}
 }
-
-/* Life-like Talking Cadence Gesture (Nodding and Expressive Articulation) */
-.state-speaking .robot-svg{
-  animation:talkingCadence 1.8s ease-in-out infinite;
-  transform-origin:center 85%;
-}
-@keyframes talkingCadence{
-  0%{transform:translateY(0) rotate(0deg)}
-  18%{transform:translateY(-5px) rotate(-1.5deg)}
-  38%{transform:translateY(-1.5px) rotate(1.2deg)}
-  58%{transform:translateY(-6px) rotate(-1deg)}
-  78%{transform:translateY(-1px) rotate(0.8deg)}
-  100%{transform:translateY(0) rotate(0deg)}
-}
-
-/* Eye and Facial Layer Controls */
 .eye-normal{
   transform-origin:center;
   animation:blinkEye 4s infinite;
@@ -228,158 +177,31 @@ body{
   0%,90%,100%{transform:scaleY(1)}
   95%{transform:scaleY(0.08)}
 }
-.eye-talking{display:none}
-.mouth-idle{transition:opacity .2s}
-.mouth-talking-group{display:none}
-.antenna-signals{display:none}
-.ear-audio-led{opacity:0.25;transition:opacity .2s}
-
-/* Speaking State Activations */
+.mouth-eq{display:none}
+.mouth-bar{transform-origin:bottom;animation:eqBounce 0.4s infinite alternate ease-in-out}
+.mouth-bar:nth-child(2){animation-delay:0.1s}
+.mouth-bar:nth-child(3){animation-delay:0.2s}
+.mouth-bar:nth-child(4){animation-delay:0.08s}
+.mouth-bar:nth-child(5){animation-delay:0.16s}
+@keyframes eqBounce{0%{transform:scaleY(0.2)}100%{transform:scaleY(1.3)}}
 .state-speaking .eye-normal{display:none}
-.state-speaking .eye-talking{display:block !important}
+.state-speaking .eye-happy{display:block !important}
+.state-speaking .mouth-eq{display:block !important}
 .state-speaking .mouth-idle{display:none}
-.state-speaking .mouth-talking-group{display:block !important}
-.state-speaking .antenna-signals{display:block !important}
-
-/* Visor Screen Glowing Edge & Holographic Scanline */
-.state-speaking .robot-visor{
-  stroke:#5EEAD4 !important;
-  filter:drop-shadow(0 0 12px rgba(0,245,212,0.7));
-  animation:visorSpeechGlow 1.2s infinite alternate ease-in-out;
-}
-@keyframes visorSpeechGlow{
-  0%{stroke:#00F5D4;filter:drop-shadow(0 0 8px rgba(0,245,212,0.5))}
-  100%{stroke:#5EEAD4;filter:drop-shadow(0 0 16px rgba(0,245,212,0.85))}
-}
-.visor-scanline{display:none}
-.state-speaking .visor-scanline{
-  display:block;
-  animation:scanlineSweep 2.2s linear infinite;
-}
-@keyframes scanlineSweep{
-  0%{transform:translateY(0);opacity:0}
-  20%{opacity:0.7}
-  80%{opacity:0.7}
-  100%{transform:translateY(60px);opacity:0}
-}
-
-/* 7 Precision Audio Speech Equalizer Bars */
-.mouth-bar{
-  transform-box:fill-box;
-  transform-origin:center bottom;
-  filter:drop-shadow(0 0 5px rgba(0,245,212,0.85));
-}
-.state-speaking .mouth-bar.mb-1{animation:speechWave1 0.28s infinite alternate ease-in-out}
-.state-speaking .mouth-bar.mb-2{animation:speechWave2 0.38s infinite alternate ease-in-out 0.05s}
-.state-speaking .mouth-bar.mb-3{animation:speechWave3 0.22s infinite alternate ease-in-out 0.12s}
-.state-speaking .mouth-bar.mb-4{animation:speechWaveHero 0.32s infinite alternate ease-in-out 0.02s}
-.state-speaking .mouth-bar.mb-5{animation:speechWave3 0.26s infinite alternate ease-in-out 0.08s}
-.state-speaking .mouth-bar.mb-6{animation:speechWave2 0.35s infinite alternate ease-in-out 0.14s}
-.state-speaking .mouth-bar.mb-7{animation:speechWave1 0.30s infinite alternate ease-in-out 0.04s}
-
-@keyframes speechWave1{
-  0%{transform:scaleY(0.25)}
-  50%{transform:scaleY(0.85)}
-  100%{transform:scaleY(0.4)}
-}
-@keyframes speechWave2{
-  0%{transform:scaleY(0.3)}
-  50%{transform:scaleY(1.35)}
-  100%{transform:scaleY(0.65)}
-}
-@keyframes speechWave3{
-  0%{transform:scaleY(0.2)}
-  50%{transform:scaleY(1.55)}
-  100%{transform:scaleY(0.8)}
-}
-@keyframes speechWaveHero{
-  0%{transform:scaleY(0.35)}
-  40%{transform:scaleY(1.75)}
-  80%{transform:scaleY(1.2)}
-  100%{transform:scaleY(0.5)}
-}
-
-/* Vocal Tract Dynamic Background Aura */
-.mouth-sound-glow{
-  transform-box:fill-box;
-  transform-origin:center center;
-}
-.state-speaking .mouth-sound-glow{
-  animation:mouthAuraPulse 0.5s infinite alternate ease-in-out;
-}
-@keyframes mouthAuraPulse{
-  0%{opacity:0.25;transform:scale(0.92)}
-  100%{opacity:0.85;transform:scale(1.15)}
-}
-
-/* Talking Eyes Expression & Sparkle */
-.state-speaking .eye-talking{
-  animation:eyeTalkingPulse 0.7s infinite alternate ease-in-out;
-  transform-origin:center center;
-}
-@keyframes eyeTalkingPulse{
-  0%{transform:scale(1)}
-  100%{transform:scale(1.04)}
-}
-.eye-twinkle{transform-box:fill-box;transform-origin:center center}
-.state-speaking .eye-twinkle{
-  animation:eyeSparkleWink 3.2s infinite;
-}
-@keyframes eyeSparkleWink{
-  0%,85%,100%{opacity:1;transform:scale(1)}
-  92%{opacity:0.1;transform:scale(0.2)}
-}
-
-/* Antenna Transmission Signal Pulse */
-.state-speaking .robot-antenna-orb{
-  animation:antennaSpeakOrb 0.5s infinite alternate ease-in-out;
-}
-@keyframes antennaSpeakOrb{
-  0%{fill:#00F5D4;filter:drop-shadow(0 0 6px #00F5D4)}
-  100%{fill:#FFFFFF;filter:drop-shadow(0 0 16px #00F5D4)}
-}
-.state-speaking .antenna-signal-arc.arc-1{
-  animation:signalArcEmit 1.2s infinite ease-out;
-}
-.state-speaking .antenna-signal-arc.arc-2{
-  animation:signalArcEmit 1.2s infinite ease-out 0.4s;
-}
-@keyframes signalArcEmit{
-  0%{opacity:0;transform:translateY(4px) scale(0.8)}
-  40%{opacity:0.9}
-  100%{opacity:0;transform:translateY(-8px) scale(1.3)}
-}
-
-/* Ear Pod Audio Monitors */
-.state-speaking .ear-audio-led.e1{animation:earLedPulse 0.3s infinite alternate ease-in-out;opacity:1}
-.state-speaking .ear-audio-led.e2{animation:earLedPulse 0.22s infinite alternate ease-in-out 0.08s;opacity:1}
-.state-speaking .ear-audio-led.e3{animation:earLedPulse 0.36s infinite alternate ease-in-out 0.14s;opacity:1}
-@keyframes earLedPulse{
-  0%{stroke:#00F5D4;opacity:0.4}
-  100%{stroke:#FFFFFF;opacity:1;filter:drop-shadow(0 0 4px #00F5D4)}
-}
-
-/* Listening Mode Indicator Styling */
 .state-listening .robot-antenna-orb{
   fill:var(--amber) !important;
-  filter:drop-shadow(0 0 10px var(--amber)) !important;
+  filter:drop-shadow(0 0 8px var(--amber));
 }
 .state-listening .robot-visor{
   stroke:var(--amber) !important;
 }
-
-/* Robot Caption & Titles */
 .robot-caption{
   margin-top:8px;
   text-align:center;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:2px;
 }
 .robot-status-title{
   font-family:'Baloo 2',sans-serif;
-  font-size:1.22rem;
+  font-size:1.18rem;
   font-weight:700;
   color:#fff;
   letter-spacing:.2px;
@@ -387,115 +209,35 @@ body{
   align-items:center;
   justify-content:center;
   gap:8px;
-  text-shadow:0 2px 10px rgba(0,0,0,0.5);
 }
 .robot-status-subtitle{
-  font-size:.85rem;
+  font-size:.82rem;
   color:var(--text-muted);
+  margin-top:2px;
 }
 .tap-hint{
   display:inline-block;
   background:rgba(255,255,255,0.06);
-  border:1px dashed rgba(255,255,255,0.22);
-  padding:3px 14px;
+  border:1px dashed rgba(255,255,255,0.18);
+  padding:3px 12px;
   border-radius:999px;
   font-size:.74rem;
   color:var(--cyan);
   margin-top:6px;
-  cursor:pointer;
-  transition:all .15s;
-}
-.tap-hint:hover{
-  background:rgba(0,245,212,0.12);
-  border-color:var(--cyan);
-}
-
-/* Floating Live Speech Status Badge */
-.speaking-badge{
-  display:none;
-  align-items:center;
-  gap:7px;
-  background:rgba(0, 245, 212, 0.12);
-  border:1px solid rgba(0, 245, 212, 0.4);
-  padding:4px 12px;
-  border-radius:999px;
-  font-size:.74rem;
-  color:var(--cyan);
-  font-weight:700;
-  margin-top:6px;
-  box-shadow:0 0 14px rgba(0,245,212,0.25);
-  animation:badgeFloat 2s ease-in-out infinite;
-}
-@keyframes badgeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-.voice-anim-bars{
-  display:inline-flex;
-  align-items:flex-end;
-  gap:2px;
-  height:12px;
-}
-.v-bar{
-  width:2.5px;
-  background:var(--cyan);
-  border-radius:1px;
-  animation:vBarBounce 0.4s infinite alternate ease-in-out;
-}
-.v-bar:nth-child(1){height:6px;animation-delay:0.05s}
-.v-bar:nth-child(2){height:12px;animation-delay:0.15s}
-.v-bar:nth-child(3){height:9px;animation-delay:0.25s}
-.v-bar:nth-child(4){height:11px;animation-delay:0.1s}
-@keyframes vBarBounce{0%{transform:scaleY(0.3)}100%{transform:scaleY(1.2)}}
-
-/* Interactive Quick Suggestions Bar (Farmer/Citizen Shortcuts) */
-.quick-chips-bar{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  max-width:100%;
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  padding:8px 4px 2px;
-  scrollbar-width:none;
-  margin-top:8px;
-  z-index:20;
-}
-.quick-chips-bar::-webkit-scrollbar{display:none}
-.quick-chip{
-  flex-shrink:0;
-  background:rgba(255, 255, 255, 0.06);
-  border:1px solid rgba(255, 255, 255, 0.15);
-  color:#E2E8F0;
-  padding:5px 12px;
-  border-radius:999px;
-  font-size:.76rem;
-  font-weight:600;
-  cursor:pointer;
-  transition:all .15s ease;
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  white-space:nowrap;
-  user-select:none;
-}
-.quick-chip:hover, .quick-chip:active{
-  background:rgba(0, 245, 212, 0.16);
-  border-color:rgba(0, 245, 212, 0.45);
-  color:var(--cyan);
-  transform:translateY(-1px);
 }
 
 /* Hero Stage Below-Bot QR Card (Speech Output + QR Handoff) */
 .hero-qr-badge-card{
-  margin-top:10px;
-  background:rgba(14, 23, 40, 0.95);
-  backdrop-filter:blur(16px);
-  border:1.5px solid rgba(0, 245, 212, 0.45);
+  margin-top:12px;
+  background:rgba(14, 23, 40, 0.94);
+  backdrop-filter:blur(14px);
+  border:1.5px solid rgba(0, 245, 212, 0.4);
   border-radius:18px;
   padding:10px 14px;
-  box-shadow:0 12px 35px rgba(0, 0, 0, 0.75), 0 0 25px rgba(0, 245, 212, 0.18);
+  box-shadow:0 12px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 245, 212, 0.15);
   animation:heroQrFadeIn .35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  max-width:400px;
-  width:calc(100% - 20px);
+  max-width:380px;
+  width:calc(100% - 24px);
   z-index:20;
 }
 @keyframes heroQrFadeIn{
@@ -514,14 +256,14 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 4px 14px rgba(0,0,0,0.35);
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
   flex-shrink:0;
-  width:88px;
-  height:88px;
+  width:90px;
+  height:90px;
 }
 .hero-qr-canvas-box img, .hero-qr-canvas-box canvas{
-  width:78px !important;
-  height:78px !important;
+  width:80px !important;
+  height:80px !important;
   display:block;
 }
 .hero-qr-info{
@@ -547,7 +289,7 @@ body{
 }
 .hero-qr-heading{
   font-family:'Baloo 2',sans-serif;
-  font-size:.96rem;
+  font-size:.94rem;
   font-weight:700;
   color:#fff;
   line-height:1.25;
@@ -558,14 +300,13 @@ body{
   line-height:1.35;
 }
 .hero-qr-actions{
-  margin-top:5px;
+  margin-top:4px;
   display:flex;
-  gap:8px;
-  flex-wrap:wrap;
+  gap:6px;
 }
 .hero-qr-replay-btn{
   background:rgba(255, 255, 255, 0.08);
-  border:1px solid rgba(255, 255, 255, 0.22);
+  border:1px solid rgba(255, 255, 255, 0.2);
   color:#F8FAFC;
   border-radius:8px;
   padding:4px 10px;
@@ -581,25 +322,6 @@ body{
   background:var(--cyan);
   color:#060A12;
   border-color:var(--cyan);
-}
-.hero-qr-open-btn{
-  background:linear-gradient(135deg, #00F5D4 0%, #3A86FF 100%);
-  border:none;
-  color:#060A12;
-  border-radius:8px;
-  padding:4px 11px;
-  font-size:.74rem;
-  font-weight:700;
-  cursor:pointer;
-  display:inline-flex;
-  align-items:center;
-  gap:4px;
-  transition:all .15s;
-  box-shadow:0 0 10px rgba(0,245,212,0.3);
-}
-.hero-qr-open-btn:hover{
-  transform:translateY(-1px);
-  box-shadow:0 0 15px rgba(0,245,212,0.5);
 }
 
 .solution-panel{
@@ -890,13 +612,6 @@ body{
   margin-bottom:6px;
 }
 
-/* Top National Authority Tricolor Strip */
-.tricolor-strip{
-  position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg, #FF9933 0%, #FF9933 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #138808 66.6%, #138808 100%);
-  z-index:90;
-}
-
 /* Full Mobile Responsiveness for all screen orientations & sizes */
 @media (max-width: 768px), (orientation: portrait) {
   body {
@@ -915,132 +630,33 @@ body{
     border-radius: 0;
     border: none;
     box-shadow: none;
-    padding: max(8px, env(safe-area-inset-top, 8px)) max(10px, env(safe-area-inset-right, 10px)) calc(64px + max(10px, env(safe-area-inset-bottom, 10px))) max(10px, env(safe-area-inset-left, 10px));
-    background: radial-gradient(circle at 50% 28%, #112240 0%, #081120 65%, #030712 100%);
-  }
-  .kiosk-header {
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 6px;
-    width: 100%;
-    z-index: 30;
-    padding: 0 2px;
-  }
-  .kiosk-brand {
-    font-size: 1.05rem;
-    gap: 6px;
-  }
-  .kiosk-brand .status-dot {
-    width: 7px;
-    height: 7px;
-  }
-  .kiosk-tag {
-    font-size: .62rem;
-    padding: 2px 6px;
-    letter-spacing: .2px;
-  }
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    flex-wrap: nowrap;
-  }
-  .wake-indicator {
-    padding: 3px 8px;
-    font-size: .68rem;
-    gap: 4px;
-    white-space: nowrap;
-  }
-  .kiosk-btn {
-    padding: 4px 9px;
-    font-size: .74rem;
-    font-weight: 700;
-    border-radius: 999px;
+    padding: max(10px, env(safe-area-inset-top, 10px)) max(12px, env(safe-area-inset-right, 12px)) calc(58px + max(8px, env(safe-area-inset-bottom, 8px))) max(12px, env(safe-area-inset-left, 12px));
+    background: radial-gradient(circle at 50% 30%, #13243C 0%, #070D18 100%);
   }
   .hero-stage {
     justify-content: center;
     margin-top: 0;
-    padding-bottom: 6px;
-    width: 100%;
+    padding-bottom: 16px;
   }
   .robot-container {
-    width: 140px;
-    height: 130px;
-    margin-bottom: 2px;
-  }
-  .robot-caption {
-    margin-top: 4px;
+    width: 145px;
+    height: 135px;
   }
   .robot-status-title {
-    font-size: 1.18rem;
+    font-size: 1.25rem;
     padding: 0 10px;
-    line-height: 1.3;
     text-align: center;
   }
   .robot-status-subtitle {
-    font-size: .84rem;
-    padding: 0 12px;
-    line-height: 1.38;
-    text-align: center;
-  }
-  .tap-hint {
-    margin-top: 4px;
-    padding: 3px 12px;
-    font-size: .72rem;
-  }
-  .speaking-badge {
-    margin-top: 4px;
-    padding: 3px 10px;
-    font-size: .72rem;
-  }
-  .quick-chips-bar {
-    width: 100%;
-    padding: 6px 2px 2px;
-    justify-content: flex-start;
-  }
-  .quick-chip {
-    font-size: .72rem;
-    padding: 5px 11px;
-  }
-  .hero-qr-badge-card {
-    max-width: 380px;
-    width: 100%;
-    padding: 8px 10px;
-    margin-top: 6px;
-    border-radius: 16px;
-  }
-  .hero-qr-canvas-box {
-    width: 78px;
-    height: 78px;
-    padding: 4px;
-  }
-  .hero-qr-canvas-box img, .hero-qr-canvas-box canvas {
-    width: 70px !important;
-    height: 70px !important;
-  }
-  .hero-qr-heading {
     font-size: .88rem;
-  }
-  .hero-qr-caption {
-    font-size: .68rem;
-    line-height: 1.3;
-  }
-  .hero-qr-actions {
-    margin-top: 4px;
-    gap: 6px;
-  }
-  .hero-qr-replay-btn, .hero-qr-open-btn {
-    padding: 3px 9px;
-    font-size: .7rem;
-    border-radius: 6px;
+    padding: 0 16px;
+    line-height: 1.4;
   }
   .solution-panel {
-    top: calc(max(8px, env(safe-area-inset-top, 8px)) + 42px);
-    left: max(6px, env(safe-area-inset-left, 6px));
-    right: max(6px, env(safe-area-inset-right, 6px));
-    bottom: calc(58px + max(8px, env(safe-area-inset-bottom, 8px)));
+    top: calc(max(10px, env(safe-area-inset-top, 10px)) + 40px);
+    left: max(8px, env(safe-area-inset-left, 8px));
+    right: max(8px, env(safe-area-inset-right, 8px));
+    bottom: calc(56px + max(8px, env(safe-area-inset-bottom, 8px)));
     padding: 10px 12px;
     border-radius: 18px;
     overflow-y: auto;
@@ -1063,11 +679,11 @@ body{
     flex-shrink: 0;
   }
   .mini-robot-side .robot-container {
-    width: 50px;
-    height: 46px;
+    width: 54px;
+    height: 48px;
   }
   .mini-robot-title {
-    font-size: .86rem;
+    font-size: .88rem;
     margin: 0 8px;
     text-align: left;
     flex: 1;
@@ -1085,7 +701,7 @@ body{
     gap: 10px;
   }
   .summary-box {
-    min-height: 150px;
+    min-height: 160px;
     max-height: none;
     padding: 10px 12px;
   }
@@ -1093,53 +709,34 @@ body{
     width: 100%;
     flex-direction: row;
     align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
+    gap: 14px;
+    padding: 10px 14px;
     flex-shrink: 0;
   }
   .qr-frame {
-    width: 76px;
-    height: 76px;
+    width: 80px;
+    height: 80px;
     flex-shrink: 0;
   }
   .qr-frame div, .qr-frame img {
-    width: 76px !important;
-    height: 76px !important;
+    width: 80px !important;
+    height: 80px !important;
   }
   .qr-box-title {
     text-align: left;
-    font-size: .86rem;
+    font-size: .88rem;
   }
   .qr-box-sub {
     text-align: left;
-    font-size: .74rem;
+    font-size: .75rem;
   }
   .bottom-input-bar {
     position: absolute;
-    bottom: max(10px, env(safe-area-inset-bottom, 10px));
+    bottom: max(8px, env(safe-area-inset-bottom, 8px));
     left: max(10px, env(safe-area-inset-left, 10px));
     right: max(10px, env(safe-area-inset-right, 10px));
-    height: 48px;
-    border-radius: 999px;
-    background: rgba(13, 22, 38, 0.92);
-    backdrop-filter: blur(18px);
-    border: 1.5px solid rgba(255, 255, 255, 0.16);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
-    padding: 4px 6px 4px 14px;
+    height: 44px;
     z-index: 50;
-  }
-  .bottom-input-bar input {
-    font-size: .88rem;
-  }
-  .bottom-mic-btn {
-    width: 36px;
-    height: 36px;
-    font-size: .92rem;
-  }
-  .bottom-send-btn {
-    height: 36px;
-    padding: 0 16px;
-    font-size: .8rem;
   }
 }
 
@@ -1219,14 +816,11 @@ body{
 <div class="kiosk-stage-container">
   <div class="kiosk-viewport" id="kioskApp">
     
-    <!-- National Authority Tricolor Strip -->
-    <div class="tricolor-strip"></div>
-
     <header class="kiosk-header">
       <div class="kiosk-brand">
         <span class="status-dot" id="kioskStatusDot"></span>
         <span>Sahayak AI</span>
-        <span class="kiosk-tag" id="kioskTag">Touch Screen Kiosk</span>
+        <span class="kiosk-tag">Touch Screen Kiosk</span>
       </div>
       <div class="header-actions">
         <div class="wake-indicator" id="wakeIndicator">
@@ -1239,102 +833,45 @@ body{
 
     <main class="hero-stage" id="heroStage">
       <div class="robot-container" id="robotTrigger" title="Tap to speak">
-        <!-- Glowing Ambient Halo -->
         <div class="robot-halo" id="robotHalo"></div>
-
-        <!-- Concentric Sonic Voice Ripples (Active during speech) -->
-        <div class="voice-ripple vr-1"></div>
-        <div class="voice-ripple vr-2"></div>
-        <div class="voice-ripple vr-3"></div>
         
         <svg class="robot-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Antenna Transmission Signal Broadcast Waves -->
-          <g class="antenna-signals">
-            <path class="antenna-signal-arc arc-1" d="M 68 6 Q 80 0 92 6" stroke="#00F5D4" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-            <path class="antenna-signal-arc arc-2" d="M 62 0 Q 80 -8 98 0" stroke="#00F5D4" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-          </g>
-
-          <!-- Antenna Stem & Pulsing Energy Orb -->
-          <line x1="80" y1="12" x2="80" y2="32" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
-          <circle class="robot-antenna-orb" cx="80" cy="12" r="8" fill="#00F5D4" filter="drop-shadow(0 0 10px #00F5D4)"/>
+          <line x1="80" y1="10" x2="80" y2="32" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+          <circle class="robot-antenna-orb" cx="80" cy="10" r="8" fill="#00F5D4" filter="drop-shadow(0 0 8px #00F5D4)"/>
           
-          <!-- Left Ear Pod with Audio Monitor LEDs -->
-          <rect x="17" y="58" width="13" height="32" rx="6.5" fill="#1E293B" stroke="#00F5D4" stroke-width="2"/>
-          <line class="ear-audio-led e1" x1="21" y1="67" x2="26" y2="67" stroke="#00F5D4" stroke-width="2" stroke-linecap="round"/>
-          <line class="ear-audio-led e2" x1="21" y1="74" x2="26" y2="74" stroke="#00F5D4" stroke-width="2" stroke-linecap="round"/>
-          <line class="ear-audio-led e3" x1="21" y1="81" x2="26" y2="81" stroke="#00F5D4" stroke-width="2" stroke-linecap="round"/>
+          <rect x="18" y="60" width="12" height="28" rx="6" fill="#334155" stroke="#00F5D4" stroke-width="2"/>
+          <rect x="130" y="60" width="12" height="28" rx="6" fill="#334155" stroke="#00F5D4" stroke-width="2"/>
           
-          <!-- Right Ear Pod with Audio Monitor LEDs -->
-          <rect x="130" y="58" width="13" height="32" rx="6.5" fill="#1E293B" stroke="#00F5D4" stroke-width="2"/>
-          <line class="ear-audio-led e1" x1="134" y1="67" x2="139" y2="67" stroke="#00F5D4" stroke-width="2" stroke-linecap="round"/>
-          <line class="ear-audio-led e2" x1="134" y1="74" x2="139" y2="74" stroke="#00F5D4" stroke-width="2" stroke-linecap="round"/>
-          <line class="ear-audio-led e3" x1="134" y1="81" x2="139" y2="81" stroke="#00F5D4" stroke-width="2" stroke-linecap="round"/>
+          <rect x="26" y="30" width="108" height="88" rx="32" fill="url(#chassisGrad)" stroke="rgba(255,255,255,0.22)" stroke-width="2.5"/>
           
-          <!-- Main Chassis Robot Head -->
-          <rect x="26" y="30" width="108" height="90" rx="32" fill="url(#chassisGrad)" stroke="rgba(255,255,255,0.24)" stroke-width="2.5"/>
+          <rect class="robot-visor" x="36" y="42" width="88" height="64" rx="20" fill="#070E1B" stroke="#00F5D4" stroke-width="2.2"/>
           
-          <!-- Digital Glass Visor Screen -->
-          <rect class="robot-visor" x="36" y="42" width="88" height="66" rx="20" fill="#060C17" stroke="#00F5D4" stroke-width="2.4"/>
-          
-          <!-- Visor Holographic Scanline Overlay -->
-          <rect class="visor-scanline" x="38" y="44" width="84" height="2" fill="url(#scanlineGrad)" opacity="0.6"/>
-
-          <!-- Normal Idle Eyes (with Realistic Blinking) -->
           <g class="eye-normal">
-            <rect x="53" y="56" width="16" height="24" rx="8" fill="#00F5D4" filter="drop-shadow(0 0 8px #00F5D4)"/>
-            <rect x="91" y="56" width="16" height="24" rx="8" fill="#00F5D4" filter="drop-shadow(0 0 8px #00F5D4)"/>
-            <circle cx="57" cy="62" r="3.2" fill="#FFFFFF"/>
-            <circle cx="95" cy="62" r="3.2" fill="#FFFFFF"/>
+            <rect x="54" y="58" width="16" height="22" rx="8" fill="#00F5D4" filter="drop-shadow(0 0 6px #00F5D4)"/>
+            <rect x="90" y="58" width="16" height="22" rx="8" fill="#00F5D4" filter="drop-shadow(0 0 6px #00F5D4)"/>
+            <circle cx="58" cy="63" r="3" fill="#FFFFFF"/>
+            <circle cx="94" cy="63" r="3" fill="#FFFFFF"/>
           </g>
 
-          <!-- Talking Smiling Eyes (with Joyful Twinkles) -->
-          <g class="eye-talking">
-            <path d="M 51 72 Q 61 54 71 72" stroke="#00F5D4" stroke-width="4.8" fill="none" stroke-linecap="round" filter="drop-shadow(0 0 8px #00F5D4)"/>
-            <path d="M 89 72 Q 99 54 109 72" stroke="#00F5D4" stroke-width="4.8" fill="none" stroke-linecap="round" filter="drop-shadow(0 0 8px #00F5D4)"/>
-            <circle cx="61" cy="61" r="2.4" fill="#FFFFFF" class="eye-twinkle"/>
-            <circle cx="99" cy="61" r="2.4" fill="#FFFFFF" class="eye-twinkle"/>
+          <g class="eye-happy" style="display:none">
+            <path d="M 52 74 Q 62 58 72 74" stroke="#00F5D4" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <path d="M 88 74 Q 98 58 108 74" stroke="#00F5D4" stroke-width="4.5" fill="none" stroke-linecap="round"/>
           </g>
 
-          <!-- Idle Mouth (Gentle Smile) -->
-          <path class="mouth-idle" d="M 68 93 Q 80 99 92 93" stroke="#475569" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <line class="mouth-idle" x1="70" y1="92" x2="90" y2="92" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
 
-          <!-- Talking Soundwave Mouth Equalizer Visualizer -->
-          <g class="mouth-talking-group">
-            <ellipse class="mouth-sound-glow" cx="80" cy="90" rx="26" ry="11" fill="url(#soundAuraGrad)"/>
-            <rect class="mouth-bar mb-1" x="59" y="85" width="3.5" height="12" rx="1.75" fill="url(#talkBarGrad)"/>
-            <rect class="mouth-bar mb-2" x="65" y="82" width="3.5" height="18" rx="1.75" fill="url(#talkBarGrad)"/>
-            <rect class="mouth-bar mb-3" x="71" y="80" width="3.5" height="22" rx="1.75" fill="url(#talkBarGrad)"/>
-            <rect class="mouth-bar mb-4" x="78" y="77" width="4" height="26" rx="2" fill="url(#talkBarCenterGrad)"/>
-            <rect class="mouth-bar mb-5" x="85" y="80" width="3.5" height="22" rx="1.75" fill="url(#talkBarGrad)"/>
-            <rect class="mouth-bar mb-6" x="91" y="82" width="3.5" height="18" rx="1.75" fill="url(#talkBarGrad)"/>
-            <rect class="mouth-bar mb-7" x="97" y="85" width="3.5" height="12" rx="1.75" fill="url(#talkBarGrad)"/>
+          <g class="mouth-eq">
+            <rect class="mouth-bar" x="64" y="88" width="3.5" height="10" rx="1.5" fill="#00F5D4"/>
+            <rect class="mouth-bar" x="71" y="86" width="3.5" height="14" rx="1.5" fill="#00F5D4"/>
+            <rect class="mouth-bar" x="78" y="84" width="3.5" height="18" rx="1.5" fill="#00F5D4"/>
+            <rect class="mouth-bar" x="85" y="86" width="3.5" height="14" rx="1.5" fill="#00F5D4"/>
+            <rect class="mouth-bar" x="92" y="88" width="3.5" height="10" rx="1.5" fill="#00F5D4"/>
           </g>
 
           <defs>
-            <linearGradient id="chassisGrad" x1="26" y1="30" x2="134" y2="120" gradientUnits="userSpaceOnUse">
+            <linearGradient id="chassisGrad" x1="26" y1="30" x2="134" y2="118" gradientUnits="userSpaceOnUse">
               <stop stop-color="#1E293B"/>
-              <stop offset="0.5" stop-color="#141E33"/>
-              <stop offset="1" stop-color="#0B1322"/>
-            </linearGradient>
-            <linearGradient id="talkBarGrad" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0" stop-color="#00F5D4"/>
-              <stop offset="0.7" stop-color="#5EEAD4"/>
-              <stop offset="1" stop-color="#FFFFFF"/>
-            </linearGradient>
-            <linearGradient id="talkBarCenterGrad" x1="0" y1="1" x2="0" y2="0">
-              <stop offset="0" stop-color="#3A86FF"/>
-              <stop offset="0.45" stop-color="#00F5D4"/>
-              <stop offset="1" stop-color="#FFFFFF"/>
-            </linearGradient>
-            <radialGradient id="soundAuraGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#00F5D4" stop-opacity="0.38"/>
-              <stop offset="60%" stop-color="#3A86FF" stop-opacity="0.18"/>
-              <stop offset="100%" stop-color="#00F5D4" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="scanlineGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#00F5D4" stop-opacity="0"/>
-              <stop offset="50%" stop-color="#00F5D4" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#00F5D4" stop-opacity="0"/>
+              <stop offset="1" stop-color="#0F172A"/>
             </linearGradient>
           </defs>
         </svg>
@@ -1344,33 +881,18 @@ body{
         <div class="robot-status-title" id="statusTitle">नमस्ते! मैं आपका सहायक AI हूँ</div>
         <div class="robot-status-subtitle" id="statusSub">बोलें "Hello Sahayak" या पूछने के लिए मुझे छुएं</div>
         <div class="tap-hint" id="tapHint">👆 Touch Robot or say "Hello Sahayak"</div>
-        
-        <!-- Floating Live Speech Status Badge -->
-        <div class="speaking-badge" id="speakingBadge">
-          <span class="voice-anim-bars">
-            <span class="v-bar"></span>
-            <span class="v-bar"></span>
-            <span class="v-bar"></span>
-            <span class="v-bar"></span>
-          </span>
-          <span id="speakingBadgeText">सहायक बोल रहा है…</span>
-        </div>
       </div>
-
-      <!-- Interactive Quick Prompt Suggestions (Farmer/Citizen Shortcuts) -->
-      <div class="quick-chips-bar" id="quickChipsBar"></div>
 
       <!-- Direct QR Card right below the Robot Avatar -->
       <div class="hero-qr-badge-card" id="heroQrCard" style="display:none;">
         <div class="hero-qr-card-inner">
           <div class="hero-qr-canvas-box" id="heroQrCode"></div>
           <div class="hero-qr-info">
-            <div class="hero-qr-pill-tag" id="heroQrPill">📱 अपने फ़ोन पर देखें / स्कैन करें</div>
+            <div class="hero-qr-pill-tag" id="heroQrPill">📱 दूसरे फ़ोन से स्कैन करें</div>
             <div class="hero-qr-heading" id="heroQrHeading">पूरा समाधान अपने फ़ोन पर पाएं</div>
             <div class="hero-qr-caption" id="heroQrCaption">दूसरे मोबाइल कैमरे से स्कैन करें और पूरी PDF गाइड प्राप्त करें</div>
             <div class="hero-qr-actions">
               <button class="hero-qr-replay-btn" id="heroReplayBtn">🔊 आवाज़ दोबारा सुनें</button>
-              <button class="hero-qr-open-btn" id="heroOpenBtn">📲 सीधे फ़ोन पर खोलें</button>
             </div>
           </div>
         </div>
@@ -1382,23 +904,12 @@ body{
         <div class="mini-robot-side">
           <div class="robot-container" id="miniRobotTrigger">
             <svg class="robot-svg" viewBox="0 0 160 160" fill="none">
-              <line x1="80" y1="12" x2="80" y2="32" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
-              <circle cx="80" cy="12" r="8" fill="#00F5D4"/>
-              <rect x="26" y="30" width="108" height="90" rx="32" fill="#1E293B" stroke="rgba(255,255,255,0.22)" stroke-width="2"/>
-              <rect x="36" y="42" width="88" height="66" rx="20" fill="#060C17" stroke="#00F5D4" stroke-width="2.2"/>
-              <g class="eye-talking">
-                <path d="M 52 72 Q 62 56 72 72" stroke="#00F5D4" stroke-width="4" fill="none" stroke-linecap="round"/>
-                <path d="M 88 72 Q 98 56 108 72" stroke="#00F5D4" stroke-width="4" fill="none" stroke-linecap="round"/>
-              </g>
-              <g class="mouth-talking-group">
-                <rect class="mouth-bar mb-1" x="62" y="85" width="3.5" height="12" rx="1.75" fill="#00F5D4"/>
-                <rect class="mouth-bar mb-2" x="68" y="82" width="3.5" height="18" rx="1.75" fill="#00F5D4"/>
-                <rect class="mouth-bar mb-3" x="74" y="80" width="3.5" height="22" rx="1.75" fill="#00F5D4"/>
-                <rect class="mouth-bar mb-4" x="80" y="78" width="3.5" height="26" rx="1.75" fill="#00F5D4"/>
-                <rect class="mouth-bar mb-5" x="86" y="80" width="3.5" height="22" rx="1.75" fill="#00F5D4"/>
-                <rect class="mouth-bar mb-6" x="92" y="82" width="3.5" height="18" rx="1.75" fill="#00F5D4"/>
-                <rect class="mouth-bar mb-7" x="98" y="85" width="3.5" height="12" rx="1.75" fill="#00F5D4"/>
-              </g>
+              <line x1="80" y1="10" x2="80" y2="32" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="80" cy="10" r="8" fill="#00F5D4"/>
+              <rect x="26" y="30" width="108" height="88" rx="32" fill="#1E293B" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+              <rect x="36" y="42" width="88" height="64" rx="20" fill="#070E1B" stroke="#00F5D4" stroke-width="2"/>
+              <g class="eye-happy"><path d="M 52 74 Q 62 58 72 74" stroke="#00F5D4" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M 88 74 Q 98 58 108 74" stroke="#00F5D4" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+              <g class="mouth-eq"><rect class="mouth-bar" x="68" y="86" width="3" height="12" rx="1.5" fill="#00F5D4"/><rect class="mouth-bar" x="75" y="84" width="3" height="16" rx="1.5" fill="#00F5D4"/><rect class="mouth-bar" x="82" y="86" width="3" height="12" rx="1.5" fill="#00F5D4"/><rect class="mouth-bar" x="89" y="88" width="3" height="8" rx="1.5" fill="#00F5D4"/></g>
             </svg>
           </div>
           <div class="mini-robot-title" id="miniStatusTitle">समाधान प्रस्तुत है</div>
@@ -1448,25 +959,17 @@ const UI = {
     speakingSub: 'कृपया आवाज़ ध्यान से सुनें',
     qrReadyTitle: '✅ समाधान पूरा हुआ',
     qrReadySub: 'दूसरे फ़ोन से नीचे दिया QR स्कैन करें',
-    qrPill: '📱 अपने फ़ोन पर देखें / स्कैन करें',
+    qrPill: '📱 दूसरे फ़ोन से स्कैन करें',
     qrHeading: 'पूरा समाधान अपने फ़ोन पर पाएं',
     qrSub: 'कैमरे से स्कैन करें और पूरी PDF गाइड प्राप्त करें',
     tapHint: '👆 Touch Robot or say "Hello Sahayak"',
     inputPlaceholder: 'अपना सवाल यहाँ लिखें या बोलें "Hello Sahayak"…',
     send: 'पूछें',
     replay: '🔊 आवाज़ दोबारा सुनें',
-    openDirect: '📲 सीधे फ़ोन पर खोलें',
     next: 'नया सवाल पूछें (Close)',
     langBtn: 'English',
-    kioskTag: 'Touch Screen Kiosk',
     help: 'मदद',
-    helpTxt: 'सहायक AI फसल बीमा क्लेम, KCC ऋण, पैक्स समिति और सरकारी योजनाओं की पूरी जानकारी देता है। पूछने के लिए "Hello Sahayak" बोलें!',
-    quickChips: [
-      { label: '🌾 फसल नुकसान क्लेम', query: 'मेरी फसल खराब हो गई है, PMFBY फसल बीमा क्लेम की प्रक्रिया बताएं' },
-      { label: '💳 KCC ऋण आवेदन', query: 'KCC किसान क्रेडिट कार्ड ऋण के लिए क्या नियम और दस्तावेज हैं?' },
-      { label: '🏛️ पैक्स खाद व बीज', query: 'पैक्स (PACS) समिति में खाद-बीज और सदस्यता के नियम क्या हैं?' },
-      { label: '📋 PM-किसान किस्त', query: 'PM-किसान सम्मान निधि की किस्त कैसे जांचें?' }
-    ]
+    helpTxt: 'सहायक AI फसल बीमा क्लेम, KCC ऋण, पैक्स समिति और सरकारी योजनाओं की पूरी जानकारी देता है। पूछने के लिए "Hello Sahayak" बोलें!'
   },
   en: {
     wakeReady: '"Hello Sahayak" Active',
@@ -1481,25 +984,17 @@ const UI = {
     speakingSub: 'Please listen carefully to the answer',
     qrReadyTitle: '✅ Solution Complete',
     qrReadySub: 'Scan the QR code below with another device',
-    qrPill: '📱 View or Scan on Phone',
+    qrPill: '📱 Scan with Phone',
     qrHeading: 'Get full guide on your phone',
-    qrSub: 'Scan with camera or tap below to open PDF checklist',
+    qrSub: 'Scan with camera to download PDF & checklist',
     tapHint: '👆 Touch Robot or say "Hello Sahayak"',
     inputPlaceholder: 'Type your query or say "Hello Sahayak"…',
     send: 'Ask',
     replay: '🔊 Replay Audio',
-    openDirect: '📲 Open on this Phone',
     next: 'Ask Next Question',
     langBtn: 'हिन्दी',
-    kioskTag: 'Touch Screen Kiosk',
     help: 'Help',
-    helpTxt: 'Sahayak AI helps farmers and citizens with crop insurance, KCC loans, PACS membership and government schemes.',
-    quickChips: [
-      { label: '🌾 Crop Damage Claim', query: 'My crop got damaged. What is the PMFBY claim process within 72 hours?' },
-      { label: '💳 KCC Loan Rules', query: 'What are the required documents and eligibility for KCC loan at PACS?' },
-      { label: '🏛️ PACS Society Rules', query: 'How to get PACS membership and subsidized fertilizer or seeds?' },
-      { label: '📋 PM-Kisan Installment', query: 'How to check PM-Kisan installment status and complete eKYC?' }
-    ]
+    helpTxt: 'Sahayak AI helps farmers and citizens with crop insurance, KCC loans, PACS membership and government schemes.'
   }
 };
 
@@ -1590,64 +1085,11 @@ function playActivationChime() {
 }
 
 let activeAudio = null;
-let audioCtx = null;
-let analyserNode = null;
-let audioAnimFrame = null;
-
 function stopAudio(){
-  if (audioAnimFrame) {
-    cancelAnimationFrame(audioAnimFrame);
-    audioAnimFrame = null;
-  }
   if(activeAudio){
     activeAudio.pause();
     activeAudio.currentTime = 0;
     activeAudio = null;
-  }
-  const bars = document.querySelectorAll('.mouth-bar');
-  bars.forEach(b => b.style.transform = '');
-}
-
-function connectAudioAnalyser(audioEl) {
-  try {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-    if (!analyserNode) {
-      analyserNode = audioCtx.createAnalyser();
-      analyserNode.fftSize = 32;
-      analyserNode.smoothingTimeConstant = 0.75;
-    }
-    const source = audioCtx.createMediaElementSource(audioEl);
-    source.connect(analyserNode);
-    analyserNode.connect(audioCtx.destination);
-    
-    const bufferLength = analyserNode.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    
-    function monitorSpeech() {
-      if (!activeAudio || activeAudio.paused) return;
-      analyserNode.getByteFrequencyData(dataArray);
-      let total = 0;
-      for (let i = 0; i < bufferLength; i++) total += dataArray[i];
-      const avg = total / bufferLength;
-      
-      const bars = document.querySelectorAll('.mouth-bar');
-      if (bars.length) {
-        bars.forEach((b, idx) => {
-          const val = (dataArray[idx % bufferLength] || avg) / 90;
-          const scale = Math.max(0.25, Math.min(val * 1.5, 2.0));
-          b.style.transform = `scaleY(${scale.toFixed(2)})`;
-        });
-      }
-      audioAnimFrame = requestAnimationFrame(monitorSpeech);
-    }
-    monitorSpeech();
-  } catch(e) {
-    // If Web Audio API cross-origin prevents source capture, CSS harmonic keyframes run smoothly
   }
 }
 
@@ -1656,13 +1098,10 @@ function playNeuralAudio(audioUrl, onEnd){
   if(!audioUrl){ if(onEnd) onEnd(); return; }
   try {
     const a = new Audio(audioUrl);
-    a.crossOrigin = "anonymous";
     activeAudio = a;
-    a.onended = () => { stopAudio(); if(onEnd) onEnd(); };
-    a.onerror = () => { stopAudio(); if(onEnd) onEnd(); };
-    a.play().then(() => {
-      connectAudioAnalyser(a);
-    }).catch(() => { stopAudio(); if(onEnd) onEnd(); });
+    a.onended = () => { activeAudio = null; if(onEnd) onEnd(); };
+    a.onerror = () => { activeAudio = null; if(onEnd) onEnd(); };
+    a.play().catch(() => { activeAudio = null; if(onEnd) onEnd(); });
   } catch(e) {
     if(onEnd) onEnd();
   }
@@ -1688,14 +1127,10 @@ const robotHalo = document.getElementById('robotHalo');
 const statusTitle = document.getElementById('statusTitle');
 const statusSub = document.getElementById('statusSub');
 const tapHint = document.getElementById('tapHint');
-const speakingBadge = document.getElementById('speakingBadge');
-const speakingBadgeText = document.getElementById('speakingBadgeText');
-const quickChipsBar = document.getElementById('quickChipsBar');
 const wakeIndicator = document.getElementById('wakeIndicator');
 const wakeText = document.getElementById('wakeText');
 const langBtn = document.getElementById('langBtn');
 const helpBtn = document.getElementById('helpBtn');
-const kioskTag = document.getElementById('kioskTag');
 const solutionPanel = document.getElementById('solutionPanel');
 const summaryBody = document.getElementById('summaryBody');
 const sourceTag = document.getElementById('sourceTag');
@@ -1714,7 +1149,6 @@ const heroQrPill = document.getElementById('heroQrPill');
 const heroQrHeading = document.getElementById('heroQrHeading');
 const heroQrCaption = document.getElementById('heroQrCaption');
 const heroReplayBtn = document.getElementById('heroReplayBtn');
-const heroOpenBtn = document.getElementById('heroOpenBtn');
 
 let currentRobotState = 'idle';
 let lastAudioUrl = '';
@@ -1729,7 +1163,6 @@ function setRobotState(state){
     robotHalo.className = 'robot-halo';
     wakeIndicator.className = 'wake-indicator';
     wakeText.textContent = S().wakeReady;
-    if (speakingBadge) speakingBadge.style.display = 'none';
     if (!heroQrCard || heroQrCard.style.display === 'none') {
       statusTitle.textContent = S().idleTitle;
       statusSub.textContent = S().idleSub;
@@ -1737,15 +1170,10 @@ function setRobotState(state){
         tapHint.style.display = 'inline-block';
         tapHint.textContent = S().tapHint;
       }
-      if (quickChipsBar) quickChipsBar.style.display = 'flex';
-    } else {
-      if (quickChipsBar) quickChipsBar.style.display = 'none';
     }
     micBtn.classList.remove('active');
   } else if(state === 'listening'){
     if (heroQrCard) heroQrCard.style.display = 'none';
-    if (speakingBadge) speakingBadge.style.display = 'none';
-    if (quickChipsBar) quickChipsBar.style.display = 'none';
     robotHalo.className = 'robot-halo active-listen';
     wakeIndicator.className = 'wake-indicator listening';
     wakeText.textContent = S().wakeListening;
@@ -1755,8 +1183,6 @@ function setRobotState(state){
     micBtn.classList.add('active');
   } else if(state === 'processing'){
     if (heroQrCard) heroQrCard.style.display = 'none';
-    if (speakingBadge) speakingBadge.style.display = 'none';
-    if (quickChipsBar) quickChipsBar.style.display = 'none';
     robotHalo.className = 'robot-halo';
     statusTitle.textContent = S().processingTitle;
     statusSub.textContent = S().processingSub;
@@ -1764,14 +1190,9 @@ function setRobotState(state){
     micBtn.classList.remove('active');
   } else if(state === 'speaking'){
     if (heroQrCard) heroQrCard.style.display = 'none';
-    if (quickChipsBar) quickChipsBar.style.display = 'none';
     robotHalo.className = 'robot-halo active-speak';
     statusTitle.textContent = S().speakingTitle;
     statusSub.textContent = S().speakingSub;
-    if (speakingBadge) {
-      speakingBadge.style.display = 'inline-flex';
-      if (speakingBadgeText) speakingBadgeText.textContent = S().speakingTitle;
-    }
     if (tapHint) tapHint.style.display = 'none';
     micBtn.classList.remove('active');
   }
@@ -1780,9 +1201,8 @@ function setRobotState(state){
 function showHeroQrCode(joinUrl) {
   if (!heroQrCode || !heroQrCard) return;
   heroQrCode.innerHTML = '';
-  const fullUrl = (joinUrl && joinUrl.startsWith('http')) ? joinUrl : `${window.location.origin}${joinUrl}`;
   new QRCode(heroQrCode, {
-    text: fullUrl,
+    text: joinUrl,
     width: 80,
     height: 80,
     colorDark: '#0B1321',
@@ -1792,43 +1212,23 @@ function showHeroQrCode(joinUrl) {
   if (heroQrCaption) heroQrCaption.textContent = S().qrSub;
   if (heroQrPill) heroQrPill.textContent = S().qrPill;
   if (heroReplayBtn) heroReplayBtn.textContent = S().replay;
-  if (heroOpenBtn) heroOpenBtn.textContent = S().openDirect;
-  if (speakingBadge) speakingBadge.style.display = 'none';
-  if (quickChipsBar) quickChipsBar.style.display = 'none';
   heroQrCard.style.display = 'block';
   statusTitle.textContent = S().qrReadyTitle;
   statusSub.textContent = S().qrReadySub;
   if (tapHint) tapHint.style.display = 'none';
 }
 
-function renderQuickChips() {
-  if (!quickChipsBar) return;
-  quickChipsBar.innerHTML = '';
-  const chips = S().quickChips || [];
-  chips.forEach(c => {
-    const btn = document.createElement('button');
-    btn.className = 'quick-chip';
-    btn.textContent = c.label;
-    btn.onclick = () => handleQuery(c.query);
-    quickChipsBar.appendChild(btn);
-  });
-}
-
 function updateUILabels(){
   langBtn.textContent = S().langBtn;
   helpBtn.textContent = S().help;
-  if (kioskTag) kioskTag.textContent = S().kioskTag;
   textInput.placeholder = S().inputPlaceholder;
   sendBtn.textContent = S().send;
   replayAudioBtn.textContent = S().replay;
   nextQueryBtn.textContent = S().next;
   if (heroReplayBtn) heroReplayBtn.textContent = S().replay;
-  if (heroOpenBtn) heroOpenBtn.textContent = S().openDirect;
   if (heroQrHeading) heroQrHeading.textContent = S().qrHeading;
   if (heroQrCaption) heroQrCaption.textContent = S().qrSub;
   if (heroQrPill) heroQrPill.textContent = S().qrPill;
-  if (speakingBadgeText) speakingBadgeText.textContent = S().speakingTitle;
-  renderQuickChips();
   setRobotState(currentRobotState);
 }
 
@@ -1919,14 +1319,6 @@ if (heroReplayBtn) {
           showHeroQrCode(lastJoinUrl);
         }
       });
-    }
-  };
-}
-
-if (heroOpenBtn) {
-  heroOpenBtn.onclick = () => {
-    if (lastJoinUrl) {
-      window.open(lastJoinUrl, '_blank');
     }
   };
 }

@@ -22,7 +22,7 @@ SESSION_TTL_SECONDS = int(os.getenv("SESSION_TTL_SECONDS", "3600"))  # 1 hour
 # Provider selection: gemini | mock | anthropic | groq
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "gemini")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
 
 STT_PROVIDER = os.getenv("STT_PROVIDER", "mock")       # mock | cloud
 TTS_PROVIDER = os.getenv("TTS_PROVIDER", "mock")       # mock | cloud

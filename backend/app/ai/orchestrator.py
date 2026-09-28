@@ -221,14 +221,6 @@ def handle_message(db: DBSession, session: models.Session, text: str, language: 
     kiosk_summary: Optional[str] = None
     qr_data = None
 
-    # Detect pure nonsense / random characters (e.g. "asdkjqwe nonsense gibberish xyz123")
-    q_words = re.findall(r"\w+", text.lower())
-    known_markers = HINGLISH_MARKERS.union(ENGLISH_INDICATORS).union({
-        "जमीन", "कब्जा", "कब्ज़ा", "मदद", "सहायता", "बताओ", "क्या", "कैसे", "कहाँ", "कब", "नमस्ते", "हेलो",
-        "fasal", "crop", "kisan", "farmer", "loan", "kcc", "pacs", "bima", "claim", "police", "court"
-    })
-    is_recognized_query = bool(set(q_words).intersection(known_markers)) or (DEVANAGARI_RE.search(text) is not None)
-
     if is_pdf_req:
         response_mode = "SCREEN_SUMMARY"
         answer = PDF_CONFIRM_TEXT.get(lang_style, PDF_CONFIRM_TEXT["en"])
@@ -241,7 +233,7 @@ def handle_message(db: DBSession, session: models.Session, text: str, language: 
         qr_data = {"token": qr_obj.token, "join_url": f"/mobile/?token={qr_obj.token}", "expires_at": qr_obj.expires_at}
         invite = QR_SPOKEN_INVITE.get(lang_style, QR_SPOKEN_INVITE["en"])
         spoken_text = clean_for_speech(f"{answer}. {invite}", lang_style)
-    elif intent_name == "UNKNOWN" and not chunks and not is_recognized_query:
+    elif intent_name == "UNKNOWN" and not chunks:
         response_mode = "HUMAN_ESCALATION"
         answer = NO_EVIDENCE.get(lang_style, NO_EVIDENCE["en"])
         sources = []
@@ -249,17 +241,17 @@ def handle_message(db: DBSession, session: models.Session, text: str, language: 
     elif (fact_type := requires_specific_fact(text)) and not evidence_has_fact([c.text for c in chunks], fact_type, text):
         response_mode = "HUMAN_ESCALATION"
         sources = []
-        bundle = llm.generate_response_bundle(text, evidence_texts, lang_style)
-        answer = bundle.get("answer_text") or NO_EVIDENCE.get(lang_style, NO_EVIDENCE["en"])
-        kiosk_summary = bundle.get("kiosk_summary")
-        spoken_text = clean_for_speech(kiosk_summary or answer, lang_style)
+        answer = llm.simplify_and_answer(text, evidence_texts, lang_style)
+        if not answer:
+            answer = NO_EVIDENCE.get(lang_style, NO_EVIDENCE["en"])
+        spoken_text = clean_for_speech(answer, lang_style)
     elif missing_named_entity(text, [c.text for c in chunks]):
         response_mode = "HUMAN_ESCALATION"
         sources = []
-        bundle = llm.generate_response_bundle(text, evidence_texts, lang_style)
-        answer = bundle.get("answer_text") or NO_EVIDENCE.get(lang_style, NO_EVIDENCE["en"])
-        kiosk_summary = bundle.get("kiosk_summary")
-        spoken_text = clean_for_speech(kiosk_summary or answer, lang_style)
+        answer = llm.simplify_and_answer(text, evidence_texts, lang_style)
+        if not answer:
+            answer = NO_EVIDENCE.get(lang_style, NO_EVIDENCE["en"])
+        spoken_text = clean_for_speech(answer, lang_style)
     else:
         bundle = llm.generate_response_bundle(text, evidence_texts, lang_style)
         answer = bundle.get("answer_text") or NO_EVIDENCE.get(lang_style, NO_EVIDENCE["en"])

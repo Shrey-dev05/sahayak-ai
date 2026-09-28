@@ -32,9 +32,6 @@ backend/data/*.sqlite
 backend/data/*.sqlite3
 uploads/
 backend/uploads/
-*.mp3
-audio_cache/
-backend/data/audio_cache/
 
 # IDE and OS
 .vscode/

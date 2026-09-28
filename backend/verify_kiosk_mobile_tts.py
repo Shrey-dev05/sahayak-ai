@@ -4,10 +4,10 @@ import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-BASE = "http://127.0.0.1:8008"
+BASE = "http://127.0.0.1:8000"
 
 def test_live_workflow():
-    with httpx.Client(base_url=BASE, timeout=90.0) as client:
+    with httpx.Client(base_url=BASE, timeout=30.0) as client:
         # 1. Health check
         h = client.get("/health")
         assert h.status_code == 200, f"Health failed: {h.text}"
