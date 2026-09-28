@@ -231,6 +231,52 @@ class GeminiLLM(LLMProvider):
                 )
             return {"answer_text": answer_text, "kiosk_summary": kiosk_summary}
 
+        if any(w in q_lower for w in ["kabza", "kabja", "कब्जा", "कब्ज़ा", "encroach", "dispute", "illegal", "zameen", "zamin", "जमीन", "land", "khet", "खेत"]):
+            if is_hindi:
+                kiosk_summary = (
+                    "• अपनी ज़मीन के मालिकाना कागज़ात (खसरा, खतौनी, बैनामा या 7/12) लेकर तुरंत उपजिलाधिकारी (SDM) या तहसीलदार कार्यालय में धारा 145/133 के तहत लिखित शिकायत दर्ज करें।\n"
+                    "• यदि कोई बलपूर्वक कब्ज़ा कर रहा है तो तुरंत 112 पर पुलिस को सूचना दें और सरकारी जनसुनवाई (IGRS) पोर्टल पर ऑनलाइन शिकायत दर्ज करें।\n"
+                    "• राजस्व निरीक्षक (कानूनगो या लेखपाल) से अपनी ज़मीन की आधिकारिक नाप-जोख व सीमांकन (Demarcation) की मांग करें।"
+                )
+                answer_text = (
+                    "ज़मीन पर अवैध कब्ज़े के विरुद्ध कानूनी व सरकारी सहायता प्रक्रिया:\n\n"
+                    "1. प्रशासनिक शिकायत (SDM व तहसीलदार स्तर):\n"
+                    "- अपने क्षेत्र के उपजिलाधिकारी (SDM) या तहसीलदार के समक्ष अपनी ज़मीन पर अवैध कब्ज़े की लिखित शिकायत प्रस्तुत करें।\n"
+                    "- राज्य राजस्व संहिता अथवा धारा 145 के तहत बेदखली व शांति व्यवस्था बनाए रखने हेतु वाद दायर करें।\n\n"
+                    "2. आवश्यक दस्तावेज़ साथ रखें:\n"
+                    "- ज़मीन का नवीनतम खसरा और खतौनी (जमाबंदी/नकल)\n"
+                    "- ज़मीन की रजिस्ट्री/बैनामा (Sale Deed) की प्रति\n"
+                    "- सरकारी राजस्व नक्शा (भू-नक्शा) व लगान रसीद\n"
+                    "- अवैध कब्जे के सबूत (फोटो/वीडियो या पंचनामा)\n\n"
+                    "3. पुलिस व जनसुनवाई पोर्टल पर शिकायत:\n"
+                    "- जबरन कब्ज़ा किए जाने पर तुरंत 112 पुलिस हेल्पलाइन पर कॉल करें और स्थानीय थाने में रिपोर्ट दर्ज कराएं।\n"
+                    "- राज्य सरकार के ऑनलाइन जनसुनवाई पोर्टल (IGRS) या एंटी भू-माफिया टास्क फोर्स पर ऑनलाइन शिकायत दर्ज कर पावती संख्या प्राप्त करें।\n\n"
+                    "4. आधिकारिक सीमांकन (Land Demarcation):\n"
+                    "तहसीलदार कार्यालय में ज़मीन की पैमाइश (नाप-जोख) व सीमा चिन्ह (मेढ़बंदी) लगाने के लिए सरकारी चालान भरकर आवेदन करें।"
+                )
+            else:
+                kiosk_summary = (
+                    "• File an urgent petition before the Sub-Divisional Magistrate (SDM) or Tehsildar with your registered title deed, Khasra, and Khatauni.\n"
+                    "• Report illegal encroachment immediately to the local police (Dial 112) and file a complaint on the state public grievance portal (IGRS / Anti-Land Mafia portal).\n"
+                    "• Apply for formal land demarcation and boundary fixing through the Revenue Inspector/Patwari."
+                )
+                answer_text = (
+                    "Legal & Administrative Redressal for Illegal Land Encroachment:\n\n"
+                    "1. Administrative Complaint (SDM / Tehsildar Level):\n"
+                    "Submit a formal petition before the Sub-Divisional Magistrate (SDM) or Tehsildar under the state Revenue Code or Section 145 CrPC for removal of unauthorized possession.\n\n"
+                    "2. Essential Title Documents Required:\n"
+                    "- Certified copy of Land Records (Khasra, Khatauni / Jamabandi / 7-12)\n"
+                    "- Registered Sale Deed / Title Deed establishing ownership\n"
+                    "- Revenue map (Bhu-Naksha) highlighting the disputed parcel\n"
+                    "- Photographic or video evidence of unauthorized construction or tilling\n\n"
+                    "3. Police & Online Grievance Portals:\n"
+                    "- Call Emergency Helpline 112 immediately if there is a breach of peace or trespass.\n"
+                    "- Lodge an online grievance on your State CM Helpline / IGRS portal (Anti-Land Mafia Cell) to receive an official tracking number.\n\n"
+                    "4. Official Land Demarcation (Paimash):\n"
+                    "File an application before the Tehsildar for survey and demarcation of boundary lines to establish clear legal possession."
+                )
+            return {"answer_text": answer_text, "kiosk_summary": kiosk_summary}
+
         if any(w in q_lower for w in ["kcc", "loan", "rin", "byaj", "karz", "interest", "credit"]):
             if is_hindi:
                 kiosk_summary = (
