@@ -1,6 +1,14 @@
-﻿services:
+services:
   - type: web
     name: sahayak-ai
     env: docker
     plan: free
     healthCheckPath: /health
+    envVars:
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: GEMINI_MODEL
+        value: gemini-3.8-flash
+      - key: GEMINI_API_KEY
+        sync: false
+

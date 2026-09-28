@@ -83,8 +83,7 @@ class GeminiLLM(LLMProvider):
 
     def generate_response_bundle(self, question: str, evidence: List[str] = None, language: str = "en") -> dict:
         if not self.api_key:
-            fb = evidence[0] if (evidence and len(evidence) > 0) else "Service temporarily offline. Please verify API key configuration."
-            return {"answer_text": fb, "kiosk_summary": None}
+            return self._build_offline_fallback(question, evidence, language)
 
         if evidence and len(evidence) > 0:
             context_block = "VERIFIED CONTEXT FROM APPROVED KNOWLEDGE BASE:\n" + "\n\n".join(f"- {e}" for e in evidence)
@@ -175,9 +174,200 @@ class GeminiLLM(LLMProvider):
             except Exception:
                 continue
 
-        # Safe fallback if API is unreachable
-        fb = evidence[0] if (evidence and len(evidence) > 0) else "I am here to assist you, but currently experiencing connectivity to the AI service. Please ask again shortly."
-        return {"answer_text": fb, "kiosk_summary": None}
+        # Safe fallback if API is unreachable or rate limited
+        return self._build_offline_fallback(question, evidence, language)
+
+    def _build_offline_fallback(self, question: str, evidence: List[str] = None, language: str = "en") -> dict:
+        lang_lower = (language or "en").lower()
+        is_hindi = "hi" in lang_lower
+        q_lower = (question or "").lower()
+
+        # 1. If evidence passages exist in approved knowledge base, prioritize them
+        if evidence and len(evidence) > 0:
+            primary_evidence = "\n\n".join(evidence[:3])
+            summary = self._extract_actionable_lines(evidence[0])
+            return {
+                "answer_text": primary_evidence,
+                "kiosk_summary": summary
+            }
+
+        # 2. Knowledge domain detection for intelligent offline responses
+        if any(w in q_lower for w in ["fasal", "crop", "nuksan", "damage", "barish", "rain", "flood", "pmfby", "bima", "claim"]):
+            if is_hindi:
+                kiosk_summary = (
+                    "• 72 घंटे के भीतर प्रधानमंत्री फसल बीमा योजना (PMFBY) पोर्टल, बैंक या टोल-फ्री 14447 पर सूचना दें।\n"
+                    "• खेत में खराब फसल की फोटो, आधार कार्ड, बैंक पासबुक और खसरा/खतौनी के कागजात तैयार रखें।\n"
+                    "• नजदीकी पैक्स (PACS), सीएससी (CSC) केंद्र या कृषि समन्वयक से तुरंत संपर्क करें।"
+                )
+                answer_text = (
+                    "फसल नुकसान दावा प्रक्रिया (PMFBY Guide):\n\n"
+                    "1. तत्काल सूचना (72 घंटे की समय-सीमा):\n"
+                    "बाढ़, भारी बारिश या प्राकृतिक आपदा से फसल खराब होने पर 72 घंटे के भीतर संबंधित बैंक, बीमा कंपनी या राष्ट्रीय टोल-फ्री नंबर 14447 पर सूचित करें।\n\n"
+                    "2. आवश्यक दस्तावेज़:\n"
+                    "- आधार कार्ड और बैंक पासबुक की प्रति\n"
+                    "- भूमि स्वामित्व दस्तावेज (खसरा/खतौनी या 7/12)\n"
+                    "- फसल बुवाई प्रमाण पत्र (पटवारी/गिरदावरी रिपोर्ट)\n"
+                    "- नुकसानग्रस्त फसल की स्पष्ट तस्वीरें\n\n"
+                    "3. संपर्क केंद्र:\n"
+                    "नजदीकी पैक्स (PACS) कार्यालय, कॉमन सर्विस सेंटर (CSC) या स्थानीय कृषि विस्तार अधिकारी से तत्काल संपर्क करें।"
+                )
+            else:
+                kiosk_summary = (
+                    "• Report crop loss within 72 hours via PMFBY portal, your bank branch, or toll-free helpline 14447.\n"
+                    "• Gather damage photos, Aadhaar card, bank passbook, and land ownership (7/12 or Khasra) documents.\n"
+                    "• Contact your local PACS, CSC center, or District Agriculture Officer immediately."
+                )
+                answer_text = (
+                    "Crop Damage Claim Guide (PMFBY):\n\n"
+                    "1. Immediate Notification (72-Hour Window):\n"
+                    "In case of localized perils like flooding or unseasonal rain, report the loss within 72 hours to your bank, the insurance company, or toll-free 14447.\n\n"
+                    "2. Required Documents:\n"
+                    "- Aadhaar card & updated bank passbook\n"
+                    "- Land records (Khasra/Khatauni or 7/12 extract)\n"
+                    "- Sowing certificate / Girdawari report\n"
+                    "- Clear photographs of the damaged crop\n\n"
+                    "3. Where to Submit:\n"
+                    "Submit claim forms at your servicing PACS, CSC Center, or District Agriculture Office."
+                )
+            return {"answer_text": answer_text, "kiosk_summary": kiosk_summary}
+
+        if any(w in q_lower for w in ["kcc", "loan", "rin", "byaj", "karz", "interest", "credit"]):
+            if is_hindi:
+                kiosk_summary = (
+                    "• किसान क्रेडिट कार्ड (KCC) पर समय पर भुगतान करने पर 3 लाख तक का ऋण केवल 4% प्रभावी ब्याज पर मिलता है।\n"
+                    "• आवेदन के लिए जमीन की खतौनी, आधार कार्ड, पैन कार्ड और पासपोर्ट साइज फोटो लेकर जाएं।\n"
+                    "• अपनी नजदीकी पैक्स (PACS) या बैंक शाखा में सीधे आवेदन करें।"
+                )
+                answer_text = (
+                    "किसान क्रेडिट कार्ड (KCC) ब्याज सहायता व ऋण दिशानिर्देश:\n\n"
+                    "1. ब्याज दर व सब्सिडी:\n"
+                    "KCC पर सामान्य ब्याज दर 7% है। केंद्र सरकार समय पर भुगतान करने पर 3% अतिरिक्त ब्याज छूट प्रदान करती है, जिससे प्रभावी ब्याज केवल 4% रह जाता है।\n\n"
+                    "2. आवश्यक दस्तावेज़:\n"
+                    "- भरा हुआ KCC आवेदन पत्र\n"
+                    "- पहचान व पता प्रमाण (आधार कार्ड, वोटर कार्ड)\n"
+                    "- भूमि स्वामित्व अभिलेख (खसरा/खतौनी या लगान रसीद)\n"
+                    "- बैंक खाता पासबुक और 2 पासपोर्ट फोटो\n\n"
+                    "3. आवेदन स्थल:\n"
+                    "अपनी प्राथमिक कृषि ऋण समिति (PACS), सहकारी बैंक या वाणिज्यिक बैंक शाखा से संपर्क करें।"
+                )
+            else:
+                kiosk_summary = (
+                    "• KCC offers agricultural loans up to Rs 3 Lakh at an effective 4% interest rate with prompt repayment.\n"
+                    "• Required papers: Land ownership records (Khasra/7-12), Aadhaar card, bank passbook, and photos.\n"
+                    "• Apply directly at your local PACS or nearest bank branch."
+                )
+                answer_text = (
+                    "Kisan Credit Card (KCC) Scheme Guidelines:\n\n"
+                    "1. Interest Rates & Subvention:\n"
+                    "Base interest rate is 7% for crop loans up to Rs 3 Lakh. Farmers who repay on time receive a 3% prompt repayment incentive, reducing the effective rate to 4%.\n\n"
+                    "2. Required Checklist:\n"
+                    "- Duly filled KCC application form\n"
+                    "- Aadhaar card & PAN/Voter ID\n"
+                    "- Certified land revenue record (7/12 or Khasra/Khatauni)\n"
+                    "- 2 passport-size photographs\n\n"
+                    "3. Contact Point:\n"
+                    "Apply through your local Primary Agricultural Credit Society (PACS) or servicing bank branch."
+                )
+            return {"answer_text": answer_text, "kiosk_summary": kiosk_summary}
+
+        if any(w in q_lower for w in ["kisan", "pm-kisan", "pmkisan", "kist", "installment", "dbt", "samman"]):
+            if is_hindi:
+                kiosk_summary = (
+                    "• पीएम-किसान योजना के तहत हर साल ₹6,000 तीन बराबर किस्तों (₹2,000 प्रत्येक) में डीबीटी के जरिए सीधे खाते में मिलते हैं।\n"
+                    "• e-KYC पूरा होना, जमीन का सत्यापन (Land Seeding) और बैंक खाते का आधार से लिंक होना अनिवार्य है।\n"
+                    "• स्थिति जांचने के लिए pmkisan.gov.in पर 'Know Your Status' देखें या 155261 पर कॉल करें।"
+                )
+                answer_text = (
+                    "प्रधानमंत्री किसान सम्मान निधि (PM-KISAN) सहायता:\n\n"
+                    "1. योजना का लाभ:\n"
+                    "पात्र किसान परिवारों को प्रति वर्ष ₹6,000 की वित्तीय सहायता ₹2,000 की 3 किस्तों में सीधे बैंक खाते में दी जाती है।\n\n"
+                    "2. किस्त रुकने के मुख्य कारण व समाधान:\n"
+                    "- e-KYC अधूरा होना: नजदीकी CSC केंद्र पर बायोमेट्रिक या OTP से पूरा करें।\n"
+                    "- आधार-बैंक सीडिंग: अपने बैंक में जाकर आधार NPCI मैपिंग कराएं।\n"
+                    "- Land Seeding: राजस्व/कृषि अधिकारी से मिलकर भूमि विवरण सत्यापित कराएं।\n\n"
+                    "3. आधिकारिक हेल्पलाइन: 155261 / 1800-115-526।"
+                )
+            else:
+                kiosk_summary = (
+                    "• PM-KISAN provides Rs 6,000 annually in 3 installments of Rs 2,000 via DBT directly to bank accounts.\n"
+                    "• Mandatory checks: e-KYC completion, land seeding verification, and Aadhaar-linked bank account.\n"
+                    "• Track status at pmkisan.gov.in under 'Know Your Status' or call helpline 155261."
+                )
+                answer_text = (
+                    "PM-KISAN Scheme Overview & Problem Resolution:\n\n"
+                    "1. Financial Benefit:\n"
+                    "Eligible farmer families receive Rs 6,000 per year transferred in 3 equal installments of Rs 2,000 directly via DBT.\n\n"
+                    "2. Essential Prerequisites:\n"
+                    "- Complete e-KYC (via OTP on portal or biometric at CSC)\n"
+                    "- Verify Land Seeding status with your local revenue/agriculture department\n"
+                    "- Ensure bank account is mapped to Aadhaar via NPCI\n\n"
+                    "3. Helpline Numbers: 155261 / 011-24300606."
+                )
+            return {"answer_text": answer_text, "kiosk_summary": kiosk_summary}
+
+        if any(w in q_lower for w in ["pacs", "society", "samiti", "bylaw", "agm", "registrar", "member"]):
+            if is_hindi:
+                kiosk_summary = (
+                    "• पैक्स (PACS) एक लोकतांत्रिक सहकारी संस्था है, जिसमें प्रत्येक सदस्य किसान को एक वोट का समान अधिकार है।\n"
+                    "• वार्षिक आम बैठक (AGM) की सूचना 15 दिन पूर्व और न्यूनतम 20% कोरम होना अनिवार्य है।\n"
+                    "• किसी भी अनियमितता की स्थिति में जिला सहायक निबंधक (ARCS) के समक्ष शिकायत दर्ज करें।"
+                )
+                answer_text = (
+                    "पैक्स (PACS) मॉडल उपनियम व किसान अधिकार:\n\n"
+                    "1. सदस्यता व मताधिकार:\n"
+                    "PACS कार्यक्षेत्र का प्रत्येक किसान सदस्य बन सकता है। सभी सदस्यों को AGM में मतदान का समान अधिकार प्राप्त है।\n\n"
+                    "2. बैठक व पारदर्शिता नियम:\n"
+                    "- वार्षिक आम सभा (AGM) वित्तीय वर्ष समाप्ति के 6 माह के भीतर आयोजित होनी आवश्यक है।\n"
+                    "- वित्तीय लेखापरीक्षा (Audit) रिपोर्ट सदस्यों के निरीक्षण हेतु उपलब्ध होनी चाहिए।\n\n"
+                    "3. शिकायत निवारण:\n"
+                    "अध्यक्ष या सचिव द्वारा नियमों का उल्लंघन किए जाने पर जिला सहकारी निबंधक (ARCS) को आवेदन प्रस्तुत करें।"
+                )
+            else:
+                kiosk_summary = (
+                    "• PACS is a democratic cooperative where every farmer member has equal voting rights.\n"
+                    "• Annual General Meeting (AGM) requires 15 days advance notice and a minimum 20% quorum.\n"
+                    "• For violations, submit a grievance to the District Assistant Registrar (ARCS)."
+                )
+                answer_text = (
+                    "PACS Model Bylaws & Governance Framework:\n\n"
+                    "1. Membership & Democratic Control:\n"
+                    "Every farmer within the jurisdiction is entitled to regular membership with one member, one vote rights.\n\n"
+                    "2. Meetings & Audits:\n"
+                    "- The AGM must be convened within 6 months of financial year end.\n"
+                    "- Annual audit reports and member registers must be available for inspection.\n\n"
+                    "3. Redressal Channel:\n"
+                    "Grievances regarding election, membership refusal, or fund mismanagement should be addressed to the District Registrar of Cooperative Societies."
+                )
+            return {"answer_text": answer_text, "kiosk_summary": kiosk_summary}
+
+        # General rural citizen assistance
+        if is_hindi:
+            kiosk_summary = (
+                "• कृषि, ऋण व फसल सहायता के लिए अपने नजदीकी पैक्स (PACS), सीएससी केंद्र या कृषि विभाग कार्यालय जाएं।\n"
+                "• अपने साथ आधार कार्ड, जमीन के दस्तावेज व बैंक पासबुक अवश्य रखें।\n"
+                "• राष्ट्रीय किसान कॉल सेंटर टोल-फ्री नंबर 1800-180-1551 पर कभी भी संपर्क करें।"
+            )
+            answer_text = (
+                "सहायक AI नागरिक सहायता केंद्र:\n\n"
+                "आपकी सहायता के लिए आधिकारिक मार्गदर्शन:\n"
+                "1. कृषि परामर्श व योजनाएं: पीएम किसान, फसल बीमा (PMFBY), केसीसी ऋण व कृषि यंत्र अनुदान।\n"
+                "2. आवश्यक पहचान प्रमाण: आधार कार्ड, बैंक खाता विवरण, और भूमि अभिलेख।\n"
+                "3. आधिकारिक हेल्पलाइन: राष्ट्रीय किसान कॉल सेंटर 1800-180-1551 (टोल-फ्री)।"
+            )
+        else:
+            kiosk_summary = (
+                "• Visit your nearest PACS, CSC Center, or District Agriculture Office for scheme and credit support.\n"
+                "• Always carry your Aadhaar card, land ownership papers, and bank passbook.\n"
+                "• For immediate agricultural advisory, call the Kisan Call Center toll-free at 1800-180-1551."
+            )
+            answer_text = (
+                "Sahayak AI Citizen Assistance:\n\n"
+                "Official guidance for rural schemes and services:\n"
+                "1. Available Services: PM-Kisan, Crop Insurance (PMFBY), KCC Loans, and cooperative society support.\n"
+                "2. Required Documentation: Aadhaar card, bank passbook, and land ownership records.\n"
+                "3. National Helpline: Kisan Call Center toll-free 1800-180-1551."
+            )
+        return {"answer_text": answer_text, "kiosk_summary": kiosk_summary}
 
     def _extract_actionable_lines(self, text: str) -> str:
         lines = [l.strip() for l in text.split("\n") if l.strip()]
