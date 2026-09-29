@@ -1109,13 +1109,23 @@ function playNeuralAudio(audioUrl, onEnd){
 
 async function ensureSession(){
   if(sessionId) return sessionId;
-  const r = await fetch(`${API}/session`, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({kiosk_id:'kiosk-touchbox-750x432', language: lang})
-  });
-  const data = await r.json();
-  sessionId = data.id;
+  try {
+    const r = await fetch(`${API}/session`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({kiosk_id:'kiosk-touchbox-750x432', language: lang})
+    });
+    if (r.ok) {
+      const data = await r.json();
+      sessionId = data.id;
+      localStorage.setItem('sahayak_session_id', sessionId);
+      return sessionId;
+    }
+  } catch(e) {
+    console.warn('Session endpoint transient error, using local fallback session ID:', e);
+  }
+  // Robust fallback session ID if /session fails or times out
+  sessionId = 'sess_' + Math.random().toString(36).substring(2, 12);
   localStorage.setItem('sahayak_session_id', sessionId);
   return sessionId;
 }
@@ -1240,80 +1250,113 @@ async function handleQuery(text){
   if (solutionPanel) solutionPanel.style.display = 'none';
   setRobotState('processing');
 
-  try {
-    await ensureSession();
-    let r = await fetch(`${API}/chat`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({session_id: sessionId, text, language: lang})
-    });
-    if(r.status === 404){
-      localStorage.removeItem('sahayak_session_id');
-      sessionId = null;
+  let attempts = 0;
+  let lastErr = null;
+
+  while(attempts < 2) {
+    attempts++;
+    try {
       await ensureSession();
-      r = await fetch(`${API}/chat`, {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 28000);
+
+      let r = await fetch(`${API}/chat`, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({session_id: sessionId, text, language: lang})
+        body: JSON.stringify({session_id: sessionId, text, language: lang}),
+        signal: controller.signal
       });
-    }
-    const res = await r.json();
-    lastAudioUrl = res.audio_url || '';
+      clearTimeout(timeoutId);
 
-    // Automatic Language Identification:
-    // If citizen spoke in Hindi or English, seamlessly adapt Kiosk language & UI labels
-    if (res.language && res.language !== lang) {
-      lang = res.language;
-      localStorage.setItem('sahayak_lang', lang);
-      updateUILabels();
-      if (mainRecog) {
-        mainRecog.lang = (lang === 'hi') ? 'hi-IN' : 'en-IN';
+      if(r.status === 404){
+        localStorage.removeItem('sahayak_session_id');
+        sessionId = null;
+        await ensureSession();
+        continue; // retry loop with fresh session
       }
-      if (wakeRecog) {
-        stopWakeWordListener();
-        wakeRecog = null;
-        startWakeWordListener();
-      }
-    }
 
-    // Prepare Join URL for QR handoff to another mobile device
-    let joinUrl = res.qr && res.qr.join_url ? res.qr.join_url : '';
-    if (!joinUrl && sessionId) {
-      try {
-        const qrFetch = await fetch(`${API}/qr/create`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({session_id: sessionId})
+      if(!r.ok){
+        const errJson = await r.json().catch(() => ({}));
+        throw new Error(errJson.detail || `Server error: ${r.status}`);
+      }
+
+      const res = await r.json();
+      lastAudioUrl = res.audio_url || '';
+
+      // Automatic Language Identification:
+      // If citizen spoke in Hindi or English, seamlessly adapt Kiosk language & UI labels
+      if (res.language && res.language !== lang) {
+        lang = res.language;
+        localStorage.setItem('sahayak_lang', lang);
+        updateUILabels();
+        if (mainRecog) {
+          mainRecog.lang = (lang === 'hi') ? 'hi-IN' : 'en-IN';
+        }
+        if (wakeRecog) {
+          stopWakeWordListener();
+          wakeRecog = null;
+          startWakeWordListener();
+        }
+      }
+
+      // Prepare Join URL for QR handoff to another mobile device
+      let joinUrl = res.qr && res.qr.join_url ? res.qr.join_url : '';
+      if (!joinUrl && sessionId) {
+        try {
+          const qrFetch = await fetch(`${API}/qr/create`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({session_id: sessionId})
+          });
+          const qrData = await qrFetch.json();
+          if (qrData.join_url) joinUrl = qrData.join_url;
+        } catch(e) {}
+      }
+      if (!joinUrl && sessionId) {
+        joinUrl = `/mobile/?session_id=${sessionId}`;
+      }
+      lastJoinUrl = joinUrl.startsWith('http') ? joinUrl : (location.origin + joinUrl);
+
+      // SPEECH OUTPUT ONLY: Animated robot actively talks, screen stays clean with only the robot
+      if (solutionPanel) solutionPanel.style.display = 'none';
+      if (heroQrCard) heroQrCard.style.display = 'none';
+      setRobotState('speaking');
+
+      if (lastAudioUrl) {
+        playNeuralAudio(lastAudioUrl, () => {
+          setRobotState('idle');
+          if (lastJoinUrl) {
+            showHeroQrCode(lastJoinUrl);
+          } else {
+            if (tapHint) tapHint.style.display = 'inline-block';
+          }
         });
-        const qrData = await qrFetch.json();
-        if (qrData.join_url) joinUrl = qrData.join_url;
-      } catch(e) {}
-    }
-    if (!joinUrl && sessionId) {
-      joinUrl = `/mobile/?session_id=${sessionId}`;
-    }
-    lastJoinUrl = joinUrl.startsWith('http') ? joinUrl : (location.origin + joinUrl);
-
-    // SPEECH OUTPUT ONLY: Animated robot actively talks, screen stays clean with only the robot
-    if (solutionPanel) solutionPanel.style.display = 'none';
-    if (heroQrCard) heroQrCard.style.display = 'none';
-    setRobotState('speaking');
-
-    playNeuralAudio(lastAudioUrl, () => {
-      // Once speaking ends:
-      setRobotState('idle');
-      if (lastJoinUrl) {
-        showHeroQrCode(lastJoinUrl);
       } else {
-        if (tapHint) tapHint.style.display = 'inline-block';
+        setRobotState('idle');
+        if (lastJoinUrl) {
+          showHeroQrCode(lastJoinUrl);
+        } else {
+          if (tapHint) tapHint.style.display = 'inline-block';
+        }
       }
-    });
+      return; // Successfully completed!
 
-  } catch(e) {
-    setRobotState('idle');
-    statusTitle.textContent = '⚠️ ' + S().idleTitle;
-    statusSub.textContent = 'Server connection issue. Please verify backend.';
+    } catch(e) {
+      lastErr = e;
+      console.warn(`Query attempt ${attempts} failed:`, e);
+      if (attempts < 2) {
+        await new Promise(r => setTimeout(r, 1200));
+      }
+    }
   }
+
+  // If all attempts failed:
+  setRobotState('idle');
+  statusTitle.textContent = '⚠️ ' + S().idleTitle;
+  statusSub.textContent = (lang === 'hi')
+    ? 'सर्वर से संपर्क करने में समस्या। कृपया दोबारा पूछें।'
+    : 'Unable to reach server. Please tap to try again.';
+  if (tapHint) tapHint.style.display = 'inline-block';
 }
 
 if (heroReplayBtn) {
