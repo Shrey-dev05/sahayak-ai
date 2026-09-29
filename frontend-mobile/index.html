@@ -2527,7 +2527,7 @@ async function init(){
     document.body.classList.add('high-contrast');
   }
 
-  // Try token join first
+  // 1. Try token join from QR code scan
   if (token) {
     try {
       const r = await fetch(`${API}/qr/join`, {
@@ -2542,11 +2542,40 @@ async function init(){
     } catch(e){}
   }
 
-  // Graceful fallback to existing session ID (e.g. if user refreshed tab)
+  // 2. Check URL session_id parameter
+  let urlSessionId = params.get('session_id');
+  if (!ctx && urlSessionId) {
+    try {
+      const r = await fetch(`${API}/session/${urlSessionId}`);
+      if (r.ok) {
+        ctx = await r.json();
+        localStorage.setItem('sahayak_mobile_session', ctx.session.id);
+      }
+    } catch(e){}
+  }
+
+  // 3. Graceful fallback to existing session ID (e.g. if user refreshed tab)
   if (!ctx && savedSessionId) {
     try {
       const r = await fetch(`${API}/session/${savedSessionId}`);
       if (r.ok) ctx = await r.json();
+    } catch(e){}
+  }
+
+  // 4. If opened directly in browser without QR token, auto-create a new mobile session
+  if (!ctx) {
+    try {
+      const createRes = await fetch(`${API}/session`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({kiosk_id: 'mobile-direct-browser', language: 'hi'})
+      });
+      if (createRes.ok) {
+        const sData = await createRes.json();
+        localStorage.setItem('sahayak_mobile_session', sData.id);
+        const r2 = await fetch(`${API}/session/${sData.id}`);
+        if (r2.ok) ctx = await r2.json();
+      }
     } catch(e){}
   }
 
